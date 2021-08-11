@@ -518,7 +518,7 @@ export const CoreContextProvider = props => {
                 "KeyConditionExpression": "PK = :v_PK",
                 "FilterExpression": "GSI1SK = :v_GSI1SK AND ActiveStatus <> :v_ActiveStatus",
                 "ExpressionAttributeValues": {
-                    ":v_PK": { "S": "DEVICE_BP_READING" },
+                    ":v_PK": { "S": "DEVICE_WS_READING" },
                     ":v_GSI1SK": { "S": "DEVICE_WS_" + userid },
                     ":v_ActiveStatus": { "S": "Deactive" }
                 }
