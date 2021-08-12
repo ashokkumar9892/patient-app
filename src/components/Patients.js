@@ -86,6 +86,7 @@ const Patients = props => {
 
     const showEditForm = (patient) => {
         setName(patient.name);
+        setHeight(patient.Height);
         setBirthDate(patient.dob);
         setPhone(patient.mobile);
         setPatientId(patient.userId);
@@ -134,7 +135,7 @@ const Patients = props => {
             width: 150
           },
           {
-            field: 'height',
+            field: 'Height',
             headerName: 'Height',
             editable: false,
             type: "number",

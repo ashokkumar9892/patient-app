@@ -324,7 +324,7 @@ export const CoreContextProvider = props => {
                 }
                 patient.pid = window.btoa(p.SK.s);
                 if (p.Height !== undefined) {
-                    patient.height = p.Height.s;
+                    patient.Height = p.Height.s;
                 }
                 patient.pid = window.btoa(p.SK.s);
                 
