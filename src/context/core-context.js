@@ -340,14 +340,14 @@ export const CoreContextProvider = props => {
                     let num = p.systolic.s;
                     if (num === '') num = 0;
                     patient.systolic = parseFloat(num).toFixed(2);
+                
                 }
-               
-
                 if (p.weight !== undefined) {
                     let num = p.weight.s;
                     if (num === '') num = 0;
                     patient.Weight = parseFloat(num).toFixed(2);
                 }
+
                 if (p.BMI !== undefined) {
                     let num1 = p.BMI.s;
                     if (num1 === '') num1 = 0;
@@ -868,6 +868,9 @@ export const CoreContextProvider = props => {
         let providername = fetchNameFromId(provider, providerOptions);
         let carecoordinatorname = fetchNameFromId(coordinator, careCoordinatorOptions);
         let coachname = fetchNameFromId(coach, coachOptions);
+        if(providername.value=="")  providername.value = providername.name;
+        if(carecoordinatorname.value=="")  carecoordinatorname.value = carecoordinatorname.name;
+        if(coachname.value=="")  coachname.value = coachname.name;
      
         const data = {
             "TableName": userTable,
@@ -880,9 +883,6 @@ export const CoreContextProvider = props => {
             ":v_GSI1PK":{"S":"patient"},
             ":v_username":{"S": name},
             ":v_mobile":{"S":phone},
-            ":v_DoctorName":{"S": providername.name},
-            //":v_IMEI":{"S":""+patient_emei+""},
-            // ":v_BMI":{"S":""+patient_bmi+""},
             ":v_DOB":{"S":"" + birthDate + ""},
             ":v_Height":{"S":"" + height + ""},
             ":v_CarecoordinatorId":{"S":"" + carecoordinatorname.value + ""},
