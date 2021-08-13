@@ -41,7 +41,7 @@ const Weight = (props) => {
         { field: 
           'UserName', 
           headerName: 'Patient Name', 
-          width: 200 ,  
+          width: 170 ,  
           type: 'string',
           renderCell: (params) => (
             <a  href={`/patient-summary/${btoa(params.row.userId)}`}> {params.row.UserName} </a>
@@ -52,18 +52,18 @@ const Weight = (props) => {
           headerName: 'Weight',
           type: 'number',
           editable: false,
-          width: 200
+          width: 100
         },
         {
             field: 'MeasurementDateTime',
             headerName: 'Date Recorded',
-            width: 200,
+            width: 170,
             editable: false,
           },
           {
             field: 'CreatedDate',
             headerName: 'Date Received',
-            width: 200,
+            width: 170,
             editable: false
            
           },
@@ -71,20 +71,20 @@ const Weight = (props) => {
             field: 'DeviceId',
             headerName: 'Device Id',
             editable: false,
-            width: 200
+            width: 150
           },
           {
             field: 'readingId',
             headerName: 'Reading Id',
             type: 'number',
             editable: false,
-            width: 200
+            width: 150
           },
 
           { 
             field: "", 
             headerName: "Action",
-            width: 300,
+            width: 120,
             
             renderCell: (params) => (
                 <div>  <a href="#" onClick={() => showEditForm(params.row)}>  <PencilSquare /></a>

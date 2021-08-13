@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CoreContext } from '../context/core-context';
 import { DataGrid } from '@material-ui/data-grid';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
+import { useForm } from "react-hook-form";
+import Input from './common/Input';
+
 
 const BloodGlucose = props => {
 
@@ -12,6 +15,22 @@ const BloodGlucose = props => {
     
     const [patientId, setPatientId] = useState('');
     const [userType, setUserType] = useState('');
+    const [message, setMessage] = useState('');
+    const handleModalClose = () => setShowModal(false);
+    const handleModalShow = () => setShowModal(true);
+
+    const [showModal, setShowModal] = useState(false);
+
+    const editProvider = () => {
+
+    }
+
+    const { register, handleSubmit, errors } = useForm({
+        mode: 'onSubmit',
+        reValidateMode: 'onBlur',
+    });
+
+
 
     const fetchBloodGlucose = () => {
        // const patientId =  localStorage.getItem("userId");
@@ -108,7 +127,7 @@ const BloodGlucose = props => {
       { 
         field: 'UserName', 
         headerName: 'Patient Name', 
-        width: 200 ,  
+        width: 170 ,  
         type: 'string',
         renderCell: (params) => (
           <a  href={`/patient-summary/${btoa(params.row.userId)}`}> {params.row.UserName} </a>
@@ -119,40 +138,40 @@ const BloodGlucose = props => {
         headerName: 'Reading',
         type: 'number',
         editable: false,
-        width: 200
+        width: 150
       },
       {
         field: 'meal',
         headerName: 'Before/After Meal',
         width: 110,
         editable: false,
-        width: 200
+        width: 170
       },
       {
           field: 'timeSlots',
           headerName: 'Recorded TimeSlot',
           width: 110,
           editable: false,
-          width: 200
+          width: 170
         },
         {
           field: 'date_recorded',
           headerName: 'Date Recorded',
           editable: false,
-          width: 200
+          width: 170
         },
         {
           field: 'reading_id',
           headerName: 'Reading Id',
           type: 'number',
-          width: 200,
+          width: 50,
           editable: false,
         },
         {
           field: 'battery',
           headerName: 'Battery',
           type: 'number',
-          width: 200,
+          width: 100,
           editable: false,
         },
         
@@ -182,7 +201,11 @@ const BloodGlucose = props => {
         <div className="card-body">
         {renderBloodGlucose()}
         </div>
-    </div >
+   </div>
+
+
+
+    
 }
 
 

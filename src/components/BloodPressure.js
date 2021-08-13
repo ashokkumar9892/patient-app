@@ -41,7 +41,7 @@ const BloodPressure = props => {
       { 
         field: 'UserName', 
         headerName: 'Patient Name', 
-        width: 200 ,  
+        width: 170 ,  
         type: 'string',
         renderCell: (params) => (
           <a  disable = {disablelink} href={`/patient-summary/${btoa(params.row.userId)}`}> {params.row.UserName} </a>
@@ -52,19 +52,19 @@ const BloodPressure = props => {
         headerName: 'Systolic',
         type: 'number',
         editable: false,
-        width: 200
+        width: 130
       },
       {
         field: 'diastolic',
         headerName: 'Diastolic',
         type: 'number',
         editable: false,
-        width: 200
+        width: 140
       },
       {
           field: 'pulse',
           headerName: 'Pulse',
-          width: 200,
+          width: 120,
           editable: false,
           type: 'number',
         },
@@ -72,12 +72,12 @@ const BloodPressure = props => {
           field: 'MeasurementDateTime',
           headerName: 'Date Recorded',
           editable: false,
-          width: 200
+          width: 170
         },
         {
           field: 'CreatedDate',
           headerName: 'Date Received',
-          width: 200,
+          width: 170,
           editable: false
          
         },
@@ -85,19 +85,19 @@ const BloodPressure = props => {
           field: 'deviceId',
           headerName: 'Device Id',
           editable: false,
-          width: 200
+          width: 150
         },
         {
           field: 'readingId',
           headerName: 'Reading Id',
-          width: 200,
+          width: 150,
           editable: false
          
         },
         { 
           field: "", 
           headerName: "Action",
-          width: 300,
+          width: 120,
           
           renderCell: (params) => (
               <div>  <a href="#" onClick={() => showEditForm(params.row)}>  <PencilSquare /></a>

@@ -1090,7 +1090,7 @@ export const CoreContextProvider = props => {
         const data = {
             "TableName": userTable,
             "Key": {
-                "SK": { "S": "PATIENT_" +patientId },
+                "SK": { "S":  ""+patientId +""},
                 "PK": { "S": "doctor" }
             },
             "UpdateExpression": "SET ActiveStatus = :v_ActiveStatus",
@@ -1106,7 +1106,7 @@ export const CoreContextProvider = props => {
         }
         ).then((response) => {
             if (response.data === "Updated") {
-                alert("Patient Deleted Successfully.");
+                alert("Provider Deleted Successfully.");
             }
         });
     }
