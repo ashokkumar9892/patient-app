@@ -90,6 +90,7 @@ const Patients = props => {
         setBirthDate(patient.dob);
         setPhone(patient.mobile);
         setPatientId(patient.userId);
+        setProvider(patient.ProviderName);
         handleModalShow();
     }
 

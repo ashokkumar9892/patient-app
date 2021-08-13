@@ -57,9 +57,8 @@ const Weight = (props) => {
         {
             field: 'MeasurementDateTime',
             headerName: 'Date Recorded',
-            width: 110,
+            width: 200,
             editable: false,
-            width: 500
           },
           {
             field: 'CreatedDate',

@@ -865,9 +865,19 @@ export const CoreContextProvider = props => {
     const UpdatePatient = (name, phone, birthDate, height, provider, coordinator, coach, patientId) => {
         console.log(name);
         const token = localStorage.getItem('app_jwt');
+
+        var  providervalue = providerOptions.filter(p=>p.name=='Select Provider')[0];
+        providervalue.value ="";
+        var  ccvalue = careCoordinatorOptions.filter(p=>p.name=='Select Coordinator')[0];
+        ccvalue.value ="";
+        var  coachvalue = coachOptions.filter(p=>p.name=='Select Coach')[0];
+        coachvalue.value ="";
+       
+
         let providername = fetchNameFromId(provider, providerOptions);
         let carecoordinatorname = fetchNameFromId(coordinator, careCoordinatorOptions);
         let coachname = fetchNameFromId(coach, coachOptions);
+       
         if(providername.value=="")  providername.value = providername.name;
         if(carecoordinatorname.value=="")  carecoordinatorname.value = carecoordinatorname.name;
         if(coachname.value=="")  coachname.value = coachname.name;
@@ -895,7 +905,7 @@ export const CoreContextProvider = props => {
 
         axios.post(apiUrl+'/DynamoDbAPIs/updateitem', data, {
             headers: {
-                Accept: "application/json, text/plain, */*",
+                Accept: "application/json, text/plain, /",
                 // "Content-Type": "application/json",
                 Authorization: "Bearer " + token
             }
