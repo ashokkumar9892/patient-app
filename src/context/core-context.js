@@ -1111,6 +1111,33 @@ export const CoreContextProvider = props => {
         });
     }
 
+    const DeleteCareCoordinator = (patientId) => {
+        const token = localStorage.getItem('app_jwt');
+
+        const data = {
+            "TableName": userTable,
+            "Key": {
+                "SK": { "S":  ""+patientId +""},
+                "PK": { "S": "carecoordinator" }
+            },
+            "UpdateExpression": "SET ActiveStatus = :v_ActiveStatus",
+            "ExpressionAttributeValues": { ":v_ActiveStatus": { "S": "Deactive" } }
+        };
+
+        axios.post(apiUrl+'/DynamoDbAPIs/updateitem', data, {
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                // "Content-Type": "application/json",
+                Authorization: "Bearer " + token
+            }
+        }
+        ).then((response) => {
+            if (response.data === "Updated") {
+                alert("Care Coordinator Deleted Successfully.");
+            }
+        });
+    }
+
     const verifyProviderVerificationCode = (code, userName, careTeamType, url = '') => {
         const token = localStorage.getItem('app_jwt');
         console.log(code, userName);
@@ -2267,6 +2294,7 @@ export const CoreContextProvider = props => {
         UpdateProfie,
         DeletePatient,
         DeleteProvider,
+        DeleteCareCoordinator,
         userDetails,
         fetchProviders,
         addProvider,

@@ -92,17 +92,19 @@ const CareCoordinator = props => {
 ];
 
 const showEditForm = (patient) => {
-    setName(patient.name);
+    setName(patient.CareCoordinator);
     setPhone(patient.phone);
     setEmail(patient.email);
     //setPatientId(patient.id);
     setPatientId(patient.doctor_id);
    handleModalShow();
-}
+    }
 
-const deletePatient = (patient) => {
-    coreContext.DeletePatient(patient.userId)
-}
+      const deletePatient = (patient) => {
+      coreContext.DeleteCareCoordinator(patient.doctor_id);
+        }
+
+
     const renderCoordinators = () => {
         if (coreContext.ccData.length > 0) {
             return (  <div style={{ height: 680, width: '100%' }}>
