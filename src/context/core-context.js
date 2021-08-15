@@ -1084,14 +1084,14 @@ export const CoreContextProvider = props => {
     }
 
 
-    const DeleteProvider = (patientId) => {
+    const DeleteCareTeam = (patientId, careTeamType, careTeamTypeMsg) => {
         const token = localStorage.getItem('app_jwt');
 
         const data = {
             "TableName": userTable,
             "Key": {
                 "SK": { "S":  ""+patientId +""},
-                "PK": { "S": "doctor" }
+                "PK": { "S":  careTeamType }
             },
             "UpdateExpression": "SET ActiveStatus = :v_ActiveStatus",
             "ExpressionAttributeValues": { ":v_ActiveStatus": { "S": "Deactive" } }
@@ -1106,34 +1106,7 @@ export const CoreContextProvider = props => {
         }
         ).then((response) => {
             if (response.data === "Updated") {
-                alert("Provider Deleted Successfully.");
-            }
-        });
-    }
-
-    const DeleteCareCoordinator = (patientId) => {
-        const token = localStorage.getItem('app_jwt');
-
-        const data = {
-            "TableName": userTable,
-            "Key": {
-                "SK": { "S":  ""+patientId +""},
-                "PK": { "S": "carecoordinator" }
-            },
-            "UpdateExpression": "SET ActiveStatus = :v_ActiveStatus",
-            "ExpressionAttributeValues": { ":v_ActiveStatus": { "S": "Deactive" } }
-        };
-
-        axios.post(apiUrl+'/DynamoDbAPIs/updateitem', data, {
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                // "Content-Type": "application/json",
-                Authorization: "Bearer " + token
-            }
-        }
-        ).then((response) => {
-            if (response.data === "Updated") {
-                alert("Care Coordinator Deleted Successfully.");
+                alert(careTeamTypeMsg+" Deleted Successfully.");
             }
         });
     }
@@ -2293,8 +2266,7 @@ export const CoreContextProvider = props => {
         addDevice,
         UpdateProfie,
         DeletePatient,
-        DeleteProvider,
-        DeleteCareCoordinator,
+        DeleteCareTeam,
         userDetails,
         fetchProviders,
         addProvider,
