@@ -623,6 +623,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+        from.setHours(0,0,0,0);
         console.log(
           coreContext.bloodpressureData,
           "coreContext.bloodpressureData"
@@ -1673,10 +1674,28 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       width: 190,
       //headerAlign: 'center'
     },
+    // {
+    //   field: "performedOn",
+    //   headerName: "Performed On",
+    //   width: 190,
+    //   //headerAlign: 'center',
+    //   editable: false,
+
+    //   valueFormatter: (params) => {
+    //     const valueFormatted = Moment(params.value).format(
+    //       "MM-DD-YYYY hh:mm:ss A"
+    //     );
+    //     return `${valueFormatted}`;
+    //   },
+
+    //   //width: 500
+    // },
     {
       field: "performedOn",
       headerName: "Performed On",
+      
       width: 190,
+      type: "dateTime",
       //headerAlign: 'center',
       editable: false,
 
@@ -1686,8 +1705,6 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         );
         return `${valueFormatted}`;
       },
-
-      //width: 500
     },
     {
       field: "timeAmount",
@@ -1870,6 +1887,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             rows={coreContext.timeLogData}
             columns={columns}
             pageSize={10}
+            sortModel={[{ field: "performedOn", sort: "desc" }]}
+            sortingOrder={["desc", "asc"]}
           />
         </div>
       );
