@@ -245,13 +245,21 @@ date.setDate(date.getDate() - 7);
   }
 
   useEffect(()=>{
-     console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
+    // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
       checknotificationForBP();
-      checknotificationForBG();
-      console.log(notificationValue,"notificationValue")
+      
+      
     }
-  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,coreContext.bloodpressureData.length,notificationValue])
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue])
+  useEffect(()=>{
+    // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
+    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
+      
+      checknotificationForBG();
+      
+    }
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue])
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -595,7 +603,7 @@ const handlechangeprovider=(p)=>{
     return(
       
       <Nav.Link href="#" >
-              <span className="badge badge-danger">
+              <span className="badge badge-danger" onClick={handleClickOpen}>
                 {notificationValue.length}
                 
                 
