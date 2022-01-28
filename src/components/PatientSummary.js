@@ -1753,10 +1753,24 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   ];
 
   const deleteTimeLog = (tl) => {
-    coreContext.DeleteTimeLog(tl);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
+    
     // renderTimelogs();
     // fetchtotaltime();
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteTimeLog(tl);
+        coreContext.fetchTimeLog("PATIENT_" + patientId);
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
   };
 
 
@@ -2856,6 +2870,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                         onClick={() =>{
                           setdeviceflag(adddeviceflag + 1)
                           coreContext.addDevice(deviceType, deviceId, patientId)
+                          setDeviceId("");
+                          setDeviceType("");
                         }
                         }
                         className="btn btn-primary mb-2">
