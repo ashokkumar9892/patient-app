@@ -194,25 +194,25 @@ const BloodPressure = (props) => {
       width: 200,
       editable: false,
     },
-    {
-      field: "sortDateColumn",
-      headerName: "Action",
-      width: 300,
+    // {
+    //   field: "sortDateColumn",
+    //   headerName: "Action",
+    //   width: 300,
 
-      renderCell: (params) => (
-        <div>
-          {" "}
-          <a href="#" onClick={() => showEditForm(params.row)}>
-            {" "}
-            <PencilSquare />
-          </a>
-          <a href="#" onClick={() => deletePatient(params.row)}>
-            {" "}
-            <Trash />
-          </a>
-        </div>
-      ),
-    },
+    //   renderCell: (params) => (
+    //     <div>
+    //       {" "}
+    //       <a href="#" onClick={() => showEditForm(params.row)}>
+    //         {" "}
+    //         <PencilSquare />
+    //       </a>
+    //       <a href="#" onClick={() => deletePatient(params.row)}>
+    //         {" "}
+    //         <Trash />
+    //       </a>
+    //     </div>
+    //   ),
+    // },
   ];
 
   const showEditForm = (patient) => {};
@@ -321,6 +321,7 @@ const BloodPressure = (props) => {
       coreContext.bloodpressureData[0].UserName !== undefined
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
+      console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid

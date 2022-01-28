@@ -623,9 +623,10 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+        to.setHours(0,0,0,0);
+        from.setHours(0,0,0,0);
         console.log(
-          coreContext.bloodpressureData,
-          "coreContext.bloodpressureData"
+          "checking date of from and to",to,from
         );
         var finaldata = coreContext.bloodpressureData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
@@ -1677,6 +1678,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       field: "performedOn",
       headerName: "Performed On",
       width: 190,
+      type: "dateTime",
       //headerAlign: 'center',
       editable: false,
 
@@ -1753,8 +1755,22 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   ];
 
   const deleteTimeLog = (tl) => {
-    coreContext.DeleteTimeLog(tl);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
+
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteTimeLog(tl);
+        coreContext.fetchTimeLog("PATIENT_" + patientId);
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
     // renderTimelogs();
     // fetchtotaltime();
   };
@@ -1856,6 +1872,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             rows={coreContext.timeLogData}
             columns={columns}
             pageSize={10}
+            sortModel={[{ field: "performedOn", sort: "desc" }]}
+            sortingOrder={["desc", "asc"]}
           />
         </div>
       );

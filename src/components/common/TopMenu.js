@@ -11,6 +11,7 @@ import {
   Col,
   FormControl,
 } from "react-bootstrap";
+import Moment from "moment";
 import {
   Envelope,
   ChatLeftText,
@@ -18,6 +19,7 @@ import {
   FileMedicalFill,
   FileMedical,
   PencilSquare,
+  Bell,
   Gear,
   People,
   PersonLinesFill,
@@ -45,6 +47,54 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { ImMenu } from "react-icons/im";
 import Input from "./Input";
 import { useForm } from "react-hook-form";
+import PropTypes from 'prop-types';
+// import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 const TopMenu = ({ changestyle, showSidebar }) => {
   const coreContext = useContext(CoreContext);
@@ -95,6 +145,113 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([coreContext.patients]);
   const [patientName, setPatientName] = useState("");
+  const [notificationValue,setNotificationValue]=useState([]);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose1 = () => {
+    setOpen(false);
+  };
+
+  const fetchtd=()=>{
+    let userType = localStorage.getItem("userType");
+    let patientId = localStorage.getItem("userId");
+    coreContext.fetchThresold(
+      "ADMIN_PATIENT",
+      "patient"
+    );
+    coreContext.fetchBloodPressure(patientId, userType);
+    coreContext.fetchBloodGlucose(patientId, userType);
+    coreContext.fetchPatientListfromApi(userType, patientId);
+  }
+  const fetchadmintd=()=>{
+    coreContext.fetchadminThresold("ADMIN_ADMIN_", "admin")
+  }
+  
+  useEffect(() => {
+    fetchadmintd();fetchtd();
+  }, []);
+
+  const checknotificationForBP=()=>{
+    var date = new Date();
+date.setDate(date.getDate() - 7);
+
+    coreContext.patients.map((patient)=>{
+      coreContext.bloodpressureData.filter((data)=>data.MeasurementDateTime>date).map((bp)=>{
+        if(patient.userId===bp.UserId){
+          coreContext.thresoldData.map((td)=>{
+            if(td.UserId.includes(patient.userId)){
+              if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
+                notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
+                  "MM-DD-YYYY hh:mm A"
+                ))
+              }
+              if(Number(bp.systolic)>Number(td.systolic_high) || Number(bp.systolic)<Number(td.systolic_low )){
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
+                notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
+                  "MM-DD-YYYY hh:mm A"
+                ))
+               }
+            }
+            
+
+          })
+
+        }
+        
+      }
+      
+      
+      )
+
+    })
+   
+    
+  }
+  const checknotificationForBG=()=>{
+    var date = new Date();
+    date.setDate(date.getDate() - 7);
+    coreContext.patients.map((patient)=>{
+      coreContext.bloodglucoseData.filter((data)=>data.MeasurementDateTime>date).map((bg)=>{
+        if(patient.userId===bg.userId){
+          coreContext.thresoldData.map((td)=>{
+            if(td.UserId.includes(patient.userId)){
+              
+              if(Number(bg.bloodglucosemgdl)>Number(td.bg_high) || Number(bg.bloodglucosemgdl)<Number(td.bg_low)){
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl)===false){
+                  
+                  notificationValue.push(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
+                    "MM-DD-YYYY hh:mm A"
+                  ))
+                }
+                 
+               }
+            }
+            
+
+          })
+
+        }
+        
+      }
+      
+      
+      )
+
+    })
+  }
+
+  useEffect(()=>{
+     console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
+    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
+      checknotificationForBP();
+      checknotificationForBG();
+      console.log(notificationValue,"notificationValue")
+    }
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,coreContext.bloodpressureData.length,notificationValue])
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -434,6 +591,26 @@ const handlechangeprovider=(p)=>{
     if (coreContext.patients.length > 0) {
     }
   };
+  const rendernotificationlength=()=>{
+    return(
+      
+      <Nav.Link href="#" >
+              <span className="badge badge-danger">
+                {notificationValue.length}
+                
+                
+</span>
+<Bell onClick={handleClickOpen}/>
+              </Nav.Link>
+
+
+
+      )
+
+  }
+  //const count=React.useMemo({notificationValue.length,[notificationValue.length])
+    const count=React.useMemo(()=>rendernotificationlength(),[notificationValue.length])
+  console.log()
   return (
     <>
       <React.Fragment>
@@ -521,6 +698,9 @@ const handlechangeprovider=(p)=>{
               <Nav.Link href="#" onClick={handleShow}>
                 <PersonPlusFill />
               </Nav.Link>
+              {
+                (window.location.href.indexOf("patient-summary") <= 0) ?count:""
+              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -1023,7 +1203,33 @@ const handlechangeprovider=(p)=>{
             </Button>
           </Modal.Footer>
         </Modal>
-      </React.Fragment>
+        <div><BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        style={{marginLeft:"70%"}}
+        open={open}
+      >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
+          Notifications
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+         
+          
+          {notificationValue.map((curr)=>{
+           return(
+             <>
+            <Typography gutterBottom>
+         {curr.split("~")[0]} has cross the  threshold with reading {curr.split("~")[2]} on {curr.split("~")[3]}
+            </Typography>
+            <hr/>
+            
+              </>
+           )
+         })}
+        </DialogContent>
+        
+      </BootstrapDialog>
+    </div>    </React.Fragment>
     </>
   );
 };

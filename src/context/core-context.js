@@ -800,6 +800,7 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         const thresholdData = response.data;
+        console.log("chiki",response.data)
 
         const dataSetthresold = [];
         {
@@ -815,6 +816,9 @@ export const CoreContextProvider = (props) => {
             }
             if (th.High) {
               th.High_value = th.High.s;
+            }
+            if (th.SK) {
+              thdata.UserId = th.SK.s;
             }
 
             if (thdata.Element_value === "Blood Glucose") {
@@ -2417,7 +2421,7 @@ export const CoreContextProvider = (props) => {
       data = {
         TableName: userTable,
         ProjectionExpression:
-          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, ActiveStatus,Notes",
+          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken,GSI1PK,ActiveStatus,Notes",
         KeyConditionExpression: "PK = :v_PK",
         FilterExpression: "ActiveStatus <> :v_ActiveStatus",
         ExpressionAttributeValues: {
@@ -2437,6 +2441,7 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         const bloodpressureData = response.data;
+        console.log("bloodpressuredata",response.data)
         const dataSetbp = [];
         if (bloodpressureData.length === 0) {
           dataSetbp.push("No Data Found");
@@ -2448,8 +2453,10 @@ export const CoreContextProvider = (props) => {
           bpdata.id = index;
           if (bp.GSI1PK !== undefined) {
             bpdata.gSI1PK = bp.GSI1PK.s;
-            bpdata.userId = bp.GSI1PK.s.split("_").pop();
+            bpdata.UserId = bp.GSI1PK.s.split("_").pop();
+            console.log("bpdata.UserId",bpdata.UserId)
           }
+         
           if (bp.UserName !== undefined) {
             bpdata.UserName = bp.UserName.s;
           }
