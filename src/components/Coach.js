@@ -4,6 +4,7 @@ import { Modal, Button } from "react-bootstrap";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useForm } from "react-hook-form";
 import Input from "./common/Input";
+import swal from "sweetalert";
 
 import {
   DataGrid,
@@ -104,7 +105,23 @@ const Coach = (props) => {
   };
 
   const deletePatient = (patient) => {
-    coreContext.DeleteCareTeam(patient.doctor_id, "coach", "Coach");
+    
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteCareTeam(patient.doctor_id, "coach", "Coach");
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
+
+
   };
 
   const renderCoach = () => {

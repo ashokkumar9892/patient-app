@@ -7,6 +7,7 @@ import { CoreContext } from "../context/core-context";
 import Loader from "react-loader-spinner";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import swal from "sweetalert";
 import { Bar, Line, Scatter, Bubble, Stacked } from "react-chartjs-2";
 
 import {
@@ -86,6 +87,7 @@ const PatientSummary = (props) => {
   const [Days, setDays] = useState();
   const [tddata, settddata] = useState([]);
   const [pointcolor, setpointcolor] = useState([]);
+  const [mainThresold,setMainThresold]=useState();
 
   const marks = [
     {
@@ -147,6 +149,7 @@ const PatientSummary = (props) => {
   };
   const myst3 = {
     backgroundColor: "orange",
+
     marginRight: "20px",
     width: "50px",
   };
@@ -160,6 +163,7 @@ const PatientSummary = (props) => {
   const [threadMobile, setThreadMobile] = useState("");
   const [deviceType, setDeviceType] = useState("");
   const [deviceId, setDeviceId] = useState("");
+  const[adddeviceflag, setdeviceflag] = useState(1);
   const [thData, setThData] = useState([]);
   const [timerLogs, setTimerLog] = useState([]);
   const [taskType, setTaskType] = useState();
@@ -328,9 +332,13 @@ const PatientSummary = (props) => {
     //   }
     // }
   };
+  const fetchtime =()=>{
+    coreContext.fetchTimeLog("PATIENT_" + patientId)
+  }
 
   const pateientvalue = useMemo(() => fetchPatient, []);
   useEffect(pateientvalue, []);
+  useEffect(fetchPatient,[adddeviceflag]);
 
   // useEffect(fetchPatient, [coreContext.patient.notes]);
   useEffect(
@@ -340,7 +348,7 @@ const PatientSummary = (props) => {
 const checkthresoldvalue=()=>{
 
 if(coreContext.thresoldData.filter((curr)=>curr.Element_value==="Blood Glucose").length===0){
-  return "150";
+  return "0";
 }
 else {
   let ttt=coreContext.thresoldData.filter((curr)=>curr.Element_value==="Blood Glucose")
@@ -348,6 +356,17 @@ else {
 return String(ttt[0].bg_high)
 }
   }
+  const checkadminthresoldvalue=()=>{
+
+    if(coreContext.adminthresold.filter((curr)=>curr.Element_value==="Blood Glucose").length===0){
+      return "150";
+    }
+    else {
+      let ttt=coreContext.adminthresold.filter((curr)=>curr.Element_value==="Blood Glucose")
+      
+    return String(ttt[0].bg_high)
+    }
+      }
 
  
 
@@ -357,14 +376,9 @@ return String(ttt[0].bg_high)
         (curr) => curr.Element_value === "Blood Glucose"
       ).length === 0
     ) {
-      return "20";
+      return "0";
     } else {
-      console.log(
-        "functionvalue",
-        coreContext.thresoldData.filter(
-          (curr) => curr.Element_value === "Blood Glucose"
-        )[0].bg_high
-      );
+      
       return String(
         coreContext.thresoldData.filter(
           (curr) => curr.Element_value === "Blood Glucose"
@@ -372,11 +386,110 @@ return String(ttt[0].bg_high)
       );
     }
   };
+  const checkadminthresoldMinvalue = () => {
+    if (
+      coreContext.adminthresold.filter(
+        (curr) => curr.Element_value === "Blood Glucose"
+      ).length === 0
+    ) {
+      return "20";
+    } else {
+      console.log(
+        "functionvalue",
+        coreContext.adminthresold.filter(
+          (curr) => curr.Element_value === "Blood Glucose"
+        )[0].bg_high
+      );
+      return String(
+        coreContext.adminthresold.filter(
+          (curr) => curr.Element_value === "Blood Glucose"
+        )[0].bg_low
+      );
+    }
+  };
+  const checkadmindiastolic = (type) => {
+    if(type==="SYSTOLIC"){
+      let option="systolic_high"
+    }else{
+      let option ="diastolic_high"
+
+    }
+
+    if (
+      coreContext.adminthresold.filter(
+        (curr) => curr.Element_value === type
+      ).length === 0
+    ) {
+      return "20";
+    } else {
+      if(type==="SYSTOLIC"){
+        
+        return String(
+          coreContext.adminthresold.filter(
+            (curr) => curr.Element_value === type
+          )[0].systolic_high
+        );
+      }
+      if(type==="DIASTOLIC"){
+        return String(
+          coreContext.adminthresold.filter(
+            (curr) => curr.Element_value === type
+          )[0].diastolic_high
+        );
+      }
+     
+      
+    }
+  };
+  const checkdiastolic = (type) => {
+    if(type==="SYSTOLIC"){
+      let option="systolic_high"
+    }else{
+      let option ="diastolic_high"
+
+    }
+
+    if (
+      coreContext.thresoldData.filter(
+        (curr) => curr.Element_value === type
+      ).length === 0
+    ) {
+      return "20";
+    } else {
+      if(type==="SYSTOLIC"){
+        
+        return String(
+          coreContext.thresoldData.filter(
+            (curr) => curr.Element_value === type
+          )[0].systolic_high
+        );
+      }
+      if(type==="DIASTOLIC"){
+        return String(
+          coreContext.thresoldData.filter(
+            (curr) => curr.Element_value === type
+          )[0].diastolic_high
+        );
+      }
+     
+      
+    }
+  };
 
   //const tvalue=checkthresoldvalue();
-  const tvalue = useMemo(() => checkthresoldvalue(), [coreContext.thresoldData.length]);
+  const tvalue = useMemo(() => checkthresoldvalue(), [JSON.stringify(coreContext.thresoldData)]);
+  const tadminvalue=useMemo(()=>checkadminthresoldvalue(),[JSON.stringify(coreContext.adminthresold)])
+  const tvaluemin = useMemo(() => checkthresoldMinvalue(), [JSON.stringify(coreContext.thresoldData)]);
+  const tadminvaluemin=useMemo(()=>checkadminthresoldMinvalue(),[JSON.stringify(coreContext.adminthresold)])
+  const tadmindiastolic=useMemo(()=>checkadmindiastolic("DIASTOLIC"),[JSON.stringify(coreContext.adminthresold)])
+  const tadminsystolic=useMemo(()=>checkadmindiastolic("SYSTOLIC"),[JSON.stringify(coreContext.adminthresold)])
+  const tsystolic=useMemo(()=>checkdiastolic("SYSTOLIC"),[JSON.stringify(coreContext.thresoldData)])
+  const tdiastolic=useMemo(()=>checkdiastolic("DIASTOLIC"),[JSON.stringify(coreContext.thresoldData)])
+
+  console.log(tadminvalue,tadminsystolic,"patiensummery page")
   //const tMinvalue=checkthresoldMinvalue();
-  const tMinvalue = useMemo(() => checkthresoldMinvalue(), [coreContext.thresoldData.length]);
+  const tMinvalue = useMemo(() => checkthresoldMinvalue(), [JSON.stringify(coreContext.thresoldData)]);
+  const tadminMinvalue = useMemo(() => checkadminthresoldMinvalue(), [JSON.stringify(coreContext.adminthresold)]);
 
   //alert(tvalue)
   //alert(alert(checkthresoldvalue()))
@@ -420,10 +533,14 @@ return String(ttt[0].bg_high)
       "patient"
     );
   };
+  const fetchadmintd=()=>{
+    coreContext.fetchadminThresold("ADMIN_"+localStorage.getItem("userId"), "admin")
+  }
   useEffect(fetchbp, [coreContext.bloodpressureData.length]);
   useEffect(fetchbg, [coreContext.bloodglucoseData.length]);
-  useEffect(fetchTd, [coreContext.thresoldData.length]);
-
+  useEffect(fetchTd, [JSON.stringify(coreContext.thresoldData)]);
+  useEffect(fetchadmintd, [JSON.stringify(coreContext.adminthresold)]);
+console.log("check admin thresold from patient",coreContext.thresoldData)
   const fetchsliderdays = () => {
     var SliderDays;
     if (slider === 0) {
@@ -506,12 +623,13 @@ return String(ttt[0].bg_high)
       coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+        from.setHours(0,0,0,0);
         console.log(
           coreContext.bloodpressureData,
           "coreContext.bloodpressureData"
         );
         var finaldata = coreContext.bloodpressureData.filter(
-          (date) => date.CreatedDate >= from && date.CreatedDate <= to
+          (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
         var SliderDays;
@@ -535,28 +653,32 @@ return String(ttt[0].bg_high)
         }
         if (slider === 100) {
           SliderDays = Math.ceil(Math.abs(to - from) / (1000 * 60 * 60 * 24));
-        }
+      }
+        // let today = new Date();
+        // var bfr = new Date().setDate(today.getDate() - SliderDays).setHours(0,0,0,0);
         let today = new Date();
-        let bfr = new Date().setDate(today.getDate() - SliderDays-1);
-
+        today.setHours(0,0,0,0)
+        let bfr = today.setDate(today.getDate() - SliderDays);
+        console.log(bfr,"bfring")
         var finaldata = coreContext.bloodpressureData.filter(
-          (date) => date.CreatedDate >= new Date(bfr)
+          (date) => date.MeasurementDateTime >= new Date(bfr)
         );
+        
       }
-      console.log("finaldaata", finaldata);
-      {
-      }
+      
       let Systolic = [];
       let diastolic = [];
       let labels = [];
       let pulse = [];
       let dates = [];
+      
       finaldata.map((curr) => {
         Systolic.push(Number(curr.systolic));
         diastolic.push(Number(curr.diastolic));
-        labels.push(Moment(curr.CreatedDate).format("MM-DD-YYYY hh:mm A"));
+        labels.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY hh:mm A"));
         pulse.push(curr.Pulse);
-        dates.push(Moment(curr.CreatedDate).format("MM-DD-YYYY"));
+        
+        dates.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY"));
       });
       console.log(labels, "labels date");
 
@@ -603,7 +725,7 @@ return String(ttt[0].bg_high)
                       {finaldata
                         .filter(
                           (item) =>
-                            Moment(item.CreatedDate).format("MM-DD-YYYY") ===
+                            Moment(item.MeasurementDateTime).format("MM-DD-YYYY") ===
                             curr
                         )
                         .map((curr1) => {
@@ -611,7 +733,7 @@ return String(ttt[0].bg_high)
                             <>
                               <tr scope="row">
                                 <td>
-                                  {Moment(curr1.CreatedDate).format("hh:mm A")}
+                                  {Moment(curr1.MeasurementDateTime).format("hh:mm A")}
                                 </td>
                                 <td>
                                   {curr1.systolic}/{curr1.diastolic}
@@ -647,15 +769,17 @@ return String(ttt[0].bg_high)
         let diastolicgrap = [];
         let labelsgrap = [];
         let pulsegrap = [];
+        let thresolddiastolic=[];
+      let thresoldsystolic=[];
         // Systolic.push(Number(curr.systolic));
         // diastolic.push(Number(curr.diastolic));
-        // labels.push(Moment(curr.CreatedDate).format("MM-DD-YYYY hh:mm A"));
+        // labels.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY hh:mm A"));
         // pulse.push(curr.Pulse);
-        // dates.push(Moment(curr.CreatedDate).format("MM-DD-YYYY"));
+        // dates.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY"));
         var sortData = finaldata.sort(function (a, b) {
           return (
-            new Date(Moment(a.CreatedDate).format("MM-DD-YYYY hh:mm A")) -
-            new Date(Moment(b.CreatedDate).format("MM-DD-YYYY hh:mm A"))
+            new Date(Moment(a.MeasurementDateTime).format("MM-DD-YYYY hh:mm A")) -
+            new Date(Moment(b.MeasurementDateTime).format("MM-DD-YYYY hh:mm A"))
           );
         });
         console.log(sortData, "dataAA");
@@ -663,8 +787,10 @@ return String(ttt[0].bg_high)
         sortData.map((curr) => {
           Systolicgrap.push(Number(curr.systolic));
           diastolicgrap.push(Number(curr.diastolic));
+        {(tdiastolic==="0")? thresolddiastolic.push(tadmindiastolic): thresolddiastolic.push(tdiastolic)} 
+          {(tsystolic==="0")?thresoldsystolic.push(tadminsystolic):thresoldsystolic.push(tsystolic)}
           labelsgrap.push(
-            Moment(curr.CreatedDate).format("MM-DD-YYYY hh:mm A")
+            Moment(curr.MeasurementDateTime).format("MM-DD-YYYY hh:mm A")
           );
           pulsegrap.push(curr.Pulse);
         });
@@ -713,6 +839,28 @@ return String(ttt[0].bg_high)
               tension: 0,
 
               //borderColor:["white"],
+            },
+            {
+              label: "Max Diastolic",
+              data: thresolddiastolic,
+              pointRadius: 0,
+              //pointBackgroundColor:"white",
+
+              backgroundColor: ["red"],
+              borderColor: ["red"],
+              fill: false,
+              borderWidth: 6,
+            },
+            {
+              label: "Max Systolic",
+              data: thresoldsystolic,
+              pointRadius: 0,
+              //pointBackgroundColor:"white",
+
+              backgroundColor: ["indigo"],
+              borderColor: ["indigo"],
+              fill: false,
+              borderWidth: 6,
             },
           ],
         };
@@ -870,7 +1018,7 @@ return String(ttt[0].bg_high)
     ) {
       if (slider === 100) {
         var finalbgdata = coreContext.bloodglucoseData.filter(
-          (date) => date.CreatedDate >= from && date.CreatedDate <= to
+          (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
         var SliderDays;
@@ -896,13 +1044,18 @@ return String(ttt[0].bg_high)
           SliderDays = Math.ceil(Math.abs(to - from) / (1000 * 60 * 60 * 24));
         }
         let today = new Date();
-        let bfr = new Date().setDate(today.getDate() - SliderDays-1);
-
+        today.setHours(0,0,0,0)
+        let bfr = today.setDate(today.getDate() - SliderDays);
+        
+          console.log(coreContext.bloodglucoseData.filter(
+            (date) => date.MeasurementDateTime >= new Date(bfr)
+          ),new Date(bfr),new Date(today.setHours(0,0,0,0)),"ngdatachecking")
         var finalbgdata = coreContext.bloodglucoseData.filter(
-          (date) => date.CreatedDate >= new Date(bfr)
+          (date) => date.MeasurementDateTime >= new Date(bfr)
         );
       }
-      let bg = [];
+      console.log("finalbgdata",coreContext.bloodglucoseData)
+            let bg = [];
       let bgbefore = [];
       let bgafter = [];
       let labels = [];
@@ -912,6 +1065,8 @@ return String(ttt[0].bg_high)
       let uniquedates = [];
       let sorteddates = [];
       let pcolorb = [];
+      let pradiusBM=[];
+      let pradiusAM=[];
       console.log(finalbgdata, "finalbgdataglocouse");
       // for graph
       // let labelsgrap = [];
@@ -926,17 +1081,21 @@ return String(ttt[0].bg_high)
 
       var sortData = finalbgdata.sort(function (a, b) {
         return (
-          new Date(Moment(a.CreatedDate).format("MM-DD-YYYY hh:mm A")) -
-          new Date(Moment(b.CreatedDate).format("MM-DD-YYYY hh:mm A"))
+          new Date(Moment(a.MeasurementDateTime).format("MM-DD-YYYY hh:mm A")) -
+          new Date(Moment(b.MeasurementDateTime).format("MM-DD-YYYY hh:mm A"))
         );
       });
 
       finalbgdata.map((curr) => {
         bg.push(Number(curr.bloodglucosemgdl));
-        labels.push(Moment(curr.CreatedDate).format("MM-DD-YYYY hh:mm A"));
-        cdate.push(Moment(curr.CreatedDate).format("MM-DD-YYYY"));
-        thrshold.push(tvalue);
-        thresholdmin.push(tMinvalue);
+        labels.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY hh:mm A"));
+        cdate.push(Moment(curr.MeasurementDateTime).format("MM-DD-YYYY"));
+        {
+          (tvalue!=="0")?thrshold.push(tvalue):thrshold.push(tadminvalue);
+          (tMinvalue!=="0")?thresholdmin.push(tMinvalue):thresholdmin.push(tadminMinvalue);
+        }
+        
+        
         uniquedates = cdate.filter(function (item, pos) {
           return cdate.indexOf(item) == pos;
         });
@@ -948,19 +1107,28 @@ return String(ttt[0].bg_high)
         console.log(sorteddates,"check sorteddates")
         if (curr.meal === "Before Meal") {
           bgbefore.push(curr.bloodglucosemgdl);
+          bgafter.push("");
           if (
-            Number(curr.bloodglucosemgdl) < Number(tvalue) &&
-            Number(curr.bloodglucosemgdl) > Number(tMinvalue)
+            Number(curr.bloodglucosemgdl) < Number((tvalue!=="0")?tvalue:tadminvalue) &&
+            Number(curr.bloodglucosemgdl) > Number((tMinvalue!=="0")?tMinvalue:tadminMinvalue)
           ) {
             pcolorb.push("green");
-          } else if (Number(curr.bloodglucosemgdl) > Number(tvalue)) {
+          } else if (Number(curr.bloodglucosemgdl) > Number((tvalue!=="0")?tvalue:tadminvalue)) {
             pcolorb.push("red");
           } else {
             pcolorb.push("blue");
           }
+          pradiusAM.push(0);
+          pradiusBM.push(10);
         }
+
         if (curr.meal === "After Meal") {
           bgafter.push(curr.bloodglucosemgdl);
+          bgbefore.push("0");
+          pcolorb.push("blue")
+          pradiusAM.push(10);
+          pradiusBM.push(0);
+
         }
       });
       let avgbg = bg.reduce((a, b) => a + b, 0) / finalbgdata.length;
@@ -982,7 +1150,7 @@ return String(ttt[0].bg_high)
               backgroundColor: ["Blue"],
               borderColor: ["Blue"],
               fill: false,
-              pointRadius: 10,
+              pointRadius: pradiusBM,
               pointStyle: "triangle",
               pointBackgroundColor: pcolorb,
             },
@@ -992,7 +1160,7 @@ return String(ttt[0].bg_high)
               fill: false,
               backgroundColor: ["orange"],
               borderColor: ["orange"],
-              pointRadius: 10,
+              pointRadius: pradiusAM,
               pointStyle: "square",
               pointBackgroundColor: "orange",
             },
@@ -1146,88 +1314,185 @@ return String(ttt[0].bg_high)
                 </tr>
               </thead>
               <tbody>
+                {console.log(finalbgdata,"sorteddatesutkarsh")}
                 {sorteddates.map((curr) => {
                   const filtereddarta = finalbgdata.filter(
                     (item) =>
-                      Moment(item.CreatedDate).format("MM-DD-YYYY") === curr
+                      Moment(item.MeasurementDateTime).format("MM-DD-YYYY") === curr
                   );
-                        console.log("fileterd data",filtereddarta)
+                  console.log("fileterd data", filtereddarta)
                   let dataBMAM = {
-                    morningbm: "",
-                    morningam: "",
-                    noonbm: "",
-                    noonam: "",
-                    eveningbm: "",
-                    eveningam: "",
-                    nightbm: "",
-                    nightam: "",
-                    morningbmtime: "",
-                    morningamtime: "",
-                    noonbmtime: "",
-                    noonamtime: "",
-                    eveningbmtime: "",
-                    eveningamtime: "",
-                    nightbmtime: "",
-                    nightamtime: "",
+                    morningbm: [],
+                    morningam: [],
+                    noonbm: [],
+                    noonam: [],
+                    eveningbm: [],
+                    eveningam: [],
+                    nightbm: [],
+                    nightam: [],
+                    morningbmtime: [],
+                    morningamtime: [],
+                    noonbmtime: [],
+                    noonamtime: [],
+                    eveningbmtime: [],
+                    eveningamtime: [],
+                    nightbmtime: [],
+                    nightamtime: [],
                   };
+                 
+                  
+                 
+                  console.log(filtereddarta, "filtereddartautkarsh")
                   filtereddarta.map((curr) => {
-                    if (Number(Moment(curr.CreatedDate).format("HH")) < 10) {
+                    if (Number(Moment(curr.MeasurementDateTime).format("HH")) < 10) {
                       if (curr.meal === "Before Meal") {
-                        dataBMAM.morningbm = curr.bloodglucosemgdl;
-                        dataBMAM.morningbmtime = Moment(curr.CreatedDate).format("hh:mm A")
-                        console.log("check date from app",Moment(curr.CreatedDate).format("hh:mm"))
+                        dataBMAM.morningbm.push(curr.bloodglucosemgdl);
+                        dataBMAM.morningbmtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
+                        console.log("check date from app", Moment(curr.MeasurementDateTime).format("hh:mm"))
                       } else {
-                        dataBMAM.morningam = curr.bloodglucosemgdl;
-                        dataBMAM.morningamtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.morningam.push(curr.bloodglucosemgdl);
+                        dataBMAM.morningamtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       }
                     }
                     if (
-                      Number(Moment(curr.CreatedDate).format("HH")) > 10 &&
-                      Number(Moment(curr.CreatedDate).format("HH")) < 15
+                      Number(Moment(curr.MeasurementDateTime).format("HH")) >= 10 &&
+                      Number(Moment(curr.MeasurementDateTime).format("HH")) < 15
                     ) {
                       if (curr.meal === "Before Meal") {
-                        dataBMAM.noonbm = curr.bloodglucosemgdl;
-                        dataBMAM.noonbmtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.noonbm.push(curr.bloodglucosemgdl);
+                        dataBMAM.noonbmtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       } else {
-                        dataBMAM.noonam = curr.bloodglucosemgdl;
-                        dataBMAM.noonamtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.noonam.push(curr.bloodglucosemgdl);
+                        dataBMAM.noonamtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       }
                     }
                     if (
-                      Number(Moment(curr.CreatedDate).format("HH")) > 15 &&
-                      Number(Moment(curr.CreatedDate).format("HH")) < 21
+                      Number(Moment(curr.MeasurementDateTime).format("HH")) >= 15 &&
+                      Number(Moment(curr.MeasurementDateTime).format("HH")) < 21
                     ) {
                       if (curr.meal === "Before Meal") {
-                        dataBMAM.eveningbm = curr.bloodglucosemgdl;
-                        dataBMAM.eveningbmtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.eveningbm.push(curr.bloodglucosemgdl);
+                        dataBMAM.eveningbmtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       } else {
-                        dataBMAM.eveningam = curr.bloodglucosemgdl;
-                        dataBMAM.eveningamtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.eveningam.push(curr.bloodglucosemgdl);
+                        dataBMAM.eveningamtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"));
                       }
                     }
-                    if (Number(Moment(curr.CreatedDate).format("HH")) >= 21) {
+                    if (Number(Moment(curr.MeasurementDateTime).format("HH")) >= 21) {
                       if (curr.meal === "Before Meal") {
-                        dataBMAM.nightbm = curr.bloodglucosemgdl;
-                        dataBMAM.nightbmtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.nightbm.push(curr.bloodglucosemgdl);
+                        dataBMAM.nightbmtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       } else {
-                        dataBMAM.nightam = curr.bloodglucosemgdl;
-                        dataBMAM.nightamtime = Moment(curr.CreatedDate).format("hh:mm A")
+                        dataBMAM.nightam.push(curr.bloodglucosemgdl);
+                        dataBMAM.nightamtime.push(Moment(curr.MeasurementDateTime).format("hh:mm A"))
                       }
                     }
                   });
-
+                    let colorset=(tvalue!=="0")?tvalue:tadminvalue
+                    let colorsetmin=(tvalue!=="0")?tvaluemin:tadminvaluemin
+                    console.log(dataBMAM.morningbm.reverse(),dataBMAM.morningbmtime.reverse(),dataBMAM.noonbm.reverse(),dataBMAM.noonbmtime.reverse(),dataBMAM.eveningbm.reverse(),dataBMAM.eveningbmtime.reverse(),dataBMAM.nightbm.reverse(),dataBMAM.nightbmtime.reverse(),dataBMAM.morningam.reverse(),dataBMAM.morningamtime.reverse(),dataBMAM.noonam.reverse(),dataBMAM.noonamtime.reverse(),dataBMAM.eveningam.reverse(),dataBMAM.eveningamtime.reverse(),dataBMAM.nightam.reverse(),dataBMAM.nightamtime.reverse(),"dat of incrorr")
                   return (
                     <>
+                      {/* <tr>
+                        <td rowspan="2">{curr}</td>
+                        <td style={{ backgroundColor: (dataBMAM.morningbm < Number(colorset) && Number(dataBMAM.morningbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.morningbm !== "" && Number(dataBMAM.morningbm > Number(colorsetmin) )? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}><p>{dataBMAM.morningbm}<br />{dataBMAM.morningbmtime}</p></td>
+                        <td style={{ backgroundColor: (dataBMAM.morningam < Number(colorset) && Number(dataBMAM.morningam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.morningam !== "" && Number(dataBMAM.morningam > Number(colorsetmin) ) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.morningam}<br />{dataBMAM.noonamtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.noonbm < Number(colorset) && Number(dataBMAM.noonbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.noonbm !== "" && Number(dataBMAM.noonbm > Number(colorsetmin)) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.noonbm}<br />{dataBMAM.noonbmtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.noonam < Number(colorset)&& Number(dataBMAM.noonam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.noonam !== "" && Number(dataBMAM.noonam > Number(colorsetmin)) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.noonam}<br />{dataBMAM.noonamtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.eveningbm < Number(colorset) && Number(dataBMAM.eveningbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.eveningbm !== "" && Number(dataBMAM.eveningbm > Number(colorsetmin) ) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.eveningbm}<br />{dataBMAM.eveningbmtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.eveningam < Number(colorset) && Number(dataBMAM.eveningam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.eveningam !== "" && Number(dataBMAM.eveningam > Number(colorsetmin)) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.eveningam}<br />{dataBMAM.eveningamtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.nightbm < Number(colorset) && Number(dataBMAM.nightbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.nightbm !== "" && Number(dataBMAM.nightbm > Number(colorsetmin ))? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.nightbm}<br />{dataBMAM.nightbmtime}</td>
+                        <td style={{ backgroundColor: (dataBMAM.nightam < Number(colorset) && Number(dataBMAM.nightam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.nightam !== "" && Number(dataBMAM.nightam > Number(colorsetmin) ) ? "#f6a683" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.nightam}<br />{dataBMAM.nightamtime}</td>
+                      </tr> */}
+                      
                       <tr>
                         <td rowspan="2">{curr}</td>
-                        <td style={{ backgroundColor: (dataBMAM.morningbm < tvalue && dataBMAM.morningbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.morningbm !== "" && dataBMAM.morningbm > tvalue) ? "#f6a683" : "grey" }}><p>{dataBMAM.morningbm}<br />{dataBMAM.morningbmtime}</p></td>
-                        <td style={{ backgroundColor: (dataBMAM.morningam < tvalue && dataBMAM.morningam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.morningam !== "" && dataBMAM.morningam > tvalue) ? "#f6a683" : "grey" }}>{dataBMAM.morningam}<br />{dataBMAM.noonamtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.noonbm < tvalue && dataBMAM.noonbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.noonbm !== "" && dataBMAM.noonbm > 150) ? "#f6a683" : "grey" }}>{dataBMAM.noonbm}<br />{dataBMAM.noonbmtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.noonam < tvalue && dataBMAM.noonam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.noonam !== "" && dataBMAM.noonam > 150) ? "#f6a683" : "grey" }}>{dataBMAM.noonam}<br />{dataBMAM.noonamtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.eveningbm < tvalue && dataBMAM.eveningbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.eveningbm !== "" && dataBMAM.eveningbm > tvalue) ? "#f6a683" : "grey" }}>{dataBMAM.eveningbm}<br />{dataBMAM.eveningbmtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.eveningam < tvalue && dataBMAM.eveningam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.eveningam !== "" && dataBMAM.eveningam > tvalue) ? "#f6a683" : "grey" }}>{dataBMAM.eveningam}<br />{dataBMAM.eveningamtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.nightbm < tvalue && dataBMAM.nightbm !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.nightbm !== "" && dataBMAM.nightbm > tvalue) ? "#f6a683" : "grey" }}>{dataBMAM.nightbm}<br />{dataBMAM.nightbmtime}</td>
-                        <td style={{ backgroundColor: (dataBMAM.nightam < tvalue && dataBMAM.nightam !== "") ? "rgba(0, 255, 0, 0.15)" : (dataBMAM.nightam !== "" && dataBMAM.nightam > tvalue) ? "#f6a683" : "grey" }}>{dataBMAM.nightam}<br />{dataBMAM.nightamtime}</td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>
+                            {
+                              dataBMAM.morningbm.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.morningbm[index]) < Number(colorset) && Number(dataBMAM.morningbm[index]) > Number(colorsetmin) && Number(dataBMAM.morningbm[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}><p>{dataBMAM.morningbm[index]}<br />{dataBMAM.morningbmtime[index]}</p></td>
+                              
+                                ))
+                                
+
+                            }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr >
+                            {
+                              dataBMAM.morningam.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.morningam[index]) < Number(colorset) && Number(dataBMAM.morningam[index]) > Number(colorsetmin) && Number(dataBMAM.morningam[index]) !== "") ? "rgba(0, 255, 0, 0.15)" :  "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.morningam[index]}<br />{dataBMAM.morningamtime[index]}</td>
+                              ))
+
+                            }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>
+                            {
+                              dataBMAM.noonbm.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.noonbm[index]) < Number(colorset) && Number(dataBMAM.noonbm[index]) > Number(colorsetmin) && Number(dataBMAM.noonbm[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.noonbm[index]}<br />{dataBMAM.noonbmtime[index]}</td>
+                              ))
+                            }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>{
+                            dataBMAM.noonam.map((data, index) => (
+                              <td style={{ backgroundColor: (Number(dataBMAM.noonam[index]) < Number(colorset) && Number(dataBMAM.noonam[index]) > Number(colorsetmin) && Number(dataBMAM.noonam[index]) !== "") ? "rgba(0, 255, 0, 0.15)" :  "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.noonam[index]}<br />{dataBMAM.noonamtime[index]}</td>
+                            ))
+                          }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>
+                            {
+                              dataBMAM.eveningbm.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.eveningbm[index]) < Number(colorset) && Number(dataBMAM.eveningbm[index]) > Number(colorsetmin) && Number(dataBMAM.eveningbm[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.eveningbm[index]}<br />{dataBMAM.eveningbmtime[index]}</td>
+                              ))
+                            }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>
+                            {
+                              dataBMAM.eveningam.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.eveningam[index]) < Number(colorset) && Number(dataBMAM.eveningam[index]) > Number(colorsetmin) && Number(dataBMAM.eveningam[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.eveningam[index]}<br />{dataBMAM.eveningamtime[index]}</td>
+                              ))
+                            }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>{
+                            dataBMAM.nightbm.map((data, index) => (
+                              <td style={{ backgroundColor: (Number(dataBMAM.nightbm[index]) < Number(colorset) && Number(dataBMAM.nightbm[index]) > Number(colorsetmin) && Number(dataBMAM.nightbm[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.nightbm[index]}<br />{dataBMAM.nightbmtime[index]}</td>
+                            ))
+                          }
+
+                          </tr>
+                        </td>
+                        <td style={{backgroundColor:"white"}}>
+                          <tr>
+                            {
+                              dataBMAM.nightam.map((data, index) => (
+                                <td style={{ backgroundColor: (Number(dataBMAM.nightam[index]) < Number(colorset) && Number(dataBMAM.nightam[index]) > Number(colorsetmin) && Number(dataBMAM.nightam[index]) !== "") ? "rgba(0, 255, 0, 0.15)" : "rgba(255, 0, 0, 0.2)" }}>{dataBMAM.nightam[index]}<br />{dataBMAM.nightamtime[index]}</td>
+                              ))
+
+                            }
+
+                          </tr>
+                        </td >
+
+
+
                       </tr>
                       <tr>
                         <td></td>
@@ -1390,8 +1655,7 @@ return String(ttt[0].bg_high)
     sett1("");
     setShowModal(false);
     coreContext.fetchTimeLog("PATIENT_" + patientId);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
+    
     setTlValue("00:00:00");
   };
   const columns = [
@@ -1410,10 +1674,28 @@ return String(ttt[0].bg_high)
       width: 190,
       //headerAlign: 'center'
     },
+    // {
+    //   field: "performedOn",
+    //   headerName: "Performed On",
+    //   width: 190,
+    //   //headerAlign: 'center',
+    //   editable: false,
+
+    //   valueFormatter: (params) => {
+    //     const valueFormatted = Moment(params.value).format(
+    //       "MM-DD-YYYY hh:mm:ss A"
+    //     );
+    //     return `${valueFormatted}`;
+    //   },
+
+    //   //width: 500
+    // },
     {
       field: "performedOn",
       headerName: "Performed On",
+      
       width: 190,
+      type: "dateTime",
       //headerAlign: 'center',
       editable: false,
 
@@ -1423,8 +1705,6 @@ return String(ttt[0].bg_high)
         );
         return `${valueFormatted}`;
       },
-
-      //width: 500
     },
     {
       field: "timeAmount",
@@ -1490,11 +1770,26 @@ return String(ttt[0].bg_high)
   ];
 
   const deleteTimeLog = (tl) => {
-    coreContext.DeleteTimeLog(tl);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
-    renderTimelogs();
-    fetchtotaltime();
+    
+    // renderTimelogs();
+    // fetchtotaltime();
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteTimeLog(tl);
+        coreContext.fetchTimeLog("PATIENT_" + patientId);
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
   };
+
 
   const setCurrentTL = (tl) => {
     setShowModal(true);
@@ -1547,7 +1842,12 @@ return String(ttt[0].bg_high)
   //         });
   //     }
   // }
-
+const renderthresold=()=>{
+  return(
+    <Thresold></Thresold>
+  )
+}
+const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContext.thresoldData)])
   const renderTaskTimer = () => {
     if (coreContext.tasktimerUserData.length > 0) {
       return coreContext.tasktimerUserData.map((tl, index) => {
@@ -1587,21 +1887,41 @@ return String(ttt[0].bg_high)
             rows={coreContext.timeLogData}
             columns={columns}
             pageSize={10}
+            sortModel={[{ field: "performedOn", sort: "desc" }]}
+            sortingOrder={["desc", "asc"]}
           />
         </div>
       );
     }
   };
 
-  useEffect(renderTimelogs, [coreContext.timeLogData.length]);
-  // const deleteDevice = (patient) => {
-  //   alert('Hi how are you');
-  //coreContext.DeletePatient(patient.userId)
+  useEffect(renderTimelogs, [JSON.stringify(coreContext.timeLogData)]);
+  useEffect(fetchtime, [JSON.stringify(coreContext.timeLogData)]);
+
+  
+  
   //  }
 
   const deleteDevice = (deviceData) => {
-    coreContext.DeleteDeviceData(deviceData.id);
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteDeviceData(deviceData.id);
+        setdeviceflag(adddeviceflag + 1 )
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
+    
   };
+
+  
 
   const renderDeviceData = () => {
     if (coreContext.deviceData.length === 0) {
@@ -1635,7 +1955,11 @@ return String(ttt[0].bg_high)
               <a
                 style={{ marginRight: "5px" }}
                 href="#"
-                onClick={() => deleteDevice(deviceData)}>
+                onClick={() => {
+                  deleteDevice(deviceData)
+                  
+                  
+                  }}>
                 {" "}
                 <Trash />
               </a>
@@ -1761,12 +2085,17 @@ return String(ttt[0].bg_high)
     }
     if (coreContext.patients.length > 0)
       return (
+        <>
         <div className="row">
-          <div className="col-md-3" style={{ fontWeight: "bold" }}>
+          <div className="col-md-2" style={{ fontWeight: "bold" }}>
             {coreContext.patients[0].name}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
+          Email : {coreContext.patients[0].email}
+          </div>
+          <div className="col-md-2" style={{ fontWeight: "bold" }}>
             {"DOB : " + coreContext.patients[0].dob}
+            
           </div>
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
             {coreContext.patients[0].gender === "Male" ? (
@@ -1776,10 +2105,12 @@ return String(ttt[0].bg_high)
             )}
             {coreContext.patients[0].gender}
           </div>
-          <div className="col-md-4" style={{ fontWeight: "bold" }}>
+          <div className="col-md-3" style={{ fontWeight: "bold" }}>
             EHR ID : {coreContext.patients[0].ehrId}
           </div>
         </div>
+        
+        </>
       );
   };
   const rendertop = React.useMemo(
@@ -1846,16 +2177,17 @@ return String(ttt[0].bg_high)
   };
 
   const fetchtotaltime = () => {
-    let totaltime = 0;
+    let d = 0;
     coreContext.timeLogData.map((curr) => {
-      totaltime = totaltime + Number(curr.timeAmount);
+      d = d + Number(curr.timeAmount);
     });
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
     //console.log(coreContext.timeLogData)
-    return (
-      String(Math.floor(totaltime / 60)) +
-      ":" +
-      ("0" + String(totaltime % 60)).slice(-2)
-    );
+    
+    
+    return ('0' + h).slice(-2)+":"+('0' + m).slice(-2)+":"+('0' + s).slice(-2)
   };
   useEffect(() => {
     fetchtotaltime();
@@ -1935,7 +2267,7 @@ return String(ttt[0].bg_high)
     }
 
     if (index === 8) {
-      pause();
+      //pause();
 
       // after pause then should add in list.
       //     // _timerLog.id = timelogIdCounter;
@@ -2037,17 +2369,17 @@ return String(ttt[0].bg_high)
           onMouseLeave={(index) => handleLeaveTab(index)}>
           <TabList>
             {/* <Tab onClick={pause}>Conditions</Tab> */}
-            <Tab onClick={pause}>Programs</Tab>
+            <Tab >Programs</Tab>
             {/* <Tab onClick={pause}>Assesments</Tab> */}
-            <Tab onClick={pause}>Clinical Data</Tab>
-            <Tab onClick={pause}>Billing</Tab>
+            <Tab >Clinical Data</Tab>
+            <Tab >Billing</Tab>
             {/* <Tab onClick={pause}>Alerts</Tab> */}
             {/* <Tab onClick={pause}>Documents</Tab> */}
-            <Tab onClick={reset}>Task Timer</Tab>
+            <Tab >Task Timer</Tab>
             {/* <Tab onClick={pause}>Time Logs</Tab> */}
             <Tab>Time Logs</Tab>
-            <Tab onClick={pause}>Devices</Tab>
-            <Tab onClick={pause}>Portal</Tab>
+            <Tab >Devices</Tab>
+            <Tab >Portal</Tab>
           </TabList>
 
           {/* <TabPanel>
@@ -2119,22 +2451,22 @@ return String(ttt[0].bg_high)
                   <TabPanel>
                     <Tabs>
                       <TabList>
-                        <Tab onClick={pause}>Blood Pressure</Tab>
+                        <Tab >Blood Pressure</Tab>
                         {/* <Tab onClick={pause}>Blood Pressure</Tab> */}
                         {/* <Tab onClick={pause}>Blood Pressure Average</Tab> */}
-                        <Tab onClick={pause}>Blood Glucose</Tab>
+                        <Tab onClick={()=>{fetchTd();fetchadmintd()}}>Blood Glucose</Tab>
                         {/* <Tab onClick={pause}>Blood GLucose Average</Tab> */}
-                        <Tab onClick={pause}>Weight</Tab>
+                        <Tab>Weight</Tab>
                         {/* <Tab onClick={pause}>Weight Average</Tab> */}
-                        <Tab onClick={pause}>Threshold</Tab>
+                        <Tab>Threshold</Tab>
                       </TabList>
                       <TabPanel>
                         {/* <div className="card"> */}
                         <Tabs>
                           <TabList>
-                            <Tab onClick={pause}>Dashboard</Tab>
-                            <Tab onClick={pause}>LogBook</Tab>
-                            <Tab onClick={pause}>Charts</Tab>
+                            <Tab >Dashboard</Tab>
+                            <Tab >LogBook</Tab>
+                            <Tab >Charts</Tab>
                           </TabList>
                           <TabPanel>
                             {renderDates()}
@@ -2156,9 +2488,9 @@ return String(ttt[0].bg_high)
                       <TabPanel>
                         <Tabs>
                           <TabList>
-                            <Tab onClick={pause}>Dashboard</Tab>
-                            <Tab onClick={pause}>LogBook</Tab>
-                            <Tab onClick={pause}>Charts</Tab>
+                            <Tab >Dashboard</Tab>
+                            <Tab >LogBook</Tab>
+                            <Tab >Charts</Tab>
                           </TabList>
                           <TabPanel>
                             {renderDates()}
@@ -2190,7 +2522,7 @@ return String(ttt[0].bg_high)
                       </TabPanel> */}
                       <TabPanel>
                         <div className="card-body">
-                          <Thresold></Thresold>
+                        {thresoldbars}
                         </div>
                         {/* <React.Fragment>
                                                 <div className='row'>
@@ -2346,7 +2678,7 @@ return String(ttt[0].bg_high)
                     className="col-md-8"
                     type="button"
                     onClick={() => {
-                      pause();
+                      reset();
                       coreContext.AddTimeLog(
                         taskType,
                         performedBy,
@@ -2362,6 +2694,7 @@ return String(ttt[0].bg_high)
                       coreContext.fetchTimeLog("PATIENT_" + patientId);
                       coreContext.fetchTimeLog("PATIENT_" + patientId);
                       setPristine();
+                      renderTimelogs();
                       setPerformedBy("");
                       setTaskType("");
                       setDate(new Date());
@@ -2475,7 +2808,7 @@ return String(ttt[0].bg_high)
               <div className="card-body">
                 <div className="row">
                   <div className="col-md-12">
-                    Total Time Logs (min: sec): {fetchtotaltime()}
+                    Total Time Logs (Hour: Min: Sec): {fetchtotaltime()}
                   </div>
                 </div>
                 <div className="row">
@@ -2553,8 +2886,12 @@ return String(ttt[0].bg_high)
                       />
                       <button
                         type="button"
-                        onClick={() =>
+                        onClick={() =>{
+                          setdeviceflag(adddeviceflag + 1)
                           coreContext.addDevice(deviceType, deviceId, patientId)
+                          setDeviceId("");
+                          setDeviceType("");
+                        }
                         }
                         className="btn btn-primary mb-2">
                         Add Device
@@ -2654,7 +2991,7 @@ return String(ttt[0].bg_high)
       <div className="card-header">{renderAddNotes()}</div>
 
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-12">
           <div
             onClick={() => setShowNotesTextBox(false)}
             className="card-header">
@@ -2666,7 +3003,7 @@ return String(ttt[0].bg_high)
             {renderPatientinformation()}{" "}
           </div>
         </div>
-        <div className="col-md-4">
+        {/* <div className="col-md-4">
           <div
             style={{ fontSize: 12 }}
             className="card shadow p-3 mb-2 mt-3 bg-white rounded">
@@ -2687,7 +3024,7 @@ return String(ttt[0].bg_high)
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {Prompt}

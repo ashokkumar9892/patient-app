@@ -75,6 +75,7 @@ const Thresold = (props) => {
     //const memoizedValue = useMemo(() => coreContext.fetchThresold(patientId, userType), [corecontext.thresoldData]);
 
     setThData(coreContext.thresoldData);
+    console.log("check admin thresold from patient",coreContext.thresoldData,coreContext.adminthresold)
     
     const setdata=(data)=>
     {
@@ -199,7 +200,7 @@ const Thresold = (props) => {
 
   useEffect(fetchThresold, []);
   
-  useEffect(fetchThresold,[coreContext.thresoldData.length])
+  useEffect(fetchThresold,[JSON.stringify(coreContext.thresoldData)])
 
   const onBGChange = (e) => {
     setBgMin(e.from);
@@ -285,7 +286,7 @@ const Thresold = (props) => {
                       bgMin,
                       userType
                     );
-                   
+                    
                   }}
                   className="btn btn-primary mb-2 float-right">
                   {" "}

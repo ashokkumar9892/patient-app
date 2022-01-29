@@ -7,6 +7,7 @@ import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useForm } from "react-hook-form";
 import Input from "./common/Input";
 import Switch from "@material-ui/core/Switch";
+import swal from "sweetalert";
 
 import {
   DataGrid,
@@ -211,7 +212,21 @@ useEffect(fetchProviders, [checked]);
   };
 
   const deletePatient = (patient) => {
-    coreContext.DeleteCareTeam(patient.doctor_id, "doctor", "Provider");
+    
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteCareTeam(patient.doctor_id, "doctor", "Provider");
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
   };
 
   const renderProviders = () => {

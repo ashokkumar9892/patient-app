@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import loader from "../assets/images/835.gif";
 import Moment from "moment";
+import swal from "sweetalert";
 
 export const CoreContext = React.createContext({});
 
@@ -420,7 +421,8 @@ export const CoreContextProvider = (props) => {
           }
           patient.pid = window.btoa(p.SK.s);
           if (p.Height !== undefined) {
-            patient.height = p.Height.s;
+            (p.Height.s!=="undefined")?patient.height = p.Height.s:patient.height = ""
+            
           }
           patient.pid = window.btoa(p.SK.s);
 
@@ -497,6 +499,11 @@ export const CoreContextProvider = (props) => {
           if (p.Gender !== undefined) {
             patient.gender = p.Gender.s;
           }
+          if (p.Height !== undefined) {
+            (p.Height.s!=="undefined")?patient.height = p.Height.s:patient.height = ""
+          }else {
+            patient.height = "";
+          }
 
           if (p.Lang !== undefined) {
             patient.language = p.Lang.s;
@@ -546,7 +553,7 @@ export const CoreContextProvider = (props) => {
           // }
           ps.push(patient);
         });
-
+          console.log(ps,"cjkli")
         setPatients(ps);
       })
       .catch(() => {
@@ -1077,7 +1084,8 @@ export const CoreContextProvider = (props) => {
       )
       .then((response) => {
         if (response.data === "Registered") {
-          alert("Device Inserted Successfully.");
+          
+          swal("success", "Device Inserted Successfully.", "success");
         }
       });
   };
@@ -1151,9 +1159,11 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("Threshold Update Successfully.");
+          swal("success", "Threshold Update Successfully.", "success");
+          //alert("Threshold Update Successfully.");
         } else {
-          alert("Threshold did not Update.");
+          swal("error", "Threshold did not Update.", "error");
+          // alert("");
         }
       });
   };
@@ -1237,7 +1247,8 @@ export const CoreContextProvider = (props) => {
       .then((response) => {
         console.log(response);
         if (response.data === "Updated") {
-          alert("Record Updated Successfully.");
+          //alert("Record Updated Successfully.");
+          swal("success", "Record Updated Successfully.", "success");
           userDetails(email, "");
         }
       });
@@ -1268,9 +1279,11 @@ export const CoreContextProvider = (props) => {
     state,
     notes
   ) => {
-    console.log(gender, "check gender");
-    console.log(fname, "fname");
+    
     const token = localStorage.getItem("app_jwt");
+    if(!phone||!mobilePhone||!birthDate){
+      swal("error","Please fill all necessary details","error")
+    } else{
 
     var providervalue = providerOptions.filter(
       (p) => p.name == "Select Provider"
@@ -1363,7 +1376,14 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("Patient data Update Successfully.");
+          // alert("");
+          swal("success", "Patient data Update Successfully.", "success");
+       AssignCareTeam(
+            provider,
+            coordinator,
+            coach,
+            patientId
+          );
 
           // updating object
           //fetchPatientListfromApi();
@@ -1382,9 +1402,11 @@ export const CoreContextProvider = (props) => {
           patient.notes = notes;
           // updating object
         } else {
-          alert("Patient data did not Update  Successfully.");
+          //alert("Patient data did not Update  Successfully.");
+          swal("error", "Patient data did not Update  Successfully.", "error");
         }
       });
+    }
   };
 
   const AssignCareTeam = (provider, coordinator, coach, patientId) => {
@@ -1428,10 +1450,12 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("Care Team assigned Successfully.");
+          //alert("");
+          swal("success", "Data update Successfully.", "success");
         } else {
           console.log(response);
-          alert("Care Team  assigned did not Update  Successfully.");
+          // alert("");
+          swal("error", "Data did did not Update  Successfully.", "error");
         }
       });
   };
@@ -1558,7 +1582,7 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("Patient Deleted Successfully.");
+          swal("success", "Patient Deleted Successfully.", "success");
         }
       });
   };
@@ -1586,7 +1610,12 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("1 Entry of TimeLog Deleted Successfully.");
+          // alert("1 Entry of TimeLog Deleted Successfully.");
+          swal(
+            "success",
+            "One Entry of TimeLog Deleted Successfully.",
+            "success"
+          );
         }
       });
   };
@@ -1641,9 +1670,10 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         if (response.data === "Updated") {
-          alert("Patient Deleted Successfully.");
+          // alert("");
+          swal("success", "Device Deleted Successfully.", "success");
         } else {
-          alert("Server Error");
+          swal("error", "Server Error", "error");
         }
       });
   };
@@ -1766,7 +1796,8 @@ export const CoreContextProvider = (props) => {
     city,
     state,
     pcm,
-    pp
+    pp,
+    ppname
   ) => {
     const token = localStorage.getItem("app_jwt");
     const date = new Date();
@@ -1802,6 +1833,9 @@ export const CoreContextProvider = (props) => {
             LastName: lastname,
             ActiveStatus: "Active",
             Gender: gender,
+            DoctorName: ppname,
+            DoctorId: pp,
+            GSI1SK: pp,
             Lang: language,
             WorkPhone: workPhone,
             MobilePhone: mobilePhone,
@@ -1832,6 +1866,7 @@ export const CoreContextProvider = (props) => {
               if (putresponse.status === 200) {
                 alert("Verification code sent to your email " + email);
                 handlePatientConfirmationModalShow();
+                
 
                 //window.location.replace('confirm-user-screen.html?username='+useremail);
               } else {
@@ -1842,6 +1877,7 @@ export const CoreContextProvider = (props) => {
           if (response.data == "User already exists")
             response.data = "Email already exists";
           alert(response.data);
+
         }
       });
   };
@@ -2619,8 +2655,10 @@ export const CoreContextProvider = (props) => {
             );
           }
 
-          if (bg.before_meal) bgdata.meal = "Before Meal";
-          if (!bg.before_meal) bgdata.meal = "After Meal";
+          if (bg.before_meal !== undefined) {
+            if (bg.before_meal.bool) bgdata.meal = "Before Meal";
+            if (!bg.before_meal.bool) bgdata.meal = "After Meal";
+          }
 
           if (bg.battery !== undefined) {
             bgdata.battery = bg.battery.n;
@@ -3035,7 +3073,7 @@ export const CoreContextProvider = (props) => {
       .then((response) => {
         if (response.data === "Registered") {
           console.log(response.data);
-          alert("TimeLog has been added");
+          swal("success", "TimeLog has been added successfully", "success");
         }
       });
   };
