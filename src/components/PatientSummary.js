@@ -630,6 +630,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.patientbloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+        from.setHours(0,0,0,0);
         console.log(
           coreContext.patientbloodpressureData,
           "coreContext.patientbloodpressureData"
@@ -1680,10 +1681,28 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       width: 190,
       //headerAlign: 'center'
     },
+    // {
+    //   field: "performedOn",
+    //   headerName: "Performed On",
+    //   width: 190,
+    //   //headerAlign: 'center',
+    //   editable: false,
+
+    //   valueFormatter: (params) => {
+    //     const valueFormatted = Moment(params.value).format(
+    //       "MM-DD-YYYY hh:mm:ss A"
+    //     );
+    //     return `${valueFormatted}`;
+    //   },
+
+    //   //width: 500
+    // },
     {
       field: "performedOn",
       headerName: "Performed On",
+      
       width: 190,
+      type: "dateTime",
       //headerAlign: 'center',
       editable: false,
 
@@ -1693,8 +1712,6 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         );
         return `${valueFormatted}`;
       },
-
-      //width: 500
     },
     {
       field: "timeAmount",
@@ -1760,10 +1777,24 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   ];
 
   const deleteTimeLog = (tl) => {
-    coreContext.DeleteTimeLog(tl);
-    coreContext.fetchTimeLog("PATIENT_" + patientId);
+    
     // renderTimelogs();
     // fetchtotaltime();
+    swal({
+      title: "Are you sure?",
+      
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        coreContext.DeleteTimeLog(tl);
+        coreContext.fetchTimeLog("PATIENT_" + patientId);
+      } else {
+        swal("Delete Cancelled");
+      }
+    });
   };
 
 
@@ -1863,6 +1894,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             rows={coreContext.timeLogData}
             columns={columns}
             pageSize={10}
+            sortModel={[{ field: "performedOn", sort: "desc" }]}
+            sortingOrder={["desc", "asc"]}
           />
         </div>
       );
@@ -2867,6 +2900,8 @@ let patientName;
                         onClick={() =>{
                           setdeviceflag(adddeviceflag + 1)
                           coreContext.addDevice(deviceType, deviceId, patientId)
+                          setDeviceId("");
+                          setDeviceType("");
                         }
                         }
                         className="btn btn-primary mb-2">

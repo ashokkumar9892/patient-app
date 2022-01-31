@@ -165,25 +165,25 @@ const BloodPressure = (props) => {
       width: 200,
       editable: false,
     },
-    {
-      field: "sortDateColumn",
-      headerName: "Action",
-      width: 300,
+    // {
+    //   field: "sortDateColumn",
+    //   headerName: "Action",
+    //   width: 300,
 
-      renderCell: (params) => (
-        <div>
-          {" "}
-          <a href="#" onClick={() => showEditForm(params.row)}>
-            {" "}
-            <PencilSquare />
-          </a>
-          <a href="#" onClick={() => deletePatient(params.row)}>
-            {" "}
-            <Trash />
-          </a>
-        </div>
-      ),
-    },
+    //   renderCell: (params) => (
+    //     <div>
+    //       {" "}
+    //       <a href="#" onClick={() => showEditForm(params.row)}>
+    //         {" "}
+    //         <PencilSquare />
+    //       </a>
+    //       <a href="#" onClick={() => deletePatient(params.row)}>
+    //         {" "}
+    //         <Trash />
+    //       </a>
+    //     </div>
+    //   ),
+    // },
   ];
 
   const showEditForm = (patient) => {};

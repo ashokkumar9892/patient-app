@@ -96,18 +96,18 @@ const Weight = (props) => {
             editable: false,
             width: 200
           },
-          { 
-            field: "sortDateColumn", 
-            headerName: "Action",
-            width: 300,
+          // { 
+          //   field: "sortDateColumn", 
+          //   headerName: "Action",
+          //   width: 300,
             
-            renderCell: (params) => (
-                <div>  <a href="#" onClick={() => showEditForm(params.row)}>  <PencilSquare /></a>
-                <a href="#" onClick={() => deletePatient(params.row)}>  <Trash /></a>
-                </div>
+          //   renderCell: (params) => (
+          //       <div>  <a href="#" onClick={() => showEditForm(params.row)}>  <PencilSquare /></a>
+          //       <a href="#" onClick={() => deletePatient(params.row)}>  <Trash /></a>
+          //       </div>
             
-             )
-            }         
+          //    )
+          //   }         
 
       ];
 
