@@ -189,6 +189,13 @@ const PatientSummary = (props) => {
     coreContext.fetchCareCoordinator();
   };
   useEffect(fetchCareCoordinator, []);
+  useEffect(() => {
+    //coreContext.cleanup();
+    coreContext.setdeviceData([]);
+    return () => {
+      coreContext.cleanup();
+    }
+  }, [])
 
   const fetchProviders = () => {
     const patientId = props.match.params.patient;
@@ -227,7 +234,7 @@ const PatientSummary = (props) => {
     //let patientData = JSON.parse(localStorage.getItem('app_patient'));
 
     //setPatient(patientData);
-    coreContext.fetchPatientListfromApi("patient", patientId);
+    coreContext.fetchPatientListfromApiForPatient("patient", patientId);
 
     //coreContext.fetchThresold("ADMIN_PATIENT_" + patientId, userType);
 
@@ -236,7 +243,7 @@ const PatientSummary = (props) => {
 
     //coreContext.fetchTaskTimerUser();
 
-    coreContext.fetchDeviceData("PATIENT_" + patientId, userName, userType);
+    coreContext.fetchDeviceDataForPatient("PATIENT_" + patientId,patientName);
     /// setting default value
     // if (coreContext.thresoldData.length === 0) {
     //   let thdata = {};
@@ -338,7 +345,7 @@ const PatientSummary = (props) => {
 
   const pateientvalue = useMemo(() => fetchPatient, []);
   useEffect(pateientvalue, []);
-  useEffect(fetchPatient,[adddeviceflag]);
+  useEffect(fetchPatient,[adddeviceflag,coreContext.pss.length]);
 
   // useEffect(fetchPatient, [coreContext.patient.notes]);
   useEffect(
@@ -522,10 +529,10 @@ return String(ttt[0].bg_high)
     );
   };
   const fetchbp = () => {
-    coreContext.fetchBloodPressure(localStorage.getItem("ehrId"), "patient");
+    coreContext.fetchBloodPressureForPatient(localStorage.getItem("ehrId"), "patient");
   };
   const fetchbg = () => {
-    coreContext.fetchBloodGlucose(localStorage.getItem("ehrId"), "patient");
+    coreContext.fetchBloodGlucoseForPatient(localStorage.getItem("ehrId"), "patient");
   };
   const fetchTd = () => {
     coreContext.fetchThresold(
@@ -536,8 +543,8 @@ return String(ttt[0].bg_high)
   const fetchadmintd=()=>{
     coreContext.fetchadminThresold("ADMIN_"+localStorage.getItem("userId"), "admin")
   }
-  useEffect(fetchbp, [coreContext.bloodpressureData.length]);
-  useEffect(fetchbg, [coreContext.bloodglucoseData.length]);
+  useEffect(fetchbp, [coreContext.patientbloodpressureData.length]);
+  useEffect(fetchbg, [JSON.stringify(coreContext.patientbloodglucoseData)]);
   useEffect(fetchTd, [JSON.stringify(coreContext.thresoldData)]);
   useEffect(fetchadmintd, [JSON.stringify(coreContext.adminthresold)]);
 console.log("check admin thresold from patient",coreContext.thresoldData)
@@ -597,7 +604,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   }, [slider]);
 
   const getbpdata = (index) => {
-    if (coreContext.bloodpressureData.length == 0) {
+    if (coreContext.patientbloodpressureData.length == 0) {
       return (
         <>
           <div
@@ -615,20 +622,20 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       );
     }
     console.log(
-      coreContext.bloodpressureData[0].UserName,
-      "coreContext.bloodpressureData[0].UserName"
+      coreContext.patientbloodpressureData[0].UserName,
+      "coreContext.patientbloodpressureData[0].UserName"
     );
     if (
-      coreContext.bloodpressureData.length > 0 &&
-      coreContext.bloodpressureData[0].UserName !== "undefined"
+      coreContext.patientbloodpressureData.length > 0 &&
+      coreContext.patientbloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
         from.setHours(0,0,0,0);
         console.log(
-          coreContext.bloodpressureData,
-          "coreContext.bloodpressureData"
+          coreContext.patientbloodpressureData,
+          "coreContext.patientbloodpressureData"
         );
-        var finaldata = coreContext.bloodpressureData.filter(
+        var finaldata = coreContext.patientbloodpressureData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
@@ -660,7 +667,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         today.setHours(0,0,0,0)
         let bfr = today.setDate(today.getDate() - SliderDays);
         console.log(bfr,"bfring")
-        var finaldata = coreContext.bloodpressureData.filter(
+        var finaldata = coreContext.patientbloodpressureData.filter(
           (date) => date.MeasurementDateTime >= new Date(bfr)
         );
         
@@ -996,7 +1003,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   // const getbpdata2 = useMemo(() => getbpdata(2), []);
 
   const renderBloodGlucose = (index) => {
-    if (coreContext.bloodglucoseData.length == 0) {
+    if (coreContext.patientbloodglucoseData.length == 0) {
       return (
         <div
           style={{
@@ -1013,11 +1020,11 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
     }
 
     if (
-      coreContext.bloodglucoseData.length > 0 &&
-      coreContext.bloodglucoseData[0].UserName !== "undefined"
+      coreContext.patientbloodglucoseData.length > 0 &&
+      coreContext.patientbloodglucoseData[0].UserName !== "undefined"
     ) {
       if (slider === 100) {
-        var finalbgdata = coreContext.bloodglucoseData.filter(
+        var finalbgdata = coreContext.patientbloodglucoseData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
@@ -1047,10 +1054,10 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         today.setHours(0,0,0,0)
         let bfr = today.setDate(today.getDate() - SliderDays);
         
-          console.log(coreContext.bloodglucoseData.filter(
+          console.log(coreContext.patientbloodglucoseData.filter(
             (date) => date.MeasurementDateTime >= new Date(bfr)
           ),new Date(bfr),new Date(today.setHours(0,0,0,0)),"ngdatachecking")
-        var finalbgdata = coreContext.bloodglucoseData.filter(
+        var finalbgdata = coreContext.patientbloodglucoseData.filter(
           (date) => date.MeasurementDateTime >= new Date(bfr)
         );
       }
@@ -1526,7 +1533,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       if (index === 1) {
         return (
           <div style={{ height: 680, width: "100%" }}>
-            {/* {coreContext.bloodglucoseData} */}
+            {/* {coreContext.patientbloodglucoseData} */}
 
             <div className="d-flex">
               <div
@@ -1596,7 +1603,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
           </div>
         );
       }
-      //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
+      //coreContext.patientbloodpressureData  = coreContext.patientbloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
     } else {
       return (
         <div
@@ -1924,7 +1931,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   
 
   const renderDeviceData = () => {
-    if (coreContext.deviceData.length === 0) {
+    console.log("check something",coreContext.patientdevicedata)
+    if (coreContext.patientdevicedata.length === 0) {
       return (
         <div
           style={{
@@ -1941,10 +1949,10 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       );
     }
 
-    if (coreContext.deviceData.length > 0) {
+    if (coreContext.patientdevicedata.length > 0) {
     }
     {
-      return coreContext.deviceData.map((deviceData, index) => {
+      return coreContext.patientdevicedata.map((deviceData, index) => {
         return (
           <tr>
             <td>{deviceData.DeviceType} </td>
@@ -1969,7 +1977,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       });
     }
   };
-  useEffect(renderDeviceData, [coreContext.deviceData.length]);
+  const renderdevice=React.useMemo(()=>renderDeviceData(),[coreContext.patientdevicedata.length])
+ // useEffect(renderDeviceData, [coreContext.patientdevicedata.length]);
 
   const renderThreads = () => {
     if (coreContext.threads.length > 0) {
@@ -2066,9 +2075,9 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       notes
     );
   };
-
+let patientName;
   const renderTopDetails = () => {
-    if (coreContext.patients.length === 0) {
+    if (coreContext.pss.length !== 1) {
       return (
         <div
           style={{
@@ -2083,30 +2092,32 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
         </div>
       );
     }
-    if (coreContext.patients.length > 0)
+    if (coreContext.pss.length===1)
+    {patientName=coreContext.pss[0].name}
       return (
         <>
         <div className="row">
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.patients[0].name}
+            {coreContext.pss[0].name}
+            
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-          Email : {coreContext.patients[0].email}
+          Email : {coreContext.pss[0].email}
           </div>
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {"DOB : " + coreContext.patients[0].dob}
+            {"DOB : " + coreContext.pss[0].dob}
             
           </div>
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.patients[0].gender === "Male" ? (
+            {coreContext.pss[0].gender === "Male" ? (
               <GenderMale />
             ) : (
               <GenderFemale />
             )}
-            {coreContext.patients[0].gender}
+            {coreContext.pss[0].gender}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-            EHR ID : {coreContext.patients[0].ehrId}
+            EHR ID : {coreContext.pss[0].ehrId}
           </div>
         </div>
         
@@ -2115,7 +2126,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   };
   const rendertop = React.useMemo(
     () => renderTopDetails(),
-    [coreContext.patients.length]
+    [coreContext.pss.length]
   );
 
   const renderAddModifyFlags = () => {
@@ -2197,8 +2208,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   }, []);
 
   const renderPatientinformation = () => {
-    if (coreContext.patients.length > 0) {
-      coreContext.patient = coreContext.patients[0];
+    if (coreContext.pss.length > 0) {
+      coreContext.patient = coreContext.pss[0];
     }
     if (coreContext.patient) {
       localStorage.setItem("ehrId", coreContext.patient.ehrId);
@@ -2857,7 +2868,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>{renderDeviceData()}</tbody>
+                      <tbody>{renderdevice}</tbody>
                     </table>
                   </div>
                   <div className="col-md-4">
