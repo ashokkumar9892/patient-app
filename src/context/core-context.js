@@ -443,7 +443,7 @@ export const CoreContextProvider = (props) => {
     return( ps)
 
   }
-  const ConvertBG=(data)=>{
+  const ConvertBG=(data,type)=>{
     const dataSetbg = [];
         if (data.length === 0) {
           dataSetbg.push("No Data Found");
@@ -516,13 +516,19 @@ export const CoreContextProvider = (props) => {
          return pid.includes(curr.userId)
 
         })
+
         if(filteredata.length===0){
           filteredata.push("No Data FOund")
         }
-        return(filteredata)
+        if(type!=="patient"){
+          return(filteredata)
+        }else{
+return dataSetbg
+        }
+        
 
   }
-  const ConvertBP=(data)=>{
+  const ConvertBP=(data,type)=>{
     const dataSetbp = [];
         if (data.length === 0) {
           dataSetbp.push("No Data Found");
@@ -604,8 +610,14 @@ export const CoreContextProvider = (props) => {
         }
 
         console.log(filteredata,pid,"filteredata")
+        if(type!=="patient"){
+          return(filteredata)
+        }
+        else{
+          return dataSetbp
+        }
    
-        return(filteredata)
+        
 
   }
   const ConvertDevice=(data,username)=>{
@@ -2977,7 +2989,7 @@ console.log("lolo2",pk)
       .then((response) => {
        // const bloodpressureData = response.data;
       
-       {var some=()=>ConvertBP(response.data)}
+       {var some=()=>ConvertBP(response.data,"patient")}
         
         setpatientbloodpressureData(some);
       });
@@ -3141,7 +3153,7 @@ console.log("lolo2",pk)
       .then((response) => {
         //const bloodglucoseData = response.data;
         console.log("hcekcin",response.data)
-        {var some=()=>ConvertBG(response.data)}
+        {var some=()=>ConvertBG(response.data,"patient")}
         
 setpatientbloodglucoseData(some)
       });
