@@ -174,7 +174,7 @@ const TopMenu = ({ changestyle, showSidebar }) => {
     fetchadmintd();fetchtd();
   }, []);
 
-  const checknotificationForBP=()=>{
+  const FetchNotificationForBP=()=>{
     var date = new Date();
 date.setDate(date.getDate() - 7);
 
@@ -184,16 +184,16 @@ date.setDate(date.getDate() - 7);
           coreContext.thresoldData.map((td)=>{
             if(td.UserId.includes(patient.userId)){
               if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
-                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic)===false)
                 notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
                   "MM-DD-YYYY hh:mm A"
-                ))
+                )+"~Diastolic")
               }
               if(Number(bp.systolic)>Number(td.systolic_high) || Number(bp.systolic)<Number(td.systolic_low )){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
                 notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
                   "MM-DD-YYYY hh:mm A"
-                ))
+                )+"~Systolic")
                }
             }
             
@@ -211,7 +211,7 @@ date.setDate(date.getDate() - 7);
    
     
   }
-  const checknotificationForBG=()=>{
+  const FetchNotificationForBG=()=>{
     var date = new Date();
     date.setDate(date.getDate() - 7);
     coreContext.patients.map((patient)=>{
@@ -225,7 +225,7 @@ date.setDate(date.getDate() - 7);
                   
                   notificationValue.push(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
-                  ))
+                  )+"~Blood Glucose")
                 }
                  
                }
@@ -247,7 +247,7 @@ date.setDate(date.getDate() - 7);
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
-      checknotificationForBP();
+      FetchNotificationForBP();
       
       
     }
@@ -256,7 +256,7 @@ date.setDate(date.getDate() - 7);
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
       
-      checknotificationForBG();
+      FetchNotificationForBG();
       
     }
   },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue])
@@ -1227,7 +1227,12 @@ const handlechangeprovider=(p)=>{
            return(
              <>
             <Typography gutterBottom>
-         {curr.split("~")[0]} has cross the  threshold with reading {curr.split("~")[2]} on {curr.split("~")[3]}
+              
+         {curr.split("~")[0]} has crossed the  threshold with {curr.split("~")[4]} reading {curr.split("~")[2]} on {curr.split("~")[3]}
+            </Typography>
+            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}}>
+              
+        Mark as Read
             </Typography>
             <hr/>
             
