@@ -246,7 +246,7 @@ const BloodGlucose = (props) => {
         <>
          
           {/* <DataGridTable columns={dgcolumns} rows={coreContext.bloodglucoseData}/> */}
-          <DataGridTable columns={dgcolumns} rows={coreContext.bloodglucoseData}/>
+          <DataGridTable columns={dgcolumns} rows={coreContext.bloodglucoseData} sort={[{ field: "MeasurementDateTime", sort: "desc" }]}/>
           </>
         
       );

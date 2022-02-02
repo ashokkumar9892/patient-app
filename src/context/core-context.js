@@ -520,7 +520,7 @@ export const CoreContextProvider = (props) => {
         if(filteredata.length===0){
           filteredata.push("No Data FOund")
         }
-        if(type!=="patient"){
+        if(type!=="patient" && window.location.href.substring("bloodglucose")>0){
           return(filteredata)
         }else{
 return dataSetbg
@@ -541,6 +541,7 @@ return dataSetbg
           if (bp.GSI1PK !== undefined) {
             bpdata.gSI1PK = bp.GSI1PK.s;
             bpdata.userId = bp.GSI1PK.s.split("_").pop();
+            bpdata.UserId = bp.GSI1PK.s.split("_").pop();
           }
 
           
@@ -1122,6 +1123,9 @@ setpss(some)
             }
             if (th.High) {
               th.High_value = th.High.s;
+            }
+            if (th.SK) {
+              thdata.UserId = th.SK.s;
             }
 
             if (thdata.Element_value === "Blood Glucose") {
@@ -2879,7 +2883,7 @@ console.log("lolo2",pk)
       data = {
         TableName: userTable,
         ProjectionExpression:
-          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, ActiveStatus,Notes",
+          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, GSI1PK,ActiveStatus,Notes",
         IndexName: "Patient-Doctor-Device-Index",
         FilterExpression: "ActiveStatus <> :v_ActiveStatus",
         KeyConditionExpression: "GSI1PK = :v_PK",
@@ -2967,7 +2971,7 @@ console.log("lolo2",pk)
       data = {
         TableName: userTable,
         ProjectionExpression:
-          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, ActiveStatus,Notes",
+          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, GSI1PK,ActiveStatus,Notes",
         IndexName: "Patient-Doctor-Device-Index",
         FilterExpression: "ActiveStatus <> :v_ActiveStatus",
         KeyConditionExpression: "GSI1PK = :v_PK",
