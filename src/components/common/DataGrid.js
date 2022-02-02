@@ -134,6 +134,7 @@ const DataGridTable = ({columns,rows}) => {
           columns={columns}
           pageSize={10}
           sortingOrder={["desc", "asc"]}
+          sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
           componentsProps={{
             toolbar: {
               value: searchText,
