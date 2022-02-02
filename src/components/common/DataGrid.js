@@ -107,7 +107,7 @@ function QuickSearchToolbar(props) {
   };
   
   
-const DataGridTable = ({columns,rows}) => {
+const DataGridTable = ({columns,rows,sort}) => {
     const classes = useStyles();
     const [rows1, setRows1] = React.useState(rows);
     const [searchText, setSearchText] = React.useState("");
@@ -134,7 +134,7 @@ const DataGridTable = ({columns,rows}) => {
           columns={columns}
           pageSize={10}
           sortingOrder={["desc", "asc"]}
-          sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
+          sortModel={sort}
           componentsProps={{
             toolbar: {
               value: searchText,

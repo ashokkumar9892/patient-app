@@ -294,7 +294,7 @@ const BloodPressure = (props) => {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
       return (
         
-        <DataGridTable columns={dgcolumns} rows={coreContext.bloodpressureData}/>
+        <DataGridTable columns={dgcolumns} rows={coreContext.bloodpressureData} sort={[{ field: "MeasurementDateTime", sort: "desc" }]}/>
       );
     } else {
       return (
