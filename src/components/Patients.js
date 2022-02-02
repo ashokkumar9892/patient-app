@@ -567,7 +567,7 @@ const Patients = (props) => {
             {console.log(coreContext.patients[selectionModel])}
           </div> */}
           {/* <center>{select}sa</center> */}
-          <DataGridTable columns={admincolumns} rows={coreContext.patients}/>
+          <DataGridTable columns={admincolumns} rows={coreContext.patients} sort={[{ field: "name", sort: "asc" }]}/>
         </>
       );
     }
@@ -578,7 +578,7 @@ const Patients = (props) => {
     ) {
       return (
         // 
-        <DataGridTable columns={columns} rows={coreContext.patients}/>
+        <DataGridTable columns={columns} rows={coreContext.patients} sort={[{ field: "name", sort: "asc" }]}/>
       );
     } else {
       return (

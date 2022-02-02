@@ -316,13 +316,13 @@ const js=React.useMemo(()=>renderBloodPressure(),[coreContext.bloodpressureData.
   return (
     <div className="card">
       <h4 className="card-header">BLOOD PRESSURE INFORMATION</h4>
-      <div style={{ display: "flex", paddingTop: "10px" }}>
+      {/* <div style={{ display: "flex", paddingTop: "10px" }}>
         <button
           style={{ marginLeft: "94%" }}
           onClick={() => fetchBloodPressure()}>
           Refresh
         </button>
-      </div>
+      </div> */}
       <div className="card-body">{js}</div>
     </div>
   );
