@@ -21,20 +21,19 @@ const Weight = (props) => {
         let userType = localStorage.getItem("userType");
         let patientId = localStorage.getItem("userId");
         // check page if left side menu.
-        if(window.location.href.substring('weight')> 0)
-        {
+       
           coreContext.fetchWSData(patientId,userType);
-        }
-        if(window.location.href.indexOf('patient-summary') >0 )
-        {
-            patientId = localStorage.getItem("ehrId");
-            userType = 'patient';
-            // clear this otherwise will be problem
-            localStorage.removeItem("ehrId");
-        }
+        
+        // if(window.location.href.indexOf('patient-summary') >0 )
+        // {
+        //     patientId = localStorage.getItem("ehrId");
+        //     userType = 'patient';
+        //     // clear this otherwise will be problem
+        //     localStorage.removeItem("ehrId");
+        // }
         setUserType(userType);
         coreContext.fetchPatientListfromApi(userType, patientId);
-      coreContext.fetchWSData(patientId,userType);
+     // coreContext.fetchWSData(patientId,userType);
      
     }
     useEffect(fetchWeight, [coreContext.weightData.length,coreContext.patients.length]);

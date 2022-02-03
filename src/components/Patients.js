@@ -193,6 +193,7 @@ const Patients = (props) => {
       patient.CareName = "Select Coordinator";
       setCoordinator("");
     } else {
+      console.log(coreContext.careCoordinatorOptions,"coreContext.careCoordinatorOptions")
       setCoordinator(
         coreContext.careCoordinatorOptions.filter((name) =>
           name.name.includes(patient.CareName)
@@ -261,7 +262,7 @@ const Patients = (props) => {
       coreContext.fetchPatientListfromApi(userType, userId, isactiveusrs);
   };
 
-  useEffect(fetchPatients, [coreContext.patients.length]);
+  useEffect(fetchPatients, [JSON.stringify(coreContext.patients)]);
   useEffect(fetchPatients, [checked]);
 
   const deletePatient = (patient) => {
@@ -596,7 +597,7 @@ const Patients = (props) => {
       );
     }
   };
-  const ren=React.useMemo(()=>renderPatients(),[coreContext.patients.length]);
+  const ren=React.useMemo(()=>renderPatients(),[JSON.stringify(coreContext.patients)]);
   // const renderbuttons=()=>{
   //   <div style={{  width: '100px' }}  >
   //   <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showEditForm(rows)}>  <PencilSquare /></Link>

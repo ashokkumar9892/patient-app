@@ -118,6 +118,67 @@ const PatientSummary = (props) => {
       label: "custom",
     },
   ];
+  const patientcolumns = [
+    // { field: 
+    //   'UserName', 
+    //   headerName: 'Patient Name', 
+    //   width: 200 ,  
+    //   type: 'string',
+    // },
+    {
+      field: 'MeasurementDateTime',
+      headerName: 'Date Recorded',
+      width: 110,
+      editable: false,
+      width: 300,
+      type: 'date',
+    width: 200,
+    valueFormatter: (params) => {
+      const valueFormatted = Moment(params.value).format('MM-DD-YYYY hh:mm A')
+       return `${valueFormatted}`;
+     },
+    },
+    {
+      field: 'weight',
+      headerName: 'Weight (lbs)',
+      type: 'number',
+      editable: false,
+      width: 200
+    },
+    
+      // // {
+      // //   field: 'CreatedDate',
+      // //   headerName: 'Date Received',
+      // //   width: 200,
+      // //   editable: false,
+      // //   type: 'date',
+      // // width: 200,
+      // // valueFormatter: (params) => {
+      // //   const valueFormatted = Moment(params.value).format('MM-DD-YYYY hh:mm A')
+      // //    return `${valueFormatted}`;
+      // //  },
+       
+      // },
+      {
+        field: 'DeviceId',
+        headerName: 'Device Id',
+        editable: false,
+        width: 200
+      },
+      {
+        field: 'readingId',
+        headerName: 'Reading Id',
+        type: 'number',
+        editable: false,
+        width: 200
+      },
+      // { 
+      //   field: "sortDateColumn", 
+      //   headerName: "Action"
+       
+      // }         
+
+  ];
 
   function valueLabelFormat(value) {
     return marks.findIndex((mark) => mark.value === value) + 1;
@@ -530,6 +591,9 @@ return String(ttt[0].bg_high)
   const fetchbp = () => {
     coreContext.fetchBloodPressureForPatient(localStorage.getItem("ehrId"), "patient");
   };
+  const fetchws = () => {
+    coreContext.fetchWSData(localStorage.getItem("ehrId"), "patient");
+  };
   const fetchbg = () => {
     coreContext.fetchBloodGlucoseForPatient(localStorage.getItem("ehrId"), "patient");
   };
@@ -545,6 +609,7 @@ return String(ttt[0].bg_high)
   useEffect(fetchbp, [coreContext.patientbloodpressureData.length]);
   useEffect(fetchbg, [JSON.stringify(coreContext.patientbloodglucoseData)]);
   useEffect(fetchTd, [JSON.stringify(coreContext.thresoldData)]);
+  useEffect(fetchws, [JSON.stringify(coreContext.patientWeightData)]);
   useEffect(fetchadmintd, [JSON.stringify(coreContext.adminthresold)]);
 console.log("check admin thresold from patient",coreContext.thresoldData)
   const fetchsliderdays = () => {
@@ -2366,6 +2431,46 @@ let patientName;
     if (index == 7) {
     }
   };
+  // const renderweight=()=>{
+
+  //   return(
+  //     <Weight></Weight>
+  //   )
+  // }
+  const renderweight = () => {
+    if (coreContext.patientWeightData.length === 0) {
+      return (
+        <div
+          style={{
+            height: 500,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "10px",
+            alignItems: "center",
+          }}>
+          <h6>No data Found</h6>
+          {/* <Loader type="Circles" color="#00BFFF" height={100} width={100} /> */}
+        </div>
+      );
+    }
+    if (coreContext.patientWeightData.length > 0) {
+      //  timerLogs  = timerLogs.sort((a,b) => new Moment(b.startDT) - new Moment(a.startDT));
+      return (
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid
+            className={classes.root}
+            rows={coreContext.patientWeightData}
+            columns={patientcolumns}
+            pageSize={10}
+            sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
+            sortingOrder={["desc", "asc"]}
+          />
+        </div>
+      );
+    }
+  };
+  const weightdata=React.useMemo(()=>renderweight(),[coreContext.patientWeightData.length])
 
   function doSomething(value) {
     // console.log("doSomething called by child with value:", value);
@@ -2522,7 +2627,8 @@ let patientName;
 
                       <TabPanel>
                         <div className="card-body">
-                          <Weight></Weight>
+                          {weightdata}
+                          {/* <Weight></Weight> */}
                         </div>
                       </TabPanel>
                       {/* <TabPanel>

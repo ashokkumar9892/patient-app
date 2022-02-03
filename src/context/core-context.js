@@ -45,6 +45,7 @@ export const CoreContextProvider = (props) => {
   const [patient, setPatient] = useState({});
   const [threads, setThreads] = useState([]);
   const [inbox, setInbox] = useState([]);
+  const [patientWeightData, SetPatientWeightData] = useState([]);
   const [genderOptions, setgenderOptions] = useState([
     { name: "Male", value: 0 },
     { name: "Female", value: 1 },
@@ -1072,15 +1073,19 @@ setpss(some)
          return pid.includes(curr.userId)
 
         })
-
+        
         
         if(filteredata.length===0){
           filteredata.push("No Data FOund")
         }
    
        
-
-        setweightData(filteredata);
+        if(usertype!=="patient" ){
+          alert(window.location.href.substring("weight"))
+          setweightData(filteredata);
+        }else{
+          SetPatientWeightData(dataSetwt)
+        }
       });
   };
 
@@ -3780,6 +3785,7 @@ setpatientbloodglucoseData(some)
         handlePatientConfirmationModalClose,
         fetchBloodPressure,
         fetchBloodGlucose,
+        patientWeightData,
         relogin,
         setdeviceData,
         patientbloodpressureData,
