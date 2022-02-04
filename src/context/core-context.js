@@ -1081,7 +1081,7 @@ setpss(some)
    
        
         if(usertype!=="patient" ){
-          alert(window.location.href.substring("weight"))
+          
           setweightData(filteredata);
         }else{
           SetPatientWeightData(dataSetwt)
