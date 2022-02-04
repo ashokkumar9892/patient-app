@@ -177,6 +177,7 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const FetchNotificationForBP=()=>{
     var date = new Date();
 date.setDate(date.getDate() - 7);
+date.setHours(0,0,0,0)
 
     coreContext.patients.map((patient)=>{
       coreContext.bloodpressureData.filter((data)=>data.MeasurementDateTime>date).map((bp)=>{
@@ -214,6 +215,7 @@ date.setDate(date.getDate() - 7);
   const FetchNotificationForBG=()=>{
     var date = new Date();
     date.setDate(date.getDate() - 7);
+    date.setHours(0,0,0,0)
     coreContext.patients.map((patient)=>{
       coreContext.bloodglucoseData.filter((data)=>data.MeasurementDateTime>date).map((bg)=>{
         if(patient.userId===bg.userId){
