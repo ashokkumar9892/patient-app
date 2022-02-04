@@ -694,7 +694,9 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.patientbloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+        //from.setHours(0,0,0,0);
         from.setHours(0,0,0,0);
+        to.setHours(23,59,59,999);
         console.log(
           coreContext.patientbloodpressureData,
           "coreContext.patientbloodpressureData"
