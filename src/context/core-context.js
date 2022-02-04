@@ -3084,6 +3084,68 @@ export const CoreContextProvider = (props) => {
         }
       });
   };
+  const AddNotification = (Notification,usertype,userid) => {
+    const token = localStorage.getItem("app_jwt");
+      const data = JSON.stringify({
+     // id: timeLogData.length + 1,
+      PK: "Notification_"+usertype,
+      SK:Notification,
+      GSI1PK:"Notification_"+userid
+      
+    });
+
+    axios
+      .post(
+        apiUrl +
+          "/DynamoDbAPIs/PutItem?jsonData=" +
+          data +
+          "&tableName=" +
+          userTable +
+          "&actionType=register",
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            // "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data === "Registered") {
+          console.log(response.data);
+          swal("success", "Notification added", "success");
+        }
+      });
+  };
+  const FetchNotification = (userid) => {
+    const token = localStorage.getItem("app_jwt");
+
+    let data = "";
+    data = {
+      TableName: userTable,
+      KeyConditionExpression: "PK = :v_PK",
+      FilterExpression: "GSI1PK = :v_GSI1PK",
+      ExpressionAttributeValues: {
+        ":v_PK": { S: "Notificaion_admin" },
+       ":v_GSI1PK": { S: "Notification_" + userid },
+        
+      },
+    };
+    axios
+      .post(apiUrl + "/DynamoDbAPIs/getitem", data, {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          // "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const timelogData = response.data;
+        console.log("notification fetch", response.data);
+        
+      });
+  };
+
 
   const UpdateTimeLog = (
     timelog,
@@ -3319,6 +3381,8 @@ export const CoreContextProvider = (props) => {
         adminthresold,
         fetchadminThresold,
         userinfo,
+        AddNotification,
+        FetchNotification
       }}>
       {props.children}
     </CoreContext.Provider>

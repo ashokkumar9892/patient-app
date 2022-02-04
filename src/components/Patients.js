@@ -156,7 +156,7 @@ const Patients = (props) => {
       patient.ProviderName = "Select Provider";
       setProvider("");
     } else {
-      console.log(coreContext.providerOptions,"coreContext.providerOptions")
+      //console.log(coreContext.providerOptions,"coreContext.providerOptions")
       
 
       // coreContext.providerOptions.filter((name)=>{
@@ -510,7 +510,7 @@ const Patients = (props) => {
   // const classes = useStyles();
 
   const renderPatients = () => {
-    if (coreContext.patients.length == 0) {
+    if (coreContext.patients.length === 0) {
       return (
         <div
           style={{
@@ -529,6 +529,7 @@ const Patients = (props) => {
       coreContext.patients.length > 0 &&
       usertype === "admin" &&
       coreContext.patients[0].name !== undefined
+      && coreContext.providerOptions.length>0 && coreContext.coachOptions.length>0 && coreContext.careCoordinatorOptions.length>0
     ) 
     console.log("uttkarsh patients",coreContext.patients)
     {

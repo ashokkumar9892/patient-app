@@ -169,9 +169,11 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const fetchadmintd=()=>{
     coreContext.fetchadminThresold("ADMIN_ADMIN_", "admin")
   }
-  
+  const fetchdbnotificaion=()=>{
+coreContext.FetchNotification(localStorage.getItem("userId"))
+  }
   useEffect(() => {
-    fetchadmintd();fetchtd();
+    fetchadmintd();fetchtd();fetchdbnotificaion();
   }, []);
 
   const FetchNotificationForBP=()=>{
@@ -186,15 +188,15 @@ date.setHours(0,0,0,0)
             if(td.UserId.includes(patient.userId)){
               if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic)===false)
-                notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
+                notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
                   "MM-DD-YYYY hh:mm A"
-                )+"~Diastolic")
+                )+"~Diastolic","date":bp.MeasurementDateTime})
               }
               if(Number(bp.systolic)>Number(td.systolic_high) || Number(bp.systolic)<Number(td.systolic_low )){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
-                notificationValue.push(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
+                notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
                   "MM-DD-YYYY hh:mm A"
-                )+"~Systolic")
+                )+"~Systolic","date":bp.MeasurementDateTime})
                }
             }
             
@@ -225,9 +227,9 @@ date.setHours(0,0,0,0)
               if(Number(bg.bloodglucosemgdl)>Number(td.bg_high) || Number(bg.bloodglucosemgdl)<Number(td.bg_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl)===false){
                   
-                  notificationValue.push(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
+                  notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
-                  )+"~Blood Glucose")
+                  )+"~Blood Glucose","date":bg.MeasurementDateTime})
                 }
                  
                }
@@ -1225,14 +1227,17 @@ const handlechangeprovider=(p)=>{
         <DialogContent dividers>
          
           
-          {notificationValue.map((curr)=>{
+          {notificationValue.sort(function(a,b){
+ 
+  return new Date(b.date) - new Date(a.date);
+}).map((curr)=>{
            return(
              <>
             <Typography gutterBottom>
               
-         {curr.split("~")[0]} has crossed the  threshold with {curr.split("~")[4]} reading {curr.split("~")[2]} on {curr.split("~")[3]}
+         {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
             </Typography>
-            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}}>
+            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"))}>
               
         Mark as Read
             </Typography>
