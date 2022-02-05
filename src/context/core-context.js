@@ -3110,6 +3110,7 @@ export const CoreContextProvider = (props) => {
           },
         }
       )
+      
       .then((response) => {
         if (response.data === "Registered") {
           console.log(response.data);
@@ -3126,7 +3127,7 @@ export const CoreContextProvider = (props) => {
       KeyConditionExpression: "PK = :v_PK",
       FilterExpression: "GSI1PK = :v_GSI1PK",
       ExpressionAttributeValues: {
-        ":v_PK": { S: "Notificaion_admin" },
+        ":v_PK": { S: "Notification_admin" },
        ":v_GSI1PK": { S: "Notification_" + userid },
         
       },
