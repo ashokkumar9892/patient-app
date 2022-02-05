@@ -99,7 +99,7 @@ const Provider = (props) => {
   const [patientId, setPatientId] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [searchText, setSearchText] = React.useState("");
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);fetchProviders()};
   const handleModalShow = () => setShowModal(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -399,7 +399,7 @@ useEffect(fetchProviders, [checked]);
             blockButton={true}
             value="Submit"
             onClick={() =>
-              coreContext.UpdateProvider(name, phone, email, patientId)
+              {coreContext.UpdateProvider(name, phone, email, patientId);handleModalClose()}
             }
             elementType="button"
             variant="primary"

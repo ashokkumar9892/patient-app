@@ -624,7 +624,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
-        //to.setHours(0,0,0,0);
+
         from.setHours(0,0,0,0);
         to.setHours(23,59,59,999);
         console.log(
@@ -1676,9 +1676,26 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       width: 190,
       //headerAlign: 'center'
     },
+    // {
+    //   field: "performedOn",
+    //   headerName: "Performed On",
+    //   width: 190,
+    //   //headerAlign: 'center',
+    //   editable: false,
+
+    //   valueFormatter: (params) => {
+    //     const valueFormatted = Moment(params.value).format(
+    //       "MM-DD-YYYY hh:mm:ss A"
+    //     );
+    //     return `${valueFormatted}`;
+    //   },
+
+    //   //width: 500
+    // },
     {
       field: "performedOn",
       headerName: "Performed On",
+      
       width: 190,
       type: "dateTime",
       //headerAlign: 'center',
@@ -1690,8 +1707,6 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         );
         return `${valueFormatted}`;
       },
-
-      //width: 500
     },
     {
       field: "timeAmount",
@@ -1758,6 +1773,8 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
 
   const deleteTimeLog = (tl) => {
 
+    // renderTimelogs();
+    // fetchtotaltime();
     swal({
       title: "Are you sure?",
       
@@ -1773,8 +1790,6 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         swal("Delete Cancelled");
       }
     });
-    // renderTimelogs();
-    // fetchtotaltime();
   };
 
 
@@ -2876,6 +2891,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                         onClick={() =>{
                           setdeviceflag(adddeviceflag + 1)
                           coreContext.addDevice(deviceType, deviceId, patientId)
+                          setDeviceId("");
+                          setDeviceType("");
                         }
                         }
                         className="btn btn-primary mb-2">
