@@ -28,7 +28,7 @@ const CareCoordinator = (props) => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [patientId, setPatientId] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);fetchCareCoordinator();};
   const handleModalShow = () => setShowModal(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -280,7 +280,7 @@ const CareCoordinator = (props) => {
             blockButton={true}
             value="Submit"
             onClick={() =>
-              coreContext.UpdateCareCoordinator(name, phone, email, patientId)
+              {coreContext.UpdateCareCoordinator(name, phone, email, patientId);handleModalClose()}
             }
             elementType="button"
             variant="primary"

@@ -99,7 +99,7 @@ const Provider = (props) => {
   const [patientId, setPatientId] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [searchText, setSearchText] = React.useState("");
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);fetchProviders()};
   const handleModalShow = () => setShowModal(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -141,7 +141,7 @@ const Provider = (props) => {
   };
   useEffect(resetForm, [coreContext.resetForm]);
 
-  useEffect(fetchProviders, [JSON.stringify(coreContext.providerData)]);
+  useEffect(fetchProviders, [coreContext.providerData.length]);
 {console.log("checking the date",coreContext.providerData)}
 const onToggleChangeActiveUsers = (event) => {
   setChecked(event.target.checked);
@@ -339,11 +339,11 @@ useEffect(fetchProviders, [checked]);
           <Button
             variant="primary"
             onClick={() =>
-              {coreContext.verifyProviderVerificationCode(
+              coreContext.verifyProviderVerificationCode(
                 verificationCode,
                 email,
                 "Provider"
-              );handleModalClose();}
+              )
             }>
             Submit
           </Button>
@@ -399,7 +399,7 @@ useEffect(fetchProviders, [checked]);
             blockButton={true}
             value="Submit"
             onClick={() =>
-              coreContext.UpdateProvider(name, phone, email, patientId)
+              {coreContext.UpdateProvider(name, phone, email, patientId);handleModalClose()}
             }
             elementType="button"
             variant="primary"

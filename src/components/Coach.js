@@ -39,7 +39,7 @@ const Coach = (props) => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [patientId, setPatientId] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);fetchCoach()};
   const handleModalShow = () => setShowModal(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -273,7 +273,7 @@ const Coach = (props) => {
             blockButton={true}
             value="Submit"
             onClick={() =>
-              coreContext.UpdateCoach(name, phone, email, patientId)
+              {coreContext.UpdateCoach(name, phone, email, patientId);handleModalClose()}
             }
             elementType="button"
             variant="primary"
