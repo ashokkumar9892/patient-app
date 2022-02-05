@@ -3144,6 +3144,9 @@ export const CoreContextProvider = (props) => {
       .then((response) => {
         const notificationData = response.data;
         const notificationarray=[];
+        if(notificationData.length===0){
+          notificationarray.push("no data found")
+        }
 
         notificationData.map((curr)=>{
           notificationarray.push(curr.SK.s)

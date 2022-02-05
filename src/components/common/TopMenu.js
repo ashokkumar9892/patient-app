@@ -275,7 +275,7 @@ date.setHours(0,0,0,0)
       
       
     }
-  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue])
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue,coreContext.notifications.length])
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <0 && coreContext.notifications.length>0){
@@ -283,7 +283,7 @@ date.setHours(0,0,0,0)
       FetchNotificationForBG();
       
     }
-  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue])
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue,coreContext.notifications.length])
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
