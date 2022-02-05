@@ -13,6 +13,7 @@ export const CoreContextProvider = (props) => {
   const [bpData, setbpData] = useState([]);
   const [wsData, setwsData] = useState([]);
   const [adminthresold, setadminthresold] = useState([]);
+  const [notifications,setNotifications]=useState([]);
 
   const [weightData, setweightData] = useState([]);
   const [weightApiData, setweightdeviceApiData] = useState([]);
@@ -800,6 +801,7 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         const thresholdData = response.data;
+        console.log("chiki",response.data)
 
         const dataSetthresold = [];
         {
@@ -815,6 +817,9 @@ export const CoreContextProvider = (props) => {
             }
             if (th.High) {
               th.High_value = th.High.s;
+            }
+            if (th.SK) {
+              thdata.UserId = th.SK.s;
             }
 
             if (thdata.Element_value === "Blood Glucose") {
@@ -2417,7 +2422,7 @@ export const CoreContextProvider = (props) => {
       data = {
         TableName: userTable,
         ProjectionExpression:
-          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, ActiveStatus,Notes",
+          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken,GSI1PK,ActiveStatus,Notes",
         KeyConditionExpression: "PK = :v_PK",
         FilterExpression: "ActiveStatus <> :v_ActiveStatus",
         ExpressionAttributeValues: {
@@ -2437,6 +2442,7 @@ export const CoreContextProvider = (props) => {
       })
       .then((response) => {
         const bloodpressureData = response.data;
+        console.log("bloodpressuredata",response.data)
         const dataSetbp = [];
         if (bloodpressureData.length === 0) {
           dataSetbp.push("No Data Found");
@@ -2448,8 +2454,10 @@ export const CoreContextProvider = (props) => {
           bpdata.id = index;
           if (bp.GSI1PK !== undefined) {
             bpdata.gSI1PK = bp.GSI1PK.s;
-            bpdata.userId = bp.GSI1PK.s.split("_").pop();
+            bpdata.UserId = bp.GSI1PK.s.split("_").pop();
+            console.log("bpdata.UserId",bpdata.UserId)
           }
+         
           if (bp.UserName !== undefined) {
             bpdata.UserName = bp.UserName.s;
           }
@@ -3077,6 +3085,76 @@ export const CoreContextProvider = (props) => {
         }
       });
   };
+  const AddNotification = (Notification,usertype,userid) => {
+    const token = localStorage.getItem("app_jwt");
+      const data = JSON.stringify({
+     // id: timeLogData.length + 1,
+      PK: "Notification_"+usertype,
+      SK:Notification,
+      GSI1PK:"Notification_"+userid
+      
+    });
+
+    axios
+      .post(
+        apiUrl +
+          "/DynamoDbAPIs/PutItem?jsonData=" +
+          data +
+          "&tableName=" +
+          userTable +
+          "&actionType=register",
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            // "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      
+      .then((response) => {
+        if (response.data === "Registered") {
+          console.log(response.data);
+          swal("success", "Notification has been marked as read.", "success");
+        }
+      });
+  };
+  const FetchNotification = (userid) => {
+    const token = localStorage.getItem("app_jwt");
+
+    let data = "";
+    data = {
+      TableName: userTable,
+      KeyConditionExpression: "PK = :v_PK",
+      FilterExpression: "GSI1PK = :v_GSI1PK",
+      ExpressionAttributeValues: {
+        ":v_PK": { S: "Notification_admin" },
+       ":v_GSI1PK": { S: "Notification_" + userid },
+        
+      },
+    };
+    axios
+      .post(apiUrl + "/DynamoDbAPIs/getitem", data, {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          // "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const notificationData = response.data;
+        const notificationarray=[];
+
+        notificationData.map((curr)=>{
+          notificationarray.push(curr.SK.s)
+
+        })
+        setNotifications(notificationarray)
+        console.log(notificationarray,"notificationarray")
+        
+      });
+  };
+
 
   const UpdateTimeLog = (
     timelog,
@@ -3312,6 +3390,9 @@ export const CoreContextProvider = (props) => {
         adminthresold,
         fetchadminThresold,
         userinfo,
+        AddNotification,
+        FetchNotification,
+        notifications
       }}>
       {props.children}
     </CoreContext.Provider>

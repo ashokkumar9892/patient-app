@@ -120,8 +120,6 @@ const Coach = (props) => {
         swal("Delete Cancelled");
       }
     });
-
-
   };
 
   const renderCoach = () => {
