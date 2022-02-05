@@ -55,7 +55,7 @@ const CareCoordinator = (props) => {
   };
   useEffect(resetForm, [coreContext.resetForm]);
 
-  useEffect(fetchCareCoordinator, []);
+  useEffect(fetchCareCoordinator, [JSON.stringify(coreContext.ccData)]);
   const columns = [
     {
       field: "name",
@@ -219,12 +219,12 @@ const CareCoordinator = (props) => {
         <Modal.Footer>
           <Button
             variant="primary"
-            onClick={() =>
+            onClick={() =>{
               coreContext.verifyProviderVerificationCode(
                 verificationCode,
                 email,
                 "CareCoordinator"
-              )
+              );handleModalClose();}
             }>
             Submit
           </Button>

@@ -141,7 +141,7 @@ const Provider = (props) => {
   };
   useEffect(resetForm, [coreContext.resetForm]);
 
-  useEffect(fetchProviders, [coreContext.providerData.length]);
+  useEffect(fetchProviders, [JSON.stringify(coreContext.providerData)]);
 {console.log("checking the date",coreContext.providerData)}
 const onToggleChangeActiveUsers = (event) => {
   setChecked(event.target.checked);
@@ -339,11 +339,11 @@ useEffect(fetchProviders, [checked]);
           <Button
             variant="primary"
             onClick={() =>
-              coreContext.verifyProviderVerificationCode(
+              {coreContext.verifyProviderVerificationCode(
                 verificationCode,
                 email,
                 "Provider"
-              )
+              );handleModalClose();}
             }>
             Submit
           </Button>
