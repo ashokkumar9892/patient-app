@@ -188,15 +188,31 @@ date.setHours(0,0,0,0)
             if(td.UserId.includes(patient.userId)){
               if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic)===false)
-                notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
-                  "MM-DD-YYYY hh:mm A"
-                )+"~Diastolic","date":bp.MeasurementDateTime})
+                {
+                  if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
+                    "MM-DD-YYYY hh:mm A"
+                  )+"~Diastolic")===false){
+                    notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
+                      "MM-DD-YYYY hh:mm A"
+                    )+"~Diastolic","date":bp.MeasurementDateTime})
+  
+                  }
+                  
+                }
+                
               }
               if(Number(bp.systolic)>Number(td.systolic_high) || Number(bp.systolic)<Number(td.systolic_low )){
-                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false)
-                notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
-                  "MM-DD-YYYY hh:mm A"
-                )+"~Systolic","date":bp.MeasurementDateTime})
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false){
+                  if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
+                    "MM-DD-YYYY hh:mm A"
+                  )+"~Systolic")===false){
+                    notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
+                      "MM-DD-YYYY hh:mm A"
+                    )+"~Systolic","date":bp.MeasurementDateTime})
+                  }
+                  
+                }
+                
                }
             }
             
@@ -226,10 +242,14 @@ date.setHours(0,0,0,0)
               
               if(Number(bg.bloodglucosemgdl)>Number(td.bg_high) || Number(bg.bloodglucosemgdl)<Number(td.bg_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl)===false){
-                  
-                  notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
+                  if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
-                  )+"~Blood Glucose","date":bg.MeasurementDateTime})
+                  )+"~Blood Glucose")===false){
+                    notificationValue.push({"value":patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
+                      "MM-DD-YYYY hh:mm A"
+                    )+"~Blood Glucose","date":bg.MeasurementDateTime})
+                  }
+                  
                 }
                  
                }
@@ -250,7 +270,7 @@ date.setHours(0,0,0,0)
 
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
-    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
+    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0 && coreContext.notifications.length>0){
       FetchNotificationForBP();
       
       
@@ -258,7 +278,7 @@ date.setHours(0,0,0,0)
   },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue])
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
-    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0){
+    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <0 && coreContext.notifications.length>0){
       
       FetchNotificationForBG();
       
@@ -1237,9 +1257,10 @@ const handlechangeprovider=(p)=>{
               
          {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
             </Typography>
-            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"))}>
+            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1)}}>
               
         Mark as Read
+        
             </Typography>
             <hr/>
             

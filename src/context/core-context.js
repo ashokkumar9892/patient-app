@@ -13,6 +13,7 @@ export const CoreContextProvider = (props) => {
   const [bpData, setbpData] = useState([]);
   const [wsData, setwsData] = useState([]);
   const [adminthresold, setadminthresold] = useState([]);
+  const [notifications,setNotifications]=useState([]);
 
   const [weightData, setweightData] = useState([]);
   const [weightApiData, setweightdeviceApiData] = useState([]);
@@ -3114,7 +3115,7 @@ export const CoreContextProvider = (props) => {
       .then((response) => {
         if (response.data === "Registered") {
           console.log(response.data);
-          swal("success", "Notification added", "success");
+          swal("success", "Notification has been marked as read.", "success");
         }
       });
   };
@@ -3141,8 +3142,15 @@ export const CoreContextProvider = (props) => {
         },
       })
       .then((response) => {
-        const timelogData = response.data;
-        console.log("notification fetch", response.data);
+        const notificationData = response.data;
+        const notificationarray=[];
+
+        notificationData.map((curr)=>{
+          notificationarray.push(curr.SK.s)
+
+        })
+        setNotifications(notificationarray)
+        console.log(notificationarray,"notificationarray")
         
       });
   };
@@ -3383,7 +3391,8 @@ export const CoreContextProvider = (props) => {
         fetchadminThresold,
         userinfo,
         AddNotification,
-        FetchNotification
+        FetchNotification,
+        notifications
       }}>
       {props.children}
     </CoreContext.Provider>
