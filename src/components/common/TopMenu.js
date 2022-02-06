@@ -169,6 +169,7 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const fetchadmintd=()=>{
     coreContext.fetchadminThresold("ADMIN_ADMIN_", "admin")
   }
+
   const fetchdbnotificaion=()=>{
 coreContext.FetchNotification(localStorage.getItem("userId"))
   }
@@ -179,7 +180,7 @@ coreContext.FetchNotification(localStorage.getItem("userId"))
   const FetchNotificationForBP=()=>{
     var date = new Date();
 date.setDate(date.getDate() - 7);
-date.setHours(0,0,0,0)
+date.setHours(0,0,0,0);
 
     coreContext.patients.map((patient)=>{
       coreContext.bloodpressureData.filter((data)=>data.MeasurementDateTime>date).map((bp)=>{
@@ -188,6 +189,7 @@ date.setHours(0,0,0,0)
             if(td.UserId.includes(patient.userId)){
               if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic)===false)
+
                 {
                   if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
@@ -213,6 +215,7 @@ date.setHours(0,0,0,0)
                   
                 }
                 
+
                }
             }
             
@@ -233,7 +236,9 @@ date.setHours(0,0,0,0)
   const FetchNotificationForBG=()=>{
     var date = new Date();
     date.setDate(date.getDate() - 7);
+
     date.setHours(0,0,0,0)
+
     coreContext.patients.map((patient)=>{
       coreContext.bloodglucoseData.filter((data)=>data.MeasurementDateTime>date).map((bg)=>{
         if(patient.userId===bg.userId){
@@ -242,6 +247,7 @@ date.setHours(0,0,0,0)
               
               if(Number(bg.bloodglucosemgdl)>Number(td.bg_high) || Number(bg.bloodglucosemgdl)<Number(td.bg_low)){
                 if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl)===false){
+
                   if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
                   )+"~Blood Glucose")===false){
@@ -250,6 +256,7 @@ date.setHours(0,0,0,0)
                     )+"~Blood Glucose","date":bg.MeasurementDateTime})
                   }
                   
+
                 }
                  
                }
@@ -270,20 +277,26 @@ date.setHours(0,0,0,0)
 
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
+
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodpressureData.length>0 &&  window.location.href.indexOf("patient-summary") <= 0 && coreContext.notifications.length>0){
+
       FetchNotificationForBP();
       
       
     }
+
   },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue,coreContext.notifications.length])
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
     if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <0 && coreContext.notifications.length>0){
+
       
       FetchNotificationForBG();
       
     }
+
   },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue,coreContext.notifications.length])
+
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -1247,20 +1260,23 @@ const handlechangeprovider=(p)=>{
         <DialogContent dividers>
          
           
+
           {notificationValue.sort(function(a,b){
  
   return new Date(b.date) - new Date(a.date);
 }).map((curr)=>{
+
            return(
              <>
             <Typography gutterBottom>
-              
+
          {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
             </Typography>
             <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1)}}>
               
         Mark as Read
         
+
             </Typography>
             <hr/>
             
@@ -1276,3 +1292,5 @@ const handlechangeprovider=(p)=>{
 };
 
 export default TopMenu;
+
+

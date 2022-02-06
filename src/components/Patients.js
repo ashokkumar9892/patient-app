@@ -6,12 +6,17 @@ import { Table, Pagination, Modal, Button, Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { PencilSquare, Trash, Person } from "react-bootstrap-icons";
 import { IconName } from "react-icons/bs";
-import { makeStyles } from "@material-ui/core/styles";
+
 import { useForm } from "react-hook-form";
 import swal from 'sweetalert';
 
 import Input from "./common/Input";
 import * as React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 import Switch from "@material-ui/core/Switch";
 import moment from 'moment';
 
@@ -23,19 +28,12 @@ import {
 } from "@material-ui/data-grid";
 
 import Loader from "react-loader-spinner";
+import DataGridTable from "./common/DataGrid";
 const Moment = require("moment");
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiDataGrid-columnHeaderCheckbox": {
-      display: "block",
-      pointerEvents: "none",
-      disabled: "disabled",
-    },
-  },
-}));
+
 
 const Patients = (props) => {
-  const classes = useStyles();
+  
 
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
@@ -110,6 +108,12 @@ const Patients = (props) => {
 
   useEffect(coreContext.checkLocalAuth, []);
   useEffect(fetchPatients, []);
+  useEffect(() => {
+    
+    return () => {
+      coreContext.cleanup();
+    }
+  }, [])
 
   function formatAMPM(date) {
     var d = new Date(date);
@@ -189,6 +193,7 @@ const Patients = (props) => {
       patient.CareName = "Select Coordinator";
       setCoordinator("");
     } else {
+      console.log(coreContext.careCoordinatorOptions,"coreContext.careCoordinatorOptions")
       setCoordinator(
         coreContext.careCoordinatorOptions.filter((name) =>
           name.name.includes(patient.CareName)
@@ -257,7 +262,7 @@ const Patients = (props) => {
       coreContext.fetchPatientListfromApi(userType, userId, isactiveusrs);
   };
 
-  useEffect(fetchPatients, [coreContext.patients.length]);
+  useEffect(fetchPatients, [JSON.stringify(coreContext.patients)]);
   useEffect(fetchPatients, [checked]);
 
   const deletePatient = (patient) => {
@@ -285,10 +290,10 @@ const Patients = (props) => {
       headerName: "Patient Name",
       width: 200,
       renderCell: (params) => (
-        <a href={`/patient-summary/${btoa(params.row.userId)}`}>
+        <Link to={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
           {params.value}{" "}
-        </a>
+        </Link>
       ),
     },
     {
@@ -363,31 +368,31 @@ const Patients = (props) => {
       width: 120,
       renderCell: (params) => (
         <div style={{ width: "100px" }}>
-          <a
+          <Link
             style={{ marginRight: "5px" }}
-            href="#"
+            to="#"
             onClick={() => showEditForm(params.row)}>
             {" "}
             <PencilSquare />
-          </a>
+          </Link>
           {/* {console.log("sahil",params.row)} */}
-          <a
+          <Link
             style={{ marginRight: "5px" }}
-            href="#"
+            to="#"
             onClick={() => {
               deletePatient(params.row);
               fetchPatients();
             }}>
             {" "}
             <Trash />
-          </a>
-          <a
+          </Link>
+          <Link
             style={{ marginRight: "5px" }}
-            href="#"
+            to="#"
             onClick={() => showAssignDoctor(params.row)}>
             {" "}
             <Person />
-          </a>
+          </Link>
         </div>
       ),
     },
@@ -399,10 +404,10 @@ const Patients = (props) => {
       headerName: "Patient Name",
       width: 200,
       renderCell: (params) => (
-        <a href={`/patient-summary/${btoa(params.row.userId)}`}>
+        <Link to={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
           {params.value}{" "}
-        </a>
+        </Link>
       ),
     },
     {
@@ -477,24 +482,24 @@ const Patients = (props) => {
       width: 120,
       renderCell: (params) => (
         <div style={{ width: "100px" }}>
-          <a
+          <Link
             style={{ marginRight: "5px" }}
-            href="#"
+            to="#"
             onClick={() => showEditForm(params.row)}>
             {" "}
             <PencilSquare />
-          </a>
-          <a
+          </Link>
+          <Link
             style={{ marginRight: "5px" }}
-            href="#"
+            to="#"
             onClick={() => {
               deletePatient(params.row);
               fetchPatients();
             }}>
             {" "}
             <Trash />
-          </a>
-          {/* <a  style={{  marginRight: '5px' }} href="#" onClick={() => showAssignDoctor(params.row)}>  <Person /></a> */}
+          </Link>
+          {/* <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showAssignDoctor(params.row)}>  <Person /></Link> */}
         </div>
       ),
     },
@@ -508,6 +513,7 @@ const Patients = (props) => {
   //   }));
 
   // const classes = useStyles();
+  
 
   const renderPatients = () => {
     if (coreContext.patients.length === 0) {
@@ -535,7 +541,7 @@ const Patients = (props) => {
     {
       return (
         <>
-          <div style={{ height: 680, width: "100%" }}>
+          {/* <div style={{ height: 680, width: "100%" }}>
             <DataGrid
               className={classes.root}
               rows={coreContext.patients}
@@ -561,8 +567,9 @@ const Patients = (props) => {
               // selectionModel={selectionModel}
             />
             {console.log(coreContext.patients[selectionModel])}
-          </div>
+          </div> */}
           {/* <center>{select}sa</center> */}
+          <DataGridTable columns={admincolumns} rows={coreContext.patients} sort={[{ field: "name", sort: "asc" }]}/>
         </>
       );
     }
@@ -572,32 +579,8 @@ const Patients = (props) => {
       coreContext.patients[0].name !== undefined
     ) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            className={classes.root}
-            rows={coreContext.patients}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "name", sort: "asc" }]}
-            checkboxSelection={false}
-            //hideFooterPagination
-            // onSelectionModelChange={(selection) => {
-            //   const newSelectionModel = selection.selectionModel;
-
-            //   if (newSelectionModel.length > 1) {
-            //     const selectionSet = new Set(selectionModel);
-            //     const result = newSelectionModel.filter(
-            //       (s) => !selectionSet.has(s)
-            //     );
-
-            //     setSelectionModel(result);
-            //   } else {
-            //     setSelectionModel(newSelectionModel);
-            //   }
-            // }}
-            selectionModel={selectionModel}
-          />
-        </div>
+        // 
+        <DataGridTable columns={columns} rows={coreContext.patients} sort={[{ field: "name", sort: "asc" }]}/>
       );
     } else {
       return (
@@ -615,11 +598,12 @@ const Patients = (props) => {
       );
     }
   };
+  const ren=React.useMemo(()=>renderPatients(),[JSON.stringify(coreContext.patients)]);
   // const renderbuttons=()=>{
   //   <div style={{  width: '100px' }}  >
-  //   <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(rows)}>  <PencilSquare /></a>
-  //   <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(rows);fetchPatients();}}>  <Trash /></a>
-  //   <a  style={{  marginRight: '5px' }} href="#" onClick={() => showAssignDoctor(rows)}>  <Person /></a>
+  //   <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showEditForm(rows)}>  <PencilSquare /></Link>
+  //   <Link style={{  marginRight: '5px' }} to="#" onClick={() => {deletePatient(rows);fetchPatients();}}>  <Trash /></Link>
+  //   <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showAssignDoctor(rows)}>  <Person /></Link>
   //   </div>
   // }
 
@@ -643,19 +627,19 @@ const Patients = (props) => {
 
         {/* {renderbuttons()} */}
         {/* {(usertype==='admin')?((selectionModel.length!==0)? <div style={{  width: '100px',marginLeft:'20px' }}  >
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></a>
+                <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></Link>
                 
-                <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></a>
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showAssignDoctor(coreContext.patients[selectionModel])}>  <Person /></a>
+                <Link style={{  marginRight: '5px' }} to="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></Link>
+                <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showAssignDoctor(coreContext.patients[selectionModel])}>  <Person /></Link>
                 </div>: null):((selectionModel.length!==0)? <div style={{  width: '100px' }}  >
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></a>
+                <Link  style={{  marginRight: '5px' }} to="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></Link>
                 
-                <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></a>
+                <Link style={{  marginRight: '5px' }} to="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></Link>
               
                 </div>: null)}
                 
         */}
-        {renderPatients()}
+        {ren}
         {/* {console.log("val",select)} */}
       </Table>
 
