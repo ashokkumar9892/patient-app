@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import axios from "axios";
 import "../App.css";
@@ -118,67 +119,6 @@ const PatientSummary = (props) => {
       label: "custom",
     },
   ];
-  const patientcolumns = [
-    // { field: 
-    //   'UserName', 
-    //   headerName: 'Patient Name', 
-    //   width: 200 ,  
-    //   type: 'string',
-    // },
-    {
-      field: 'MeasurementDateTime',
-      headerName: 'Date Recorded',
-      width: 110,
-      editable: false,
-      width: 300,
-      type: 'date',
-    width: 200,
-    valueFormatter: (params) => {
-      const valueFormatted = Moment(params.value).format('MM-DD-YYYY hh:mm A')
-       return `${valueFormatted}`;
-     },
-    },
-    {
-      field: 'weight',
-      headerName: 'Weight (lbs)',
-      type: 'number',
-      editable: false,
-      width: 200
-    },
-    
-      // // {
-      // //   field: 'CreatedDate',
-      // //   headerName: 'Date Received',
-      // //   width: 200,
-      // //   editable: false,
-      // //   type: 'date',
-      // // width: 200,
-      // // valueFormatter: (params) => {
-      // //   const valueFormatted = Moment(params.value).format('MM-DD-YYYY hh:mm A')
-      // //    return `${valueFormatted}`;
-      // //  },
-       
-      // },
-      {
-        field: 'DeviceId',
-        headerName: 'Device Id',
-        editable: false,
-        width: 200
-      },
-      {
-        field: 'readingId',
-        headerName: 'Reading Id',
-        type: 'number',
-        editable: false,
-        width: 200
-      },
-      // { 
-      //   field: "sortDateColumn", 
-      //   headerName: "Action"
-       
-      // }         
-
-  ];
 
   function valueLabelFormat(value) {
     return marks.findIndex((mark) => mark.value === value) + 1;
@@ -249,13 +189,6 @@ const PatientSummary = (props) => {
     coreContext.fetchCareCoordinator();
   };
   useEffect(fetchCareCoordinator, []);
-  useEffect(() => {
-    //coreContext.cleanup();
-    coreContext.setdeviceData([]);
-    return () => {
-      coreContext.cleanup();
-    }
-  }, [])
 
   const fetchProviders = () => {
     const patientId = props.match.params.patient;
@@ -294,7 +227,7 @@ const PatientSummary = (props) => {
     //let patientData = JSON.parse(localStorage.getItem('app_patient'));
 
     //setPatient(patientData);
-    coreContext.fetchPatientListfromApiForPatient("patient", patientId);
+    coreContext.fetchPatientListfromApi("patient", patientId);
 
     //coreContext.fetchThresold("ADMIN_PATIENT_" + patientId, userType);
 
@@ -303,7 +236,7 @@ const PatientSummary = (props) => {
 
     //coreContext.fetchTaskTimerUser();
 
-    coreContext.fetchDeviceDataForPatient("PATIENT_" + patientId,patientName);
+    coreContext.fetchDeviceData("PATIENT_" + patientId, userName, userType);
     /// setting default value
     // if (coreContext.thresoldData.length === 0) {
     //   let thdata = {};
@@ -405,7 +338,7 @@ const PatientSummary = (props) => {
 
   const pateientvalue = useMemo(() => fetchPatient, []);
   useEffect(pateientvalue, []);
-  useEffect(fetchPatient,[adddeviceflag,coreContext.pss.length]);
+  useEffect(fetchPatient,[adddeviceflag]);
 
   // useEffect(fetchPatient, [coreContext.patient.notes]);
   useEffect(
@@ -590,13 +523,10 @@ return String(ttt[0].bg_high)
     );
   };
   const fetchbp = () => {
-    coreContext.fetchBloodPressureForPatient(localStorage.getItem("ehrId"), "patient");
-  };
-  const fetchws = () => {
-    coreContext.fetchWSData(localStorage.getItem("ehrId"), "patient");
+    coreContext.fetchBloodPressure(localStorage.getItem("ehrId"), "patient");
   };
   const fetchbg = () => {
-    coreContext.fetchBloodGlucoseForPatient(localStorage.getItem("ehrId"), "patient");
+    coreContext.fetchBloodGlucose(localStorage.getItem("ehrId"), "patient");
   };
   const fetchTd = () => {
     coreContext.fetchThresold(
@@ -607,10 +537,9 @@ return String(ttt[0].bg_high)
   const fetchadmintd=()=>{
     coreContext.fetchadminThresold("ADMIN_"+localStorage.getItem("userId"), "admin")
   }
-  useEffect(fetchbp, [coreContext.patientbloodpressureData.length]);
-  useEffect(fetchbg, [JSON.stringify(coreContext.patientbloodglucoseData)]);
+  useEffect(fetchbp, [coreContext.bloodpressureData.length]);
+  useEffect(fetchbg, [coreContext.bloodglucoseData.length]);
   useEffect(fetchTd, [JSON.stringify(coreContext.thresoldData)]);
-  useEffect(fetchws, [JSON.stringify(coreContext.patientWeightData)]);
   useEffect(fetchadmintd, [JSON.stringify(coreContext.adminthresold)]);
 console.log("check admin thresold from patient",coreContext.thresoldData)
   const fetchsliderdays = () => {
@@ -669,7 +598,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   }, [slider]);
 
   const getbpdata = (index) => {
-    if (coreContext.patientbloodpressureData.length == 0) {
+    if (coreContext.bloodpressureData.length == 0) {
       return (
         <>
           <div
@@ -687,22 +616,21 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       );
     }
     console.log(
-      coreContext.patientbloodpressureData[0].UserName,
-      "coreContext.patientbloodpressureData[0].UserName"
+      coreContext.bloodpressureData[0].UserName,
+      "coreContext.bloodpressureData[0].UserName"
     );
     if (
-      coreContext.patientbloodpressureData.length > 0 &&
-      coreContext.patientbloodpressureData[0].UserName !== "undefined"
+      coreContext.bloodpressureData.length > 0 &&
+      coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
-
 
         from.setHours(0,0,0,0);
         to.setHours(23,59,59,999);
         console.log(
           "checking date of from and to",to,from
         );
-        var finaldata = coreContext.patientbloodpressureData.filter(
+        var finaldata = coreContext.bloodpressureData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
@@ -734,7 +662,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         today.setHours(0,0,0,0)
         let bfr = today.setDate(today.getDate() - SliderDays);
         console.log(bfr,"bfring")
-        var finaldata = coreContext.patientbloodpressureData.filter(
+        var finaldata = coreContext.bloodpressureData.filter(
           (date) => date.MeasurementDateTime >= new Date(bfr)
         );
         
@@ -1070,7 +998,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   // const getbpdata2 = useMemo(() => getbpdata(2), []);
 
   const renderBloodGlucose = (index) => {
-    if (coreContext.patientbloodglucoseData.length == 0) {
+    if (coreContext.bloodglucoseData.length == 0) {
       return (
         <div
           style={{
@@ -1087,11 +1015,11 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
     }
 
     if (
-      coreContext.patientbloodglucoseData.length > 0 &&
-      coreContext.patientbloodglucoseData[0].UserName !== "undefined"
+      coreContext.bloodglucoseData.length > 0 &&
+      coreContext.bloodglucoseData[0].UserName !== "undefined"
     ) {
       if (slider === 100) {
-        var finalbgdata = coreContext.patientbloodglucoseData.filter(
+        var finalbgdata = coreContext.bloodglucoseData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
         );
       } else {
@@ -1121,10 +1049,10 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
         today.setHours(0,0,0,0)
         let bfr = today.setDate(today.getDate() - SliderDays);
         
-          console.log(coreContext.patientbloodglucoseData.filter(
+          console.log(coreContext.bloodglucoseData.filter(
             (date) => date.MeasurementDateTime >= new Date(bfr)
           ),new Date(bfr),new Date(today.setHours(0,0,0,0)),"ngdatachecking")
-        var finalbgdata = coreContext.patientbloodglucoseData.filter(
+        var finalbgdata = coreContext.bloodglucoseData.filter(
           (date) => date.MeasurementDateTime >= new Date(bfr)
         );
       }
@@ -1600,7 +1528,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       if (index === 1) {
         return (
           <div style={{ height: 680, width: "100%" }}>
-            {/* {coreContext.patientbloodglucoseData} */}
+            {/* {coreContext.bloodglucoseData} */}
 
             <div className="d-flex">
               <div
@@ -1670,7 +1598,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
           </div>
         );
       }
-      //coreContext.patientbloodpressureData  = coreContext.patientbloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
+      //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
     } else {
       return (
         <div
@@ -1998,8 +1926,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   
 
   const renderDeviceData = () => {
-    console.log("check something",coreContext.patientdevicedata)
-    if (coreContext.patientdevicedata.length === 0) {
+    if (coreContext.deviceData.length === 0) {
       return (
         <div
           style={{
@@ -2016,10 +1943,10 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       );
     }
 
-    if (coreContext.patientdevicedata.length > 0) {
+    if (coreContext.deviceData.length > 0) {
     }
     {
-      return coreContext.patientdevicedata.map((deviceData, index) => {
+      return coreContext.deviceData.map((deviceData, index) => {
         return (
           <tr>
             <td>{deviceData.DeviceType} </td>
@@ -2044,8 +1971,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       });
     }
   };
-  const renderdevice=React.useMemo(()=>renderDeviceData(),[coreContext.patientdevicedata.length])
- // useEffect(renderDeviceData, [coreContext.patientdevicedata.length]);
+  useEffect(renderDeviceData, [coreContext.deviceData.length]);
 
   const renderThreads = () => {
     if (coreContext.threads.length > 0) {
@@ -2142,9 +2068,9 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       notes
     );
   };
-let patientName;
+
   const renderTopDetails = () => {
-    if (coreContext.pss.length !== 1) {
+    if (coreContext.patients.length === 0) {
       return (
         <div
           style={{
@@ -2159,32 +2085,30 @@ let patientName;
         </div>
       );
     }
-    if (coreContext.pss.length===1)
-    {patientName=coreContext.pss[0].name}
+    if (coreContext.patients.length > 0)
       return (
         <>
         <div className="row">
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.pss[0].name}
-            
+            {coreContext.patients[0].name}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-          Email : {coreContext.pss[0].email}
+          Email : {coreContext.patients[0].email}
           </div>
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {"DOB : " + coreContext.pss[0].dob}
+            {"DOB : " + coreContext.patients[0].dob}
             
           </div>
           <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.pss[0].gender === "Male" ? (
+            {coreContext.patients[0].gender === "Male" ? (
               <GenderMale />
             ) : (
               <GenderFemale />
             )}
-            {coreContext.pss[0].gender}
+            {coreContext.patients[0].gender}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-            EHR ID : {coreContext.pss[0].ehrId}
+            EHR ID : {coreContext.patients[0].ehrId}
           </div>
         </div>
         
@@ -2193,7 +2117,7 @@ let patientName;
   };
   const rendertop = React.useMemo(
     () => renderTopDetails(),
-    [coreContext.pss.length]
+    [coreContext.patients.length]
   );
 
   const renderAddModifyFlags = () => {
@@ -2275,8 +2199,8 @@ let patientName;
   }, []);
 
   const renderPatientinformation = () => {
-    if (coreContext.pss.length > 0) {
-      coreContext.patient = coreContext.pss[0];
+    if (coreContext.patients.length > 0) {
+      coreContext.patient = coreContext.patients[0];
     }
     if (coreContext.patient) {
       localStorage.setItem("ehrId", coreContext.patient.ehrId);
@@ -2434,46 +2358,6 @@ let patientName;
     if (index == 7) {
     }
   };
-  // const renderweight=()=>{
-
-  //   return(
-  //     <Weight></Weight>
-  //   )
-  // }
-  const renderweight = () => {
-    if (coreContext.patientWeightData.length === 0) {
-      return (
-        <div
-          style={{
-            height: 500,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "10px",
-            alignItems: "center",
-          }}>
-          <h6>No data Found</h6>
-          {/* <Loader type="Circles" color="#00BFFF" height={100} width={100} /> */}
-        </div>
-      );
-    }
-    if (coreContext.patientWeightData.length > 0) {
-      //  timerLogs  = timerLogs.sort((a,b) => new Moment(b.startDT) - new Moment(a.startDT));
-      return (
-        <div style={{ height: 500, width: "100%" }}>
-          <DataGrid
-            className={classes.root}
-            rows={coreContext.patientWeightData}
-            columns={patientcolumns}
-            pageSize={10}
-            sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
-            sortingOrder={["desc", "asc"]}
-          />
-        </div>
-      );
-    }
-  };
-  const weightdata=React.useMemo(()=>renderweight(),[coreContext.patientWeightData.length])
 
   function doSomething(value) {
     // console.log("doSomething called by child with value:", value);
@@ -2630,8 +2514,7 @@ let patientName;
 
                       <TabPanel>
                         <div className="card-body">
-                          {weightdata}
-                          {/* <Weight></Weight> */}
+                          <Weight></Weight>
                         </div>
                       </TabPanel>
                       {/* <TabPanel>
@@ -2976,7 +2859,7 @@ let patientName;
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>{renderdevice}</tbody>
+                      <tbody>{renderDeviceData()}</tbody>
                     </table>
                   </div>
                   <div className="col-md-4">

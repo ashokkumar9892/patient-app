@@ -3,7 +3,6 @@ import { CoreContext } from '../context/core-context';
 import { DataGrid } from '@material-ui/data-grid';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
 import Loader from "react-loader-spinner";
-import DataGridTable from './common/DataGrid';
 
 
 
@@ -21,22 +20,22 @@ const Weight = (props) => {
         let userType = localStorage.getItem("userType");
         let patientId = localStorage.getItem("userId");
         // check page if left side menu.
-       
+        if(window.location.href.substring('weight')> 0)
+        {
           coreContext.fetchWSData(patientId,userType);
-        
-        // if(window.location.href.indexOf('patient-summary') >0 )
-        // {
-        //     patientId = localStorage.getItem("ehrId");
-        //     userType = 'patient';
-        //     // clear this otherwise will be problem
-        //     localStorage.removeItem("ehrId");
-        // }
+        }
+        if(window.location.href.indexOf('patient-summary') >0 )
+        {
+            patientId = localStorage.getItem("ehrId");
+            userType = 'patient';
+            // clear this otherwise will be problem
+            localStorage.removeItem("ehrId");
+        }
         setUserType(userType);
-        coreContext.fetchPatientListfromApi(userType, patientId);
-     // coreContext.fetchWSData(patientId,userType);
+      coreContext.fetchWSData(patientId,userType);
      
     }
-    useEffect(fetchWeight, [coreContext.weightData.length,coreContext.patients.length]);
+    useEffect(fetchWeight, [coreContext.weightData.length]);
    
 
     const columns = [
@@ -200,7 +199,15 @@ const Weight = (props) => {
         if (coreContext.weightData.length > 0 &&coreContext.weightData[0].UserName!==undefined){
         //  coreContext.weightData  = coreContext.weightData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
         return (
-            <DataGridTable columns={dgcolumns} rows={coreContext.weightData}/>
+            <div style={{ height: 680, width: '100%' }}>
+              <DataGrid
+                rows={coreContext.weightData}
+                columns={dgcolumns}
+                sortingOrder={['desc', 'asc']}
+                pageSize={10}
+                sortModel={[{ field: 'MeasurementDateTime', sort: 'desc' }]}
+              />
+            </div>
           );
         }
         else{
