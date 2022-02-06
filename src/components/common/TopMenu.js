@@ -640,8 +640,33 @@ const handlechangeprovider=(p)=>{
       )
 
   }
+  const rendernotifications=()=>{
+    return(
+      notificationValue.sort(function(a,b){
+ 
+        return new Date(b.date) - new Date(a.date);
+      }).map((curr)=>{
+                 return(
+                   <>
+                  <Typography gutterBottom>
+                    
+               {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
+                  </Typography>
+                  <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1);handleClose1()}}>
+                    
+              Mark as Read
+              
+                  </Typography>
+                  <hr/>
+                  
+                    </>
+                 )
+               })
+    )
+  }
   //const count=React.useMemo({notificationValue.length,[notificationValue.length])
     const count=React.useMemo(()=>rendernotificationlength(),[notificationValue.length])
+    const count1=React.useMemo(()=>rendernotifications(),[notificationValue.length])
   console.log()
   return (
     <>
@@ -1247,26 +1272,7 @@ const handlechangeprovider=(p)=>{
         <DialogContent dividers>
          
           
-          {notificationValue.sort(function(a,b){
- 
-  return new Date(b.date) - new Date(a.date);
-}).map((curr)=>{
-           return(
-             <>
-            <Typography gutterBottom>
-              
-         {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
-            </Typography>
-            <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1)}}>
-              
-        Mark as Read
-        
-            </Typography>
-            <hr/>
-            
-              </>
-           )
-         })}
+          {count1}
         </DialogContent>
         
       </BootstrapDialog>
