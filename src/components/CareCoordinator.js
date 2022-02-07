@@ -105,11 +105,7 @@ const CareCoordinator = (props) => {
   };
 
   const deletePatient = (patient) => {
-    coreContext.DeleteCareTeam(
-      patient.doctor_id,
-      "carecoordinator",
-      "Care Coordinator"
-    );
+   
     swal({
       title: "Are you sure?",
       
