@@ -122,6 +122,9 @@ export const CoreContextProvider = (props) => {
 
     window.location.assign("/login");
   };
+  const cleanup=()=>{
+    setPatients([]);
+  }
 
   const checkLocalAuth = () => {
     const isAuth = localStorage.getItem("app_isAuth");
@@ -3395,7 +3398,8 @@ export const CoreContextProvider = (props) => {
         userinfo,
         AddNotification,
         FetchNotification,
-        notifications
+        notifications,
+        cleanup
       }}>
       {props.children}
     </CoreContext.Provider>

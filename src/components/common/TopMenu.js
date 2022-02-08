@@ -667,7 +667,12 @@ const handlechangeprovider=(p)=>{
   //const count=React.useMemo({notificationValue.length,[notificationValue.length])
     const count=React.useMemo(()=>rendernotificationlength(),[notificationValue.length])
     const count1=React.useMemo(()=>rendernotifications(),[notificationValue.length])
-  console.log()
+    useEffect(() => {
+   
+      return () => {
+        coreContext.cleanup();
+      };
+    },[window.location.href.indexOf("patient-summary") >0]);
   return (
     <>
       <React.Fragment>

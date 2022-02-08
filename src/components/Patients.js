@@ -259,7 +259,12 @@ const Patients = (props) => {
 
   useEffect(fetchPatients, [coreContext.patients.length]);
   useEffect(fetchPatients, [checked]);
-
+  useEffect(() => {
+   
+    return () => {
+      coreContext.cleanup();
+    };
+  },[]);
   const deletePatient = (patient) => {
 
     swal({

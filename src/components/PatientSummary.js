@@ -2117,7 +2117,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   };
   const rendertop = React.useMemo(
     () => renderTopDetails(),
-    [coreContext.patients.length]
+    [coreContext.patients.length===1]
   );
 
   const renderAddModifyFlags = () => {
