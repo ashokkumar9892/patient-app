@@ -120,7 +120,7 @@ const BloodPressure = (props) => {
     {
       field: "UserName",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       type: "string",
       renderCell: (params) => (
         <a

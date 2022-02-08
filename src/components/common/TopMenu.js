@@ -169,11 +169,14 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const fetchadmintd=()=>{
     coreContext.fetchadminThresold("ADMIN_ADMIN_", "admin")
   }
-  const fetchdbnotificaion=()=>{
+  const fetchdbnotification=()=>{
 coreContext.FetchNotification(localStorage.getItem("userId"))
   }
   useEffect(() => {
-    fetchadmintd();fetchtd();fetchdbnotificaion();
+    if(window.location.href.indexOf("patient-summary") <=0){
+      fetchadmintd();fetchtd();fetchdbnotification();
+    }
+    
   }, []);
 
   const FetchNotificationForBP=()=>{
@@ -187,7 +190,9 @@ date.setHours(0,0,0,0)
           coreContext.thresoldData.map((td)=>{
             if(td.UserId.includes(patient.userId)){
               if(Number(bp.diastolic)>Number(td.diastolic_high) || Number(bp.diastolic)<Number(td.diastolic_low)){
-                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic)===false)
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
+                  "MM-DD-YYYY hh:mm A"
+                )+"~Diastolic")===false)
                 {
                   if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bp.diastolic+"~"+Moment(bp.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
@@ -202,7 +207,9 @@ date.setHours(0,0,0,0)
                 
               }
               if(Number(bp.systolic)>Number(td.systolic_high) || Number(bp.systolic)<Number(td.systolic_low )){
-                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic)===false){
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
+                  "MM-DD-YYYY hh:mm A"
+                )+"~Systolic")===false){
                   if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bp.systolic+"~"+Moment(bp.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
                   )+"~Systolic")===false){
@@ -241,7 +248,9 @@ date.setHours(0,0,0,0)
             if(td.UserId.includes(patient.userId)){
               
               if(Number(bg.bloodglucosemgdl)>Number(td.bg_high) || Number(bg.bloodglucosemgdl)<Number(td.bg_low)){
-                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl)===false){
+                if(notificationValue.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
+                  "MM-DD-YYYY hh:mm A"
+                )+"~Blood Glucose")===false){
                   if(coreContext.notifications.includes(patient.name+"~"+patient.userId+"~"+bg.bloodglucosemgdl+"~"+Moment(bg.MeasurementDateTime).format(
                     "MM-DD-YYYY hh:mm A"
                   )+"~Blood Glucose")===false){
@@ -267,6 +276,15 @@ date.setHours(0,0,0,0)
 
     })
   }
+  useEffect(()=>{
+    // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
+    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <0 && coreContext.notifications.length>0){
+      
+      FetchNotificationForBG();
+      
+    }
+  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue  ,coreContext.notifications.length])
+
 
   useEffect(()=>{
     // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
@@ -276,15 +294,7 @@ date.setHours(0,0,0,0)
       
     }
   },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodpressureData.length,notificationValue,coreContext.notifications.length])
-  useEffect(()=>{
-    // console.log(coreContext.thresoldData,coreContext.patients,coreContext.bloodglucoseData,"checking threshold from top menu")
-    if(coreContext.thresoldData.length>0 && coreContext.patients.length>0 && coreContext.bloodglucoseData.length>0 &&  window.location.href.indexOf("patient-summary") <0 && coreContext.notifications.length>0){
-      
-      FetchNotificationForBG();
-      
-    }
-  },[coreContext.thresoldData.length,coreContext.patients.length,coreContext.bloodglucoseData.length,notificationValue,coreContext.notifications.length])
-
+  
   const { register, handleSubmit, errors } = useForm({
     mode: "onSubmit",
     reValidateMode: "onBlur",

@@ -36,7 +36,7 @@ const BloodGlucose = (props) => {
     {
       field: "UserName",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       type: "string",
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
@@ -136,7 +136,7 @@ const BloodGlucose = (props) => {
       field: "MeasurementDateTime",
       headerName: "Date Recorded",
       editable: false,
-      width: 200,
+      width: 220,
       type: "dateTime",
 
       valueFormatter: (params) => {

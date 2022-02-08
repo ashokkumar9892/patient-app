@@ -288,7 +288,7 @@ const Patients = (props) => {
     {
       field: "name",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -300,19 +300,19 @@ const Patients = (props) => {
       field: "ProviderName",
       headerName: "Provider",
       editable: false,
-      width: 200,
+      width: 220,
     },
     {
       field: "CareName",
       headerName: "Care",
-      width: 150,
+      width: 220,
       editable: false,
     },
     {
       field: "CoachName",
       headerName: "Coach",
       editable: false,
-      width: 150,
+      width: 220,
     },
     {
       field: "height",
@@ -326,14 +326,14 @@ const Patients = (props) => {
       headerName: "Glucose",
       editable: false,
       type: "number",
-      width: 130,
+      width: 125,
     },
     {
       field: "ActiveStatus",
       headerName: "ActiveStatus",
       editable: false,
       type: "string",
-      width: 130,
+      width: 125,
     },
     // {
     //   field: 'Weight',
@@ -402,7 +402,7 @@ const Patients = (props) => {
     {
       field: "name",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -433,14 +433,14 @@ const Patients = (props) => {
       headerName: "Height",
       editable: false,
       type: "number",
-      width: 125,
+      width: 100,
     },
     {
       field: "bg_reading",
       headerName: "Glucose",
       editable: false,
       type: "number",
-      width: 130,
+      width: 100,
     },
     {
       field: "ActiveStatus",
