@@ -1287,6 +1287,7 @@ export const CoreContextProvider = (props) => {
     state,
     notes
   ) => {
+    let providername = fetchNameFromId(provider, providerOptions);
     
     const token = localStorage.getItem("app_jwt");
     if(!phone||!mobilePhone||!birthDate){
@@ -1349,7 +1350,7 @@ export const CoreContextProvider = (props) => {
         "SET DoctorId = :v_ProviderId, DoctorName = :v_ProviderName, FirstName = :v_firstname,LastName = :v_lastname, ContactNo = :v_mobile, DOB = :v_DOB," +
         "Height = :v_Height,CarecoordinatorName = :v_CarecoordinatorName, CarecoordinatorId = :v_CarecoordinatorId,CoachId = :v_CoachId,Coach = :v_CoachName," +
         "Gender = :v_Gender, Lang = :v_Language, WorkPhone = :v_WorkPhone, MobilePhone = :v_MobilePhone, Street = :v_Street," +
-        "Zip = :v_Zip, City = :v_City, St = :v_State, Notes = :v_Notes",
+        "Zip = :v_Zip, City = :v_City, St = :v_State, Notes = :v_Notes,GSI1SK = :v_GSI1SK",
       ExpressionAttributeValues: {
         ":v_ProviderId": { S: "" + providername.value + "" },
         ":v_ProviderName": { S: "" + providername.name + "" },
@@ -1371,6 +1372,7 @@ export const CoreContextProvider = (props) => {
         ":v_City": { S: "" + city + "" },
         ":v_State": { S: "" + state + "" },
         ":v_Notes": { S: "" + notes + "" },
+        ":v_GSI1SK": { S: "" + providername.value + "" },
       },
     };
 
@@ -1386,12 +1388,12 @@ export const CoreContextProvider = (props) => {
         if (response.data === "Updated") {
           // alert("");
           swal("success", "Patient data Update Successfully.", "success");
-       AssignCareTeam(
-            provider,
-            coordinator,
-            coach,
-            patientId
-          );
+      //  AssignCareTeam(
+      //       provider,
+      //       coordinator,
+      //       coach,
+      //       patientId
+      //     );
 
           // updating object
           //fetchPatientListfromApi();
