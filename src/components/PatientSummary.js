@@ -507,6 +507,7 @@ return String(ttt[0].bg_high)
               setslider(100);
             }}
             value={from}
+            // dateFormat="MM/dd/yyyy hh:mm:ss aa"
           />
           <label className="ml-3">To:</label>
           <DatePicker
@@ -623,11 +624,11 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       coreContext.bloodpressureData[0].UserName !== "undefined"
     ) {
       if (to.getDate() !== from.getDate()) {
+
         from.setHours(0,0,0,0);
         to.setHours(23,59,59,999);
         console.log(
-          coreContext.bloodpressureData,
-          "coreContext.bloodpressureData"
+          "checking date of from and to",to,from
         );
         var finaldata = coreContext.bloodpressureData.filter(
           (date) => date.MeasurementDateTime >= from && date.MeasurementDateTime <= to
@@ -1771,7 +1772,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   ];
 
   const deleteTimeLog = (tl) => {
-    
+
     // renderTimelogs();
     // fetchtotaltime();
     swal({
@@ -2116,7 +2117,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
   };
   const rendertop = React.useMemo(
     () => renderTopDetails(),
-    [coreContext.patients.length]
+    [coreContext.patients.length===1]
   );
 
   const renderAddModifyFlags = () => {
