@@ -28,7 +28,7 @@ const CareCoordinator = (props) => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [patientId, setPatientId] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);fetchCareCoordinator();};
   const handleModalShow = () => setShowModal(true);
 
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +55,7 @@ const CareCoordinator = (props) => {
   };
   useEffect(resetForm, [coreContext.resetForm]);
 
-  useEffect(fetchCareCoordinator, []);
+  useEffect(fetchCareCoordinator, [JSON.stringify(coreContext.ccData)]);
   const columns = [
     {
       field: "name",
@@ -105,11 +105,7 @@ const CareCoordinator = (props) => {
   };
 
   const deletePatient = (patient) => {
-    coreContext.DeleteCareTeam(
-      patient.doctor_id,
-      "carecoordinator",
-      "Care Coordinator"
-    );
+
     swal({
       title: "Are you sure?",
       
@@ -219,12 +215,12 @@ const CareCoordinator = (props) => {
         <Modal.Footer>
           <Button
             variant="primary"
-            onClick={() =>
+            onClick={() =>{
               coreContext.verifyProviderVerificationCode(
                 verificationCode,
                 email,
                 "CareCoordinator"
-              )
+              );handleModalClose();}
             }>
             Submit
           </Button>
@@ -280,7 +276,7 @@ const CareCoordinator = (props) => {
             blockButton={true}
             value="Submit"
             onClick={() =>
-              coreContext.UpdateCareCoordinator(name, phone, email, patientId)
+              {coreContext.UpdateCareCoordinator(name, phone, email, patientId);handleModalClose()}
             }
             elementType="button"
             variant="primary"

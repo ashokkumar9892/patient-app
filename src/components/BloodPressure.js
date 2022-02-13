@@ -120,7 +120,7 @@ const BloodPressure = (props) => {
     {
       field: "UserName",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       type: "string",
       renderCell: (params) => (
         <a
@@ -321,6 +321,7 @@ const BloodPressure = (props) => {
       coreContext.bloodpressureData[0].UserName !== undefined
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
+      console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid

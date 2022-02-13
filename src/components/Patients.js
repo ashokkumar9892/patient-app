@@ -156,7 +156,7 @@ const Patients = (props) => {
       patient.ProviderName = "Select Provider";
       setProvider("");
     } else {
-      console.log(coreContext.providerOptions,"coreContext.providerOptions")
+      //console.log(coreContext.providerOptions,"coreContext.providerOptions")
       
 
       // coreContext.providerOptions.filter((name)=>{
@@ -259,7 +259,12 @@ const Patients = (props) => {
 
   useEffect(fetchPatients, [coreContext.patients.length]);
   useEffect(fetchPatients, [checked]);
-
+  useEffect(() => {
+   
+    return () => {
+      coreContext.cleanup();
+    };
+  },[]);
   const deletePatient = (patient) => {
 
     swal({
@@ -283,7 +288,7 @@ const Patients = (props) => {
     {
       field: "name",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -295,19 +300,19 @@ const Patients = (props) => {
       field: "ProviderName",
       headerName: "Provider",
       editable: false,
-      width: 200,
+      width: 220,
     },
     {
       field: "CareName",
       headerName: "Care",
-      width: 150,
+      width: 220,
       editable: false,
     },
     {
       field: "CoachName",
       headerName: "Coach",
       editable: false,
-      width: 150,
+      width: 220,
     },
     {
       field: "height",
@@ -321,14 +326,14 @@ const Patients = (props) => {
       headerName: "Glucose",
       editable: false,
       type: "number",
-      width: 130,
+      width: 125,
     },
     {
       field: "ActiveStatus",
       headerName: "ActiveStatus",
       editable: false,
       type: "string",
-      width: 130,
+      width: 125,
     },
     // {
     //   field: 'Weight',
@@ -397,7 +402,7 @@ const Patients = (props) => {
     {
       field: "name",
       headerName: "Patient Name",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -428,14 +433,14 @@ const Patients = (props) => {
       headerName: "Height",
       editable: false,
       type: "number",
-      width: 125,
+      width: 100,
     },
     {
       field: "bg_reading",
       headerName: "Glucose",
       editable: false,
       type: "number",
-      width: 130,
+      width: 100,
     },
     {
       field: "ActiveStatus",
@@ -510,7 +515,7 @@ const Patients = (props) => {
   // const classes = useStyles();
 
   const renderPatients = () => {
-    if (coreContext.patients.length == 0) {
+    if (coreContext.patients.length === 0) {
       return (
         <div
           style={{
@@ -529,6 +534,7 @@ const Patients = (props) => {
       coreContext.patients.length > 0 &&
       usertype === "admin" &&
       coreContext.patients[0].name !== undefined
+      && coreContext.providerOptions.length>0 && coreContext.coachOptions.length>0 && coreContext.careCoordinatorOptions.length>0
     ) 
     console.log("uttkarsh patients",coreContext.patients)
     {
