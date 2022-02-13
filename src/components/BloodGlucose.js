@@ -127,6 +127,7 @@ const BloodGlucose = (props) => {
     //     </div>
     //   ),
     // },
+    
   ];
   const showEditForm = (patient) => {};
   const deletePatient = (patient) => {};
