@@ -156,7 +156,7 @@ const Dashboard = (props) => {
             else if(timelog.taskType==="DataReview")
             totalTimeLogForDataReview = Number(timelog.timeAmount) + totalTimeLogForDataReview;
           });
-          console.log("checking timelog", totalTimeLog);
+          console.log("checking timelog", totalTimeLogForDataReview,curr);
           if (totalTimeLog >= 0 && totalTimeLog <= 60) {
             zero.push(curr.userId);
           } else if (totalTimeLog >= 60 && totalTimeLog <= 540) {
