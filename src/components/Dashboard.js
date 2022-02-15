@@ -141,9 +141,7 @@ const Dashboard = (props) => {
         );
         // let patientTimelog = patientTimelogAll.filter(
         //   (app) => Number(app.performedOn.substring(5,7))==Number(month)+1       );
-        patientTimelog.map((curr)=>{
-          console.log("patient time log app",new Date(curr.performedOn).getMilliseconds()> lastDate.getMilliseconds());
-        })
+        console.log(patientTimelog,"patienttimelog")
         
         if (patientTimelog.length > 0) {
           let totalTimeLog = 0;
@@ -159,46 +157,46 @@ const Dashboard = (props) => {
           console.log("checking timelog", totalTimeLogForDataReview,curr);
           if (totalTimeLog >= 0 && totalTimeLog <= 60) {
             zero.push(curr.userId);
-          } else if (totalTimeLog >= 60 && totalTimeLog <= 540) {
+          } else if (totalTimeLog > 60 && totalTimeLog <= 600) {
             // setOnetonine(onetonine+1)
             nine.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 600 && totalTimeLog <= 1140) {
+          } else if (totalTimeLog > 600 && totalTimeLog <= 1200) {
             // setOnetonine(onetonine+1)
             nineteen.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 1200 && totalTimeLog <= 2340) {
+          } else if (totalTimeLog > 1200 && totalTimeLog <= 2400) {
             // setOnetonine(onetonine+1)
             thirtynine.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 2400 && totalTimeLog <= 3540) {
+          } else if (totalTimeLog > 2400 && totalTimeLog <= 3600) {
             // setOnetonine(onetonine+1)
             fiftynine.push(curr.userId);
             //nine=nine+1;
-          } else if (totalTimeLog >= 3600) {
+          } else if (totalTimeLog > 3600) {
             // setOnetonine(onetonine+1)
             sixty.push(curr.userId);
             //nine=nine+1;
           }
           if (totalTimeLogForDataReview >= 0 && totalTimeLogForDataReview <= 60) {
             zero1.push(curr.userId);
-          } else if (totalTimeLogForDataReview >= 60 && totalTimeLogForDataReview <= 540) {
+          } else if (totalTimeLogForDataReview > 60 && totalTimeLogForDataReview <= 600) {
             // setOnetonine(onetonine+1)
             nine1.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLogForDataReview >= 600 && totalTimeLogForDataReview <= 1140) {
+          } else if (totalTimeLogForDataReview > 600 && totalTimeLogForDataReview <= 1200) {
             // setOnetonine(onetonine+1)
             nineteen1.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLogForDataReview >= 1200 && totalTimeLogForDataReview <= 2340) {
+          } else if (totalTimeLogForDataReview > 1200 && totalTimeLogForDataReview <= 2400) {
             // setOnetonine(onetonine+1)
             thirtynine1.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLogForDataReview >= 2400 && totalTimeLogForDataReview <= 3540) {
+          } else if (totalTimeLogForDataReview > 2400 && totalTimeLogForDataReview <= 3600) {
             // setOnetonine(onetonine+1)
             fiftynine1.push(curr.userId);
             //nine=nine+1;
-          } else if (totalTimeLogForDataReview >= 3600) {
+          } else if (totalTimeLogForDataReview > 3600) {
             // setOnetonine(onetonine+1)
             console.log("sixty1",curr)
             sixty1.push(curr.userId);
@@ -319,10 +317,10 @@ const Dashboard = (props) => {
             <th style={{ textAlign: "center" }}>Patients Enrolled</th>
             <th style={{ textAlign: "center" }}>60+ Mins</th>
 
-            <th style={{ textAlign: "center" }}>40-59 Mins</th>
-            <th style={{ textAlign: "center" }}>20-39 Mins</th>
-            <th style={{ textAlign: "center" }}>10-19 Mins</th>
-            <th style={{ textAlign: "center" }}>1-9 Mins</th>
+            <th style={{ textAlign: "center" }}>40-60 Mins</th>
+            <th style={{ textAlign: "center" }}>20-40 Mins</th>
+            <th style={{ textAlign: "center" }}>10-20 Mins</th>
+            <th style={{ textAlign: "center" }}>1-10 Mins</th>
             <th style={{ textAlign: "center" }}>0 Mins</th>
             <th style={{ textAlign: "center" }}>Inactive</th>
             <th style={{ textAlign: "center" }}>Not Enrolled</th>
@@ -381,10 +379,10 @@ const Dashboard = (props) => {
             <th style={{ textAlign: "center" }}>Patients Enrolled</th>
             <th style={{ textAlign: "center" }}>60+ Mins</th>
 
-            <th style={{ textAlign: "center" }}>40-59 Mins</th>
-            <th style={{ textAlign: "center" }}>20-39 Mins</th>
-            <th style={{ textAlign: "center" }}>10-19 Mins</th>
-            <th style={{ textAlign: "center" }}>1-9 Mins</th>
+            <th style={{ textAlign: "center" }}>40-60 Mins</th>
+            <th style={{ textAlign: "center" }}>20-40 Mins</th>
+            <th style={{ textAlign: "center" }}>10-20 Mins</th>
+            <th style={{ textAlign: "center" }}>1-10 Mins</th>
             <th style={{ textAlign: "center" }}>0 Mins</th>
             <th style={{ textAlign: "center" }}>Inactive</th>
             <th style={{ textAlign: "center" }}>Not Enrolled</th>
