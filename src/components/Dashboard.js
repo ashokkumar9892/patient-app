@@ -35,6 +35,7 @@ const Dashboard = (props) => {
   const thirtynine1 = [];
   const fiftynine1 = [];
   const sixty1 = [];
+  const Billing=[]
   
   const months = [ "January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December" ];
@@ -90,6 +91,7 @@ const Dashboard = (props) => {
     
   }
   const selectmonth=React.useMemo(()=>renderSelect(),[month])
+  
 
   console.log("sahilwight", coreContext.weightData);
   const wd = coreContext.weightData
@@ -115,6 +117,11 @@ const Dashboard = (props) => {
     console.log("sahil", p);
     //   coreContext.setPatient(p);
     localStorage.setItem("d_patient", JSON.stringify(p));
+  };
+  const setBPatient = (p) => {
+    console.log("sahil", p);
+    //   coreContext.setPatient(p);
+    localStorage.setItem("B_patient", JSON.stringify(p));
   };
 
   const renderTimeLogs = () => {
@@ -188,19 +195,68 @@ const Dashboard = (props) => {
             // setOnetonine(onetonine+1)
             nineteen1.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLogForDataReview > 1200 && totalTimeLogForDataReview <= 2400) {
+          } else if (totalTimeLogForDataReview >= 1200 && totalTimeLogForDataReview <2400) {
             // setOnetonine(onetonine+1)
             thirtynine1.push(curr);
-            //nine=nine+1;
-          } else if (totalTimeLogForDataReview > 2400 && totalTimeLogForDataReview <= 3600) {
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+          } else if (totalTimeLogForDataReview >= 2400 && totalTimeLogForDataReview <= 3600) {
             // setOnetonine(onetonine+1)
             fiftynine1.push(curr.userId);
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+            //Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})            
+            
             //nine=nine+1;
           } else if (totalTimeLogForDataReview > 3600) {
             // setOnetonine(onetonine+1)
             console.log("sixty1",curr)
             sixty1.push(curr.userId);
-            //nine=nine+1;
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+            //Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
           }
          
         } else {
@@ -210,6 +266,16 @@ const Dashboard = (props) => {
       });
     }
   };
+  const checkBills=(billing)=>{
+    let Bills=0
+    billing.map((curr)=>{
+      Bills=Bills+curr.bills
+    })
+    return Bills
+  
+
+    
+  }
   
 
   const renderRemotePatientMonitor = () => {
@@ -497,10 +563,12 @@ const Dashboard = (props) => {
           </tr>
           <tr>
             <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
+              <a href="/billing" onClick={()=>setBPatient(Billing)}>{checkBills(Billing)}
+              {console.log(Billing,"Billing")}
+              </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
+              <a href="/billing">2</a>
             </th>
             <th style={{ textAlign: "center" }}>
               <a href="/Patients">2</a>
