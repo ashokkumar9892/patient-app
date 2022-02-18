@@ -117,7 +117,7 @@ const BillingPatient = (props) => {
 
   return (
     <div className="card">
-      <h4 className="card-header">BLOOD GLUCOSE INFORMATION</h4>
+      <h4 className="card-header">BILL INFORMATION</h4>
       <div className="card-body">{renderBills()}</div>
     </div>
   );
