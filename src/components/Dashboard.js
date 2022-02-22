@@ -16,6 +16,11 @@ import "react-chat-widget/lib/styles.css";
 const Dashboard = (props) => {
   const [date, setDate] = useState();
   const [userType, setUserType] = useState("");
+  const d=new Date();
+  const e=new Date();
+  let Currmonth = d.getMonth();
+  let lastDate=new Date(e.setFullYear(d.getFullYear()-1));
+  const [month,setMonth]=useState(String(Currmonth));
   const coreContext = useContext(CoreContext);
   let zero = [];
   const nine = [];
@@ -24,7 +29,16 @@ const Dashboard = (props) => {
   const fiftynine = [];
   const sixty = [];
   const inactive = [];
-
+  let zero1 = [];
+  const nine1 = [];
+  const nineteen1 = [];
+  const thirtynine1 = [];
+  const fiftynine1 = [];
+  const sixty1 = [];
+  const Billing=[]
+  
+  const months = [ "January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December" ];
   let patientwdevice = [];
 
   useEffect(coreContext.checkLocalAuth, []);
@@ -64,6 +78,20 @@ const Dashboard = (props) => {
     coreContext.fetchBloodPressure(patientId, userType);
   };
   useEffect(fetchWeight, [coreContext.weightData.length]);
+  const renderSelect=()=>{
+    return(
+      <select class="form-select form-select-sm" aria-label=".form-select-sm example" value={month} onChange={(e)=>{setMonth(e.target.value);}}>
+        <option selected >Select the Month</option>
+      {months.map((curr,index)=>{
+        return(<option value={index}>{curr}</option>)
+        
+ })}
+      </select>)
+
+    
+  }
+  const selectmonth=React.useMemo(()=>renderSelect(),[month])
+  
 
   console.log("sahilwight", coreContext.weightData);
   const wd = coreContext.weightData
@@ -90,6 +118,11 @@ const Dashboard = (props) => {
     //   coreContext.setPatient(p);
     localStorage.setItem("d_patient", JSON.stringify(p));
   };
+  const setBPatient = (p) => {
+    console.log("sahil", p);
+    //   coreContext.setPatient(p);
+    localStorage.setItem("B_patient", JSON.stringify(p));
+  };
 
   const renderTimeLogs = () => {
     if (coreContext.patients.length == 0) {
@@ -108,52 +141,142 @@ const Dashboard = (props) => {
       );
     }
     if (coreContext.patients.length > 0) {
-      console.log(
-        "check dashbpoard patient",
-        coreContext.patients,
-        coreContext.AlltimeLogData
-      );
+      
       coreContext.patients.map((curr) => {
         let patientTimelog = coreContext.AlltimeLogData.filter(
-          (app) => app.UserId == curr.userId
+          (app) => app.UserId == curr.userId && Number(app.performedOn.substring(5,7))==Number(month)+1
         );
-        console.log("patient time log", patientTimelog);
+        // let patientTimelog = patientTimelogAll.filter(
+        //   (app) => Number(app.performedOn.substring(5,7))==Number(month)+1       );
+        console.log(patientTimelog,"patienttimelog")
+        
         if (patientTimelog.length > 0) {
           let totalTimeLog = 0;
+          let totalTimeLogForDataReview = 0;
 
           patientTimelog.map((timelog) => {
-            totalTimeLog = Number(timelog.timeAmount) + totalTimeLog;
+            if(timelog.taskType==="CareCoordination"){
+              totalTimeLog = Number(timelog.timeAmount) + totalTimeLog;
+            }
+            else if(timelog.taskType==="DataReview")
+            totalTimeLogForDataReview = Number(timelog.timeAmount) + totalTimeLogForDataReview;
           });
-          console.log("checking timelog", totalTimeLog);
+          console.log("checking timelog", totalTimeLogForDataReview,curr);
           if (totalTimeLog >= 0 && totalTimeLog <= 60) {
             zero.push(curr.userId);
-          } else if (totalTimeLog >= 60 && totalTimeLog <= 540) {
+          } else if (totalTimeLog > 60 && totalTimeLog <= 600) {
             // setOnetonine(onetonine+1)
             nine.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 600 && totalTimeLog <= 1140) {
+          } else if (totalTimeLog > 600 && totalTimeLog <= 1200) {
             // setOnetonine(onetonine+1)
             nineteen.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 1200 && totalTimeLog <= 2340) {
+          } else if (totalTimeLog > 1200 && totalTimeLog <= 2400) {
             // setOnetonine(onetonine+1)
             thirtynine.push(curr);
             //nine=nine+1;
-          } else if (totalTimeLog >= 2400 && totalTimeLog <= 3540) {
+          } else if (totalTimeLog > 2400 && totalTimeLog <= 3600) {
             // setOnetonine(onetonine+1)
             fiftynine.push(curr.userId);
             //nine=nine+1;
-          } else if (totalTimeLog >= 3600) {
+          } else if (totalTimeLog > 3600) {
             // setOnetonine(onetonine+1)
             sixty.push(curr.userId);
             //nine=nine+1;
           }
+          if (totalTimeLogForDataReview >= 0 && totalTimeLogForDataReview <= 60) {
+            zero1.push(curr.userId);
+          } else if (totalTimeLogForDataReview > 60 && totalTimeLogForDataReview <= 600) {
+            // setOnetonine(onetonine+1)
+            nine1.push(curr);
+            //nine=nine+1;
+          } else if (totalTimeLogForDataReview > 600 && totalTimeLogForDataReview <= 1200) {
+            // setOnetonine(onetonine+1)
+            nineteen1.push(curr);
+            //nine=nine+1;
+          } else if (totalTimeLogForDataReview >= 1200 && totalTimeLogForDataReview <2400) {
+            // setOnetonine(onetonine+1)
+            thirtynine1.push(curr);
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+          } else if (totalTimeLogForDataReview >= 2400 && totalTimeLogForDataReview <= 3600) {
+            // setOnetonine(onetonine+1)
+            fiftynine1.push(curr.userId);
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+            //Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})            
+            
+            //nine=nine+1;
+          } else if (totalTimeLogForDataReview > 3600) {
+            // setOnetonine(onetonine+1)
+            console.log("sixty1",curr)
+            sixty1.push(curr.userId);
+            if(Billing.length<1){
+              Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+            }
+            else{
+              let count=0
+              Billing.map((obj)=>{
+                
+                if(Object.values(obj).includes(curr.userId)==true){
+                  count=count+1
+                }
+              })
+              if (count===0){
+                Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+                
+              }
+            }
+            //Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
+          }
+         
         } else {
           inactive.push(curr.userId);
         }
+        
       });
     }
   };
+  const checkBills=(billing)=>{
+    let Bills=0
+    billing.map((curr)=>{
+      Bills=Bills+curr.bills
+    })
+    return Bills
+  
+
+    
+  }
+  
 
   const renderRemotePatientMonitor = () => {
     if (
@@ -228,6 +351,10 @@ const Dashboard = (props) => {
         <div className="col-md-3">
           <input type="checkbox" /> Show Only My Patients
         </div>
+        <div className="col-md-4">
+        
+{selectmonth}
+        </div>
       </div>
       <div className="card_body">
         <h5>
@@ -256,10 +383,10 @@ const Dashboard = (props) => {
             <th style={{ textAlign: "center" }}>Patients Enrolled</th>
             <th style={{ textAlign: "center" }}>60+ Mins</th>
 
-            <th style={{ textAlign: "center" }}>40-59 Mins</th>
-            <th style={{ textAlign: "center" }}>20-39 Mins</th>
-            <th style={{ textAlign: "center" }}>10-19 Mins</th>
-            <th style={{ textAlign: "center" }}>1-9 Mins</th>
+            <th style={{ textAlign: "center" }}>40-60 Mins</th>
+            <th style={{ textAlign: "center" }}>20-40 Mins</th>
+            <th style={{ textAlign: "center" }}>10-20 Mins</th>
+            <th style={{ textAlign: "center" }}>1-10 Mins</th>
             <th style={{ textAlign: "center" }}>0 Mins</th>
             <th style={{ textAlign: "center" }}>Inactive</th>
             <th style={{ textAlign: "center" }}>Not Enrolled</th>
@@ -302,6 +429,68 @@ const Dashboard = (props) => {
             <th style={{ textAlign: "center" }}>
               <a href="/dpatients" onClick={() => setPatient(inactive)}>
                 {inactive.length}
+              </a>
+            </th>
+            {/* <th style={{ textAlign: 'center' }}><a href="/dpatients">{zeromin}</a></th> */}
+          </tr>
+        </table>
+      </div>
+      <div className="card_body">
+        <h5>
+          <Bezier /> Data Review & Management
+        </h5>
+        <table className="table table-bordered table-sm">
+          <tr>
+            
+            <th style={{ textAlign: "center" }}>Patients Enrolled</th>
+            <th style={{ textAlign: "center" }}>60+ Mins</th>
+
+            <th style={{ textAlign: "center" }}>40-60 Mins</th>
+            <th style={{ textAlign: "center" }}>20-40 Mins</th>
+            <th style={{ textAlign: "center" }}>10-20 Mins</th>
+            <th style={{ textAlign: "center" }}>1-10 Mins</th>
+            <th style={{ textAlign: "center" }}>0 Mins</th>
+            <th style={{ textAlign: "center" }}>Inactive</th>
+            <th style={{ textAlign: "center" }}>Not Enrolled</th>
+          </tr>
+          {renderTimeLogs()}
+          <tr>
+            <th style={{ textAlign: "center" }}>
+              <a href="/patients">{coreContext.patients.length}</a>{" "}
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)])}>
+                {[...new Set(sixty1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)])}>
+                {[...new Set(fiftynine1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)])}>
+                {[...new Set(thirtynine1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)])}>
+                {[...new Set(nineteen1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)])}>
+                {[...new Set(nine1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(zero1)])}>
+                {[...new Set(zero1)].length}
+              </a>
+            </th>
+            <th style={{ textAlign: "center" }}>
+              <a href="/dpatients" onClick={() => setPatient(inactive)}>
+                {[...new Set(inactive)].length}
               </a>
             </th>
             {/* <th style={{ textAlign: 'center' }}><a href="/dpatients">{zeromin}</a></th> */}
@@ -374,10 +563,12 @@ const Dashboard = (props) => {
           </tr>
           <tr>
             <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
+              <a href="/billing" onClick={()=>setBPatient(Billing)}>{checkBills(Billing)}
+              {console.log(Billing,"Billing")}
+              </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
+              <a href="/billing">2</a>
             </th>
             <th style={{ textAlign: "center" }}>
               <a href="/Patients">2</a>
