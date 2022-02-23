@@ -178,6 +178,16 @@ coreContext.FetchNotification(localStorage.getItem("userId"))
     }
     
   }, []);
+  const markasread=()=>{
+    notificationValue.sort(function(a,b){
+ 
+      return new Date(b.date) - new Date(a.date);
+    }).map((curr)=>{
+      coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"))
+             })
+             setNotificationValue([]);
+    
+  }
 
   const FetchNotificationForBP=()=>{
     var date = new Date();
@@ -651,7 +661,11 @@ const handlechangeprovider=(p)=>{
 
   }
   const rendernotifications=()=>{
-    return(
+    return(<>
+    
+                  <div className="row">
+                  {
+
       notificationValue.sort(function(a,b){
  
         return new Date(b.date) - new Date(a.date);
@@ -662,17 +676,14 @@ const handlechangeprovider=(p)=>{
                     
                {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
                   </Typography>
-                  <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1);handleClose1()}}>
-                    
-              Mark as Read
-              
-                  </Typography>
+                  
                   <hr/>
                   
                     </>
                  )
-               })
-    )
+               })}
+               </div>
+    </>)
   }
   //const count=React.useMemo({notificationValue.length,[notificationValue.length])
     const count=React.useMemo(()=>rendernotificationlength(),[notificationValue.length])
@@ -1284,6 +1295,16 @@ const handlechangeprovider=(p)=>{
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
           Notifications
         </BootstrapDialogTitle>
+        <BootstrapDialogTitle>
+         
+        <div className="row" style={{float:"right"}}>
+      <Button style={{float:"right",fontSize:"14px"}} onClick={()=>{markasread();handleClose1()}}>
+                    
+              Mark as Read
+              
+                  </Button>
+                  </div>
+       </BootstrapDialogTitle>
         <DialogContent dividers>
          
           
