@@ -35,7 +35,9 @@ const Dashboard = (props) => {
   const thirtynine1 = [];
   const fiftynine1 = [];
   const sixty1 = [];
-  const Billing=[]
+  const Billing=[];
+  const ccm=[];
+  const rpm=[];
   
   const months = [ "January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December" ];
@@ -117,6 +119,7 @@ const Dashboard = (props) => {
     console.log("sahil", p);
     //   coreContext.setPatient(p);
     localStorage.setItem("d_patient", JSON.stringify(p));
+    localStorage.setItem("month", month);
   };
   const setBPatient = (p) => {
     console.log("sahil", p);
@@ -141,6 +144,7 @@ const Dashboard = (props) => {
       );
     }
     if (coreContext.patients.length > 0) {
+      localStorage.setItem("patient_list",JSON.stringify(coreContext.patients))
       
       coreContext.patients.map((curr) => {
         let patientTimelog = coreContext.AlltimeLogData.filter(
@@ -161,20 +165,21 @@ const Dashboard = (props) => {
             else if(timelog.taskType==="DataReview")
             totalTimeLogForDataReview = Number(timelog.timeAmount) + totalTimeLogForDataReview;
           });
+         
           console.log("checking timelog", totalTimeLogForDataReview,curr);
           if (totalTimeLog >= 0 && totalTimeLog <= 60) {
             zero.push(curr.userId);
           } else if (totalTimeLog > 60 && totalTimeLog <= 600) {
             // setOnetonine(onetonine+1)
-            nine.push(curr);
+            nine.push(curr.userId);
             //nine=nine+1;
           } else if (totalTimeLog > 600 && totalTimeLog <= 1200) {
             // setOnetonine(onetonine+1)
-            nineteen.push(curr);
+            nineteen.push(curr.userId);
             //nine=nine+1;
           } else if (totalTimeLog > 1200 && totalTimeLog <= 2400) {
             // setOnetonine(onetonine+1)
-            thirtynine.push(curr);
+            thirtynine.push(curr.userId);
             //nine=nine+1;
           } else if (totalTimeLog > 2400 && totalTimeLog <= 3600) {
             // setOnetonine(onetonine+1)
@@ -189,15 +194,15 @@ const Dashboard = (props) => {
             zero1.push(curr.userId);
           } else if (totalTimeLogForDataReview > 60 && totalTimeLogForDataReview <= 600) {
             // setOnetonine(onetonine+1)
-            nine1.push(curr);
+            nine1.push(curr.userId);
             //nine=nine+1;
           } else if (totalTimeLogForDataReview > 600 && totalTimeLogForDataReview <= 1200) {
             // setOnetonine(onetonine+1)
-            nineteen1.push(curr);
+            nineteen1.push(curr.userId);
             //nine=nine+1;
           } else if (totalTimeLogForDataReview >= 1200 && totalTimeLogForDataReview <2400) {
             // setOnetonine(onetonine+1)
-            thirtynine1.push(curr);
+            thirtynine1.push(curr.userId);
             if(Billing.length<1){
               Billing.push({"id":Billing.length+1,"userId":curr.userId,"name":curr.name,"totalTime":totalTimeLogForDataReview,"bills":(Math.floor(totalTimeLogForDataReview/1200)),"timeLeft":Math.floor(totalTimeLogForDataReview/60)%20})
             }
@@ -394,7 +399,7 @@ const Dashboard = (props) => {
           {renderTimeLogs()}
           <tr>
             <th style={{ textAlign: "center" }}>
-              <a href="/patients">{coreContext.patients.length}</a>{" "}
+              <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive])}>{coreContext.patients.length}</a>{" "}
             </th>
             <th style={{ textAlign: "center" }}>
               <a href="/dpatients" onClick={() => setPatient(sixty)}>
@@ -456,7 +461,7 @@ const Dashboard = (props) => {
           {renderTimeLogs()}
           <tr>
             <th style={{ textAlign: "center" }}>
-              <a href="/patients">{coreContext.patients.length}</a>{" "}
+              <a href="/dpatients"onClick={() => setPatient([...sixty1,...fiftynine1,...thirtynine1,...nineteen1,...nine1,...zero1,...inactive])}>{coreContext.patients.length}</a>{" "}
             </th>
             <th style={{ textAlign: "center" }}>
               <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)])}>

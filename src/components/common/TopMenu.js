@@ -118,6 +118,8 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   const [gender, setGender] = useState("");
   const [language, setLanguage] = useState("");
   const [ehrId, setEhrId] = useState("");
+  const [dcount, setdcount] = useState([""]);
+  const [diagnosisId, setDiagnosisId] = useState("");
   const [isccm, setIsccm] = useState(false);
   const [ispcm, setIspcm] = useState(false);
   const [isrpm, setIsrpm] = useState(false);
@@ -153,6 +155,12 @@ const TopMenu = ({ changestyle, showSidebar }) => {
   };
   const handleClose1 = () => {
     setOpen(false);
+  };
+  const handledcount = (index,val) => {
+    const value=[...dcount]
+    value[index]=val
+    setdcount(value);
+    
   };
 
   const fetchtd=()=>{
@@ -376,6 +384,7 @@ const handlechangeprovider=(p)=>{
   };
 
   const onCreatePatientSubmit = () => {
+    
     if (!userName) {
       alert("Enter user name...");
       return;
@@ -404,7 +413,11 @@ const handlechangeprovider=(p)=>{
       alert("Enter email...");
       return;
     }
-
+    var newId= ""
+    dcount.map((curr)=>{
+      newId=newId+","+curr
+    })
+    setDiagnosisId(newId)
     coreContext.Registration(
       userName,
       firstName,
@@ -424,7 +437,8 @@ const handlechangeprovider=(p)=>{
       state,
       pcm,
       pp,
-      ppname
+      ppname,
+      newId.substring(1)
     );
     handleClose();
   };
@@ -676,8 +690,13 @@ const handlechangeprovider=(p)=>{
                     
                {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
                   </Typography>
-                  
-                  <hr/>
+                  <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1);handleClose1()}}>
+                    
+                    Mark as Read
+                    
+                        </Typography>
+                        <hr/>
+                 
                   
                     </>
                  )
@@ -1013,14 +1032,25 @@ const handlechangeprovider=(p)=>{
             <Row>
               <Col>
                 <Form.Group>
-                  <Form.Label>EHR ID</Form.Label>
-                  <Form.Control
-                    onChange={(e) => setEhrId(e.target.value)}
-                    value={ehrId}
+                  <Form.Label>Diagnosis ID</Form.Label>
+                  {
+                  dcount.map((curr,index)=>{
+                    return(
+                      <>
+                      <Form.Control
+                    onChange={(e) => handledcount(index,e.target.value)}
+                    value={dcount[index]}
                     size="sm"
                     type="text"
-                    placeholder="Enter EHR ID"
+                    placeholder="Enter Diagnosis ID"
+                  
                   />
+                 
+                  </>
+                    )
+                  })}
+                   <Button onClick={()=>setdcount([...dcount,""])}>+</Button>
+                  
                 </Form.Group>
               </Col>
             </Row>

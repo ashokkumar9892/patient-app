@@ -57,8 +57,10 @@ const Patients = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [actionPatients, setActionPatients] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [dcount, setdcount] = useState([""]);
+  const [diagnosisId, setDiagnosisId] = useState("");
 
-  const handleModalClose = () => setShowModal(false);
+  const handleModalClose = () => {setShowModal(false);setdcount([""])};
   const handleModalShow = () => setShowModal(true);
 
   const handleAssignDrModalClose = () => setAssignDrShowModal(false);
@@ -93,6 +95,39 @@ const Patients = (props) => {
   const fetchProviders = () => {
     coreContext.fetchProviders();
   };
+  const handledcount = (index,val) => {
+    const value=[...dcount]
+    value[index]=val
+    setdcount(value);
+    
+    
+  };
+  const handlefinalsubmit=()=>{
+    var newId= ""
+    dcount.map((curr)=>{
+      newId=newId+","+curr
+    })
+    coreContext.UpdatePatient(
+      fname,
+      lname,
+      phone,
+      birthDate,
+      height,
+      provider,
+      coordinator,
+      coach,
+      patientId,
+      gender,
+      language,
+      workPhone,
+      mobilePhone,
+      street,
+      zip,
+      city,
+      state,
+      newId.substring(1)
+    );
+  }
 
   useEffect(fetchProviders, []);
 
@@ -131,6 +166,9 @@ const Patients = (props) => {
     if (patient.name !== undefined) {
       patient.lastName = patient.name.split(",")[0].trim();
       patient.firstName = patient.name.split(",")[1].trim();
+    }
+    if (patient.diagnosisId ) {
+      setdcount(patient.diagnosisId.split(","))
     }
     setFName(patient.firstName);
     setLName(patient.lastName);
@@ -277,6 +315,8 @@ const Patients = (props) => {
     .then((willDelete) => {
       if (willDelete) {
         coreContext.DeletePatient(patient.userId);
+        fetchPatients();
+
       } else {
         swal("Delete Cancelled");
       }
@@ -620,6 +660,7 @@ const Patients = (props) => {
       );
     }
   };
+  useEffect(renderPatients, [JSON.stringify(coreContext.patients),coreContext.patients.length]);
   // const renderbuttons=()=>{
   //   <div style={{  width: '100px' }}  >
   //   <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(rows)}>  <PencilSquare /></a>
@@ -787,7 +828,45 @@ const Patients = (props) => {
                   elementType="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                />  
+                <div className="row">
+                <div className="col-md-10">
+
+{
+                  dcount.map((curr,index)=>{
+                    return(
+                      <>
+                      {/* <Form.Control
+                    onChange={(e) => }
+                    value={dcount[index]}
+                    size="sm"
+                    type="text"
+                    placeholder="Enter Diagnosis ID"
+                  
+                  /> */}
+                
+                  <Input
+                  label="Diagnosis Id"
+                  name="diagnosisId"
+                  required={false}
+                  register={register}
+                  errors={errors}
+                  elementType="text"
+                  value={dcount[index]}
+                  onChange={(e) => handledcount(index,e.target.value)}
                 />
+               
+                  
+                 
+                 
+                  </>
+                    )
+                  })}
+                     </div>
+                  <div className="col-md-2 mt-4">
+                  <Button onClick={()=>setdcount([...dcount,""])}>+</Button>
+                  </div>
+                  </div>
               </div>
               <div className="col-md-6">
                 {console.log("sssss", provider)}
@@ -891,27 +970,10 @@ const Patients = (props) => {
               blockButton={true}
               value="Submit"
               onClick={() => {
-                coreContext.UpdatePatient(
-                  fname,
-                  lname,
-                  phone,
-                  birthDate,
-                  height,
-                  provider,
-                  coordinator,
-                  coach,
-                  patientId,
-                  gender,
-                  language,
-                  workPhone,
-                  mobilePhone,
-                  street,
-                  zip,
-                  city,
-                  state
-                );
+                handlefinalsubmit();
                 fetchPatients();
                 setShowModal(false);
+                setdcount([""])
                 fetchPatients();
                 fetchPatients();
                 

@@ -33,6 +33,7 @@ const DPatients = (props) => {
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [actionPatients, setActionPatients] = useState([]);
+  const [rows,setRows]=useState([]);
 
   const handleModalClose = () => setShowModal(false);
   const handleModalShow = () => setShowModal(true);
@@ -104,8 +105,9 @@ const DPatients = (props) => {
   const columns = [
     {
       field: "name",
-      headerName: "Patient Name",
-      width: 200,
+      headerName: "Name",
+      editable: false,
+      width: 250,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -114,94 +116,100 @@ const DPatients = (props) => {
       ),
     },
     {
-      field: "ProviderName",
-      headerName: "Provider",
+      field: "providerName",
+      headerName: "Provider Name",
       editable: false,
+      
       width: 200,
     },
     {
-      field: "CareName",
-      headerName: "Care",
+      field: "diagnosisId",
+      headerName: "diagnosisId",
+      editable: false,
+     
+      width: 200,
+    },
+    {
+      field: "CCM",
+      headerName: "CCM Mins",
+      editable: false,
       width: 150,
-      editable: false,
-    },
-    {
-      field: "CoachName",
-      headerName: "Coach",
-      editable: false,
-      width: 150,
-    },
-    {
-      field: "height",
-      headerName: "Height",
-      editable: false,
-      type: "number",
-      width: 125,
-    },
-    {
-      field: "bg_reading",
-      headerName: "Glucose",
-      editable: false,
-      type: "number",
-      width: 130,
-    },
-    {
-      field: "Weight",
-      headerName: "Weight",
-      type: "number",
-      width: 125,
-      editable: false,
-    },
-    {
-      field: "diastolic",
-      headerName: "Diastolic",
-      type: "number",
-      width: 140,
-      editable: false,
-    },
-    {
-      field: "systolic",
-      headerName: "Systolic",
-      type: "number",
-      width: 140,
-      editable: false,
-    },
-    {
-      field: "BMI",
-      headerName: "BMI",
-      width: 175,
-      editable: false,
-    },
-    {
-      field: "",
-      headerName: "Action",
-      width: 120,
       renderCell: (params) => (
-        <div style={{ width: "100px" }}>
-          <a
-            style={{ marginRight: "5px" }}
-            href="#"
-            onClick={() => showEditForm(params.row)}>
-            {" "}
-            <PencilSquare />
-          </a>
-          <a
-            style={{ marginRight: "5px" }}
-            href="#"
-            onClick={() => deletePatient(params.row)}>
-            {" "}
-            <Trash />
-          </a>
-          <a
-            style={{ marginRight: "5px" }}
-            href="#"
-            onClick={() => showAssignDoctor(params.row)}>
-            {" "}
-            <Person />
-          </a>
-        </div>
+        <div>          {String(Math.floor(params.value/60))+":"+('0' + String(params.value%60)).slice(-2)}</div>
+
+       
       ),
     },
+    {
+      field: "RPM",
+      headerName: "RPM Mins",
+      width: 150,
+      editable: false,
+      renderCell: (params) => (
+        <div>          {String(Math.floor(params.value/60))+":"+('0' + String(params.value%60)).slice(-2)}</div>
+
+       
+      ),
+    },
+   
+  
+    // {
+    //   field: "Weight",
+    //   headerName: "Weight",
+    //   type: "number",
+    //   width: 125,
+    //   editable: false,
+    // },
+    // {
+    //   field: "diastolic",
+    //   headerName: "Diastolic",
+    //   type: "number",
+    //   width: 140,
+    //   editable: false,
+    // },
+    // {
+    //   field: "systolic",
+    //   headerName: "Systolic",
+    //   type: "number",
+    //   width: 140,
+    //   editable: false,
+    // },
+    // {
+    //   field: "BMI",
+    //   headerName: "BMI",
+    //   width: 175,
+    //   editable: false,
+    // },
+    // {
+    //   field: "",
+    //   headerName: "Action",
+    //   width: 120,
+    //   renderCell: (params) => (
+    //     <div style={{ width: "100px" }}>
+    //       <a
+    //         style={{ marginRight: "5px" }}
+    //         href="#"
+    //         onClick={() => showEditForm(params.row)}>
+    //         {" "}
+    //         <PencilSquare />
+    //       </a>
+    //       <a
+    //         style={{ marginRight: "5px" }}
+    //         href="#"
+    //         onClick={() => deletePatient(params.row)}>
+    //         {" "}
+    //         <Trash />
+    //       </a>
+    //       <a
+    //         style={{ marginRight: "5px" }}
+    //         href="#"
+    //         onClick={() => showAssignDoctor(params.row)}>
+    //         {" "}
+    //         <Person />
+    //       </a>
+    //     </div>
+    //   ),
+    // },
   ];
 
   // const useStyles = makeStyles((theme) => (
@@ -212,11 +220,50 @@ const DPatients = (props) => {
   //   }));
 
   // const classes = useStyles();
+  const checktimelog=()=>{
+    const d_pat = [... new Set(JSON.parse(localStorage.getItem("d_patient")))]
+    const patients = [... new Set(JSON.parse(localStorage.getItem("patient_list")))]
+    const month = localStorage.getItem("month");
+    const dashboardPatient=[];
+    d_pat.map((curr,index)=>{
+      let patientTimelog = coreContext.AlltimeLogData.filter(
+        (app) => app.UserId == curr && Number(app.performedOn.substring(5,7))==Number(month)+1
+      );
+      var totalTimeLog = 0;
+      var totalTimeLogForDataReview = 0;
+      if (patientTimelog.length > 0) {
+    
+  
+        patientTimelog.map((timelog) => {
+          if(timelog.taskType==="CareCoordination"){
+            totalTimeLog = Number(timelog.timeAmount) + totalTimeLog;
+          }
+          else if(timelog.taskType==="DataReview")
+          totalTimeLogForDataReview = Number(timelog.timeAmount) + totalTimeLogForDataReview;
+        });
+      }
+      const p=patients.filter((app)=>app.userId===curr)
+      dashboardPatient.push({"id":index,"name":p[0].name,"providerName":p[0].ProviderName,"diagnosisId":p[0].diagnosisId,"userId":curr,"CCM":totalTimeLog,"RPM":totalTimeLogForDataReview})
+    })
+    setRows(dashboardPatient)
+    console.log(dashboardPatient,"dashba")
+   
+  }
+  useEffect(() => {
+    checktimelog();
+    coreContext.fetchAllTimeLog();
+  }, [coreContext.AlltimeLogData.length>1]);
+  useEffect(() => {
+   
+    coreContext.fetchAllTimeLog();
+  }, []);
 
   const renderPatients = () => {
     const d_pat = localStorage.getItem("d_patient");
+    
+    
     console.log(d_pat);
-    if (coreContext.patients.length == 0) {
+    if (coreContext.AlltimeLogData.length == 0) {
       return (
         <div
           style={{
@@ -231,13 +278,11 @@ const DPatients = (props) => {
         </div>
       );
     }
-    if (coreContext.patients.length > 0) {
+    if (coreContext.AlltimeLogData.length > 0) {
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid
-            rows={coreContext.patients.filter((curr) =>
-              d_pat.includes(curr.userId)
-            )}
+            rows={rows}
             columns={columns}
             pageSize={10}
             sortModel={[{ field: "name", sort: "asc" }]}
