@@ -252,6 +252,7 @@ useEffect(fetchProviders, [checked]);
       );
     }
   };
+  useEffect(renderProviders, [JSON.stringify(coreContext.providerData)]);
 
   return (
     <div className="card">

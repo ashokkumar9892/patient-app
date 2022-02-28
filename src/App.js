@@ -207,21 +207,22 @@ function App() {
   
     //const memo=React.useMemo(()=>{renderpatient()},[coreContext.patients])
   const renderuser = () => {
-    if (coreContext.userinfo.length === 0) {
-      return (
-        <div
-          style={{
-            height: 680,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "10px",
-            alignItems: "center",
-          }}>
-          <Loader type="Circles" color="#00BFFF" height={100} width={100} />
-        </div>
-      );
-    }
+    // if (coreContext.userinfo.length === 0) {
+    //   return (
+    //     <div
+    //       style={{
+    //         height: 680,
+    //         width: "100%",
+    //         display: "flex",
+    //         justifyContent: "center",
+    //         marginTop: "10px",
+    //         alignItems: "center",
+    //       }}>
+    //       <Loader type="Circles" color="#00BFFF" height={100} width={100} />
+
+    //     </div>
+    //   );
+    // }
     if (coreContext.userinfo.length > 0) {
       console.log("userdata from app", coreContext.userinfo);
       usertype = (coreContext.userinfo[0].UserType.s!=="undefined")?coreContext.userinfo[0].UserType.s:""
@@ -436,7 +437,7 @@ function App() {
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography> */}
         {/* </Box>
-      </Modal> */} */
+      </Modal> */} 
     </>
   );
 }
