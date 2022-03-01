@@ -1330,7 +1330,7 @@ const handlechangeprovider=(p)=>{
         <div className="row" style={{float:"right"}}>
       <Button style={{float:"right",fontSize:"14px"}} onClick={()=>{markasread();handleClose1()}}>
                     
-              Mark as Read
+              Mark All as Read
               
                   </Button>
                   </div>

@@ -124,7 +124,7 @@ const DPatients = (props) => {
     },
     {
       field: "diagnosisId",
-      headerName: "diagnosisId",
+      headerName: "Diagnosis",
       editable: false,
      
       width: 200,
@@ -296,7 +296,7 @@ const DPatients = (props) => {
     <React.Fragment>
       {" "}
       <Table striped bordered hover responsive size="sm">
-        <caption>Patients' List </caption>
+        <caption>{localStorage.getItem("DInformaion")}</caption>
         {renderPatients()}
       </Table>
       <Modal show={showModal} onHide={handleModalClose} size="lg">

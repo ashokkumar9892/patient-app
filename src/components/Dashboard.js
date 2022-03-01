@@ -115,11 +115,12 @@ const Dashboard = (props) => {
     alert(coreContext.patientWDevice);
   };
   // useEffect(fetchdpatient, []);
-  const setPatient = (p) => {
+  const setPatient = (p,description) => {
     console.log("sahil", p);
     //   coreContext.setPatient(p);
     localStorage.setItem("d_patient", JSON.stringify(p));
     localStorage.setItem("month", month);
+    localStorage.setItem("DInformaion", description);
   };
   const setBPatient = (p) => {
     console.log("sahil", p);
@@ -399,40 +400,40 @@ const Dashboard = (props) => {
           {renderTimeLogs()}
           <tr>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive])}>{coreContext.patients.length}</a>{" "}
+              <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`Patients Information of CCM of ${months[month]} month`)}>{coreContext.patients.length}</a>{" "}
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(sixty)}>
+              <a href="/dpatients" onClick={() => setPatient(sixty,`Patients Information with time log between 60+ Mins of CCM of ${months[month]} month`)}>
                 {sixty.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(fiftynine)}>
+              <a href="/dpatients" onClick={() => setPatient(fiftynine,`Patients Information with time log between 40-60 Mins of CCM of ${months[month]} month`)}>
                 {fiftynine.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(thirtynine)}>
+              <a href="/dpatients" onClick={() => setPatient(thirtynine,`Patients Information with time log between 20-40 Mins of CCM of ${months[month]} month`)}>
                 {thirtynine.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(nineteen)}>
+              <a href="/dpatients" onClick={() => setPatient(nineteen,`Patients Information with time log between 10-20 Mins of CCM of ${months[month]} month`)}>
                 {nineteen.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(nine)}>
+              <a href="/dpatients" onClick={() => setPatient(nine,`Patients Information with time log between 1-10 Mins of CCM of ${months[month]} month`)}>
                 {nine.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(zero)}>
+              <a href="/dpatients" onClick={() => setPatient(zero,`Patients Information with time log between 0-1 Mins of CCM of ${months[month]} month`)}>
                 {zero.length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(inactive)}>
+              <a href="/dpatients" onClick={() => setPatient(inactive,"`Patients Information with time log between 0 Mins of CCM of ${months[month]} month`")}>
                 {inactive.length}
               </a>
             </th>
@@ -464,37 +465,37 @@ const Dashboard = (props) => {
               <a href="/dpatients"onClick={() => setPatient([...sixty1,...fiftynine1,...thirtynine1,...nineteen1,...nine1,...zero1,...inactive])}>{coreContext.patients.length}</a>{" "}
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)],`Patients Information with time log between 60+ Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(sixty1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)],`Patients Information with time log between 40-60 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(fiftynine1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)],`Patients Information with time log between 20-40 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(thirtynine1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)],`Patients Information with time log between 10-20 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(nineteen1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)],`Patients Information with time log between 1-10 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(nine1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(zero1)])}>
+              <a href="/dpatients" onClick={() => setPatient([...new Set(zero1)],`Patients Information with time log between 0-1 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(zero1)].length}
               </a>
             </th>
             <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(inactive)}>
+              <a href="/dpatients" onClick={() => setPatient(inactive,`Patients Information with time log between 0 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(inactive)].length}
               </a>
             </th>
