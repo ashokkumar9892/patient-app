@@ -183,7 +183,7 @@ Here at A Pattern Medical Clinic, our top priority is patient care. In order to 
               register={register}
               errors={errors}
               name="password"/>
-<a className="text-small position-absolute t-3 e-3" href="Pages.Authentication.ForgotPassword.html">Forgot?</a>
+<a className="text-small position-absolute t-3 e-3" href="reset-password">Forgot?</a>
 </div>
 	</div>
 	</div>
