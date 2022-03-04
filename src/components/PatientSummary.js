@@ -203,6 +203,7 @@ const PatientSummary = (props) => {
   };
 
   useEffect(fetchCoach, []);
+  useEffect(coreContext.setdefault, []);
 
   const tt = [
     ...coreContext.providerData,
@@ -1875,8 +1876,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             marginTop: "10px",
             alignItems: "center",
           }}>
-          <h6>No data Found</h6>
-          {/* <Loader type="Circles" color="#00BFFF" height={100} width={100} /> */}
+          {/* <h6>No data Found</h6> */}
+          <Loader type="Circles" color="#00BFFF" height={100} width={100} />
         </div>
       );
     }
@@ -1896,8 +1897,8 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
       );
     }
   };
-
-  useEffect(renderTimelogs, [JSON.stringify(coreContext.timeLogData)]);
+const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreContext.timeLogData)])
+  //useEffect(renderTimelogs, [JSON.stringify(coreContext.timeLogData)]);
   useEffect(fetchtime, [JSON.stringify(coreContext.timeLogData)]);
 
   
@@ -2696,7 +2697,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                       coreContext.fetchTimeLog("PATIENT_" + patientId);
                       coreContext.fetchTimeLog("PATIENT_" + patientId);
                       setPristine();
-                      renderTimelogs();
+                      
                       setPerformedBy("");
                       setTaskType("");
                       setDate(new Date());
@@ -2814,7 +2815,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-12">{renderTimelogs()}</div>
+                  <div className="col-md-12">{rendertimelog}</div>
                 </div>
               </div>
             </div>

@@ -247,6 +247,9 @@ export const CoreContextProvider = (props) => {
         //     }
       });
   };
+  const setdefault=()=>{
+    setTimeLogData([])
+  }
 
   const getdp = (d) => {
     const token = localStorage.getItem("app_jwt");
@@ -3413,7 +3416,7 @@ export const CoreContextProvider = (props) => {
         AddNotification,
         FetchNotification,
         notifications,
-        cleanup
+        cleanup,setdefault
       }}>
       {props.children}
     </CoreContext.Provider>
