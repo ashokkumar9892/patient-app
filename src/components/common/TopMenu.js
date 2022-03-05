@@ -111,6 +111,7 @@ const TopMenu = ({ changestyle, showSidebar }) => {
 
   const [message, setMessage] = useState("");
   const [userName, setUserName] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
   const [pwd, setpwd] = useState("");
   const [firstName, setfirstName] = useState("");
   const [middleName, setmiddleName] = useState("");
@@ -153,6 +154,12 @@ const TopMenu = ({ changestyle, showSidebar }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+  const handleSearchOpen = () => {
+    setShowSearch(true);
+  };
+  const handleSearchClose = () => {
+    setShowSearch(false);
   };
   const handleClose1 = () => {
     setOpen(false);
@@ -818,11 +825,11 @@ const handlechangeprovider=(p)=>{
               {renderVitalMenu()}
 	
 <li className="list-inline-item">
-<a href="#" data-bs-toggle="modal"data-bs-target="#searchPagesModal">
+<a href="#" data-bs-toggle="modal"data-bs-target="#searchPagesModal" onClick={()=>handleSearchOpen()}>
 	<i className="icon text-white bi-search"></i>
 </a>
 </li>
-<li className="list-inline-item">{renderpatientSearch()}</li>
+{/* <li className="list-inline-item">{renderpatientSearch()}</li> */}
 
 
 <li className="list-inline-item">
@@ -918,6 +925,65 @@ const handlechangeprovider=(p)=>{
               Cancel
             </Button>
           </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showSearch}
+          onHide={handleSearchClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Search Patient</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {
+ (localStorage.getItem("userType")!== "patient")?
+     
+        <Form inline>
+          <div className="col-sm-4">
+            {/* <input
+                name="name"
+                type="text"
+                style={{  height: '38px', width: '200px' }}
+                onKeyPress={event => {
+                    setPatientName(event);
+                   }}
+                placeholder="Search patients..."
+              /> */}
+            {renderPatients()}
+            <div className="col-sm-4">
+              <header>
+                <div style={{ width: "100%" }}>
+                  <ReactSearchAutocomplete
+                    items={coreContext.patients}
+                    onSearch={handleOnSearch}
+                    onHover={handleOnHover}
+                    onSelect={handleOnSelect}
+                    onFocus={handleOnFocus}
+                    autoFocus
+                  />
+                </div>
+              </header>
+            </div>
+            {/* <input
+                name="name"
+                type="button"
+                width="380" value="Search" style={{ marginLeft: '5px',  height: '38px', width: '200px' }}
+                onClick={onSearch}
+              /> */}
+          </div>
+
+          {/* <FormControl 
+            placeholder="Search patients..."
+            aria-label="Search patients..."
+            aria-describedby="basic-addon1" onKeyPress={event => {
+                if (event.key === "Enter") {
+                  search(event);
+                }}}
+          
+        /> */}
+        </Form>
+     :null
+}
+          </Modal.Body>
+          
         </Modal>
 
         <Modal show={showMessageModal} onHide={handleMessageModalClose}>
