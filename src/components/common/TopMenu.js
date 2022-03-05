@@ -42,6 +42,7 @@ import {
   GiOrangeSlice,
   GiCagedBall,
 } from "react-icons/gi";
+import Profile from '../../assets/images/profile-1.webp';
 import { CoreContext } from "../../context/core-context";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { ImMenu } from "react-icons/im";
@@ -534,20 +535,33 @@ const handlechangeprovider=(p)=>{
     const userType = localStorage.getItem("userType");
     if (userType !== "patient")
       return (
-        <NavDropdown
-          title={
-            <div style={{ display: "inline-block" }}>
-              <People /> Patients{" "}
-            </div>
-          }
-          id="collasible-nav-dropdown">
-          <NavDropdown.Item href="/patients">
-            <PersonLinesFill /> List
-          </NavDropdown.Item>
-          <NavDropdown.Item href="#" onClick={handleShow}>
-            <PencilSquare /> Add
-          </NavDropdown.Item>
-        </NavDropdown>
+        // <NavDropdown
+        //   title={
+        //     <div style={{ display: "inline-block" }}>
+        //       <People /> Patients{" "}
+        //     </div>
+        //   }
+        //   id="collasible-nav-dropdown">
+        //   <NavDropdown.Item href="/patients">
+        //     <PersonLinesFill /> List
+        //   </NavDropdown.Item>
+        //   <NavDropdown.Item href="#" onClick={handleShow}>
+        //     <PencilSquare /> Add
+        //   </NavDropdown.Item>
+        // </NavDropdown>
+        <li className="list-inline-item mr-10">
+	<div className="btn-group">
+<div className="dropdown pt-4">
+<a className="dropdown-toggle dropdown-toggle-1 mb-1 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<i className="icon text-white bi-person-circle"></i> Patients
+</a>
+<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+<a className="dropdown-item" href="/patients"><i className="icon bi-list-ul"></i> List</a>
+<a className="dropdown-item" href="#" onClick={handleShow}><i className="icon bi-file-plus-fill"></i> Add</a>
+</div>
+</div>
+</div>
+	</li>
       );
   };
 
@@ -608,7 +622,7 @@ const handlechangeprovider=(p)=>{
     if (userType !== "patient")
       return (
         <Form inline>
-          <div className="row">
+          <div className="col-sm-4">
             {/* <input
                 name="name"
                 type="text"
@@ -619,7 +633,7 @@ const handlechangeprovider=(p)=>{
                 placeholder="Search patients..."
               /> */}
             {renderPatients()}
-            <div className="rowC">
+            <div className="col-sm-4">
               <header>
                 <div style={{ width: 420 }}>
                   <ReactSearchAutocomplete
@@ -716,96 +730,161 @@ const handlechangeprovider=(p)=>{
   return (
     <>
       <React.Fragment>
-        <Navbar
-          sticky="top"
-          collapseOnSelect
-          expand="lg"
-          style={{ backgroundColor: "#012971" }}
-          variant="dark">
-          <span
-            type="button"
-            onClick={() => {
-              showSidebar();
-              changestyle();
-            }}
-            style={{
-              backgroundColor: "rgb(1, 41, 113)",
-              color: "white",
-              marginRight: "50px",
-            }}>
-            <ImMenu />
-          </span>
-          <Navbar.Brand href="/">Patient App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="/dashboard"> A PATTERN Plus Dashboard</Nav.Link>
+      <div id="nav" className="nav-container d-flex">
+<div className="nav-content d-flex">
+<div className="logo position-relative">
+<a href="/">
+<div className="img">Patient App</div>
+</a>
+</div>
 
-              <NavDropdown
-                title={
-                  <div style={{ display: "inline-block" }}>
-                    <Envelope /> Mailbox{" "}
-                  </div>
-                }
-                id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/inbox">
-                  <BoxArrowRight /> Inbox
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/outbox">
-                  <BoxArrowLeft /> Outbox
-                </NavDropdown.Item>
-                {/* <NavDropdown.Item href="#" onClick={handleMessageModalShow}><PencilSquare /> Compose</NavDropdown.Item> */}
-              </NavDropdown>
-              <NavDropdown
-                title={
-                  <div style={{ display: "inline-block" }}>
-                    <ChatLeftText /> Messages{" "}
-                  </div>
-                }
-                id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/telephone">
-                  <Telephone /> Call
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#" onClick={handleMessageModalShow}>
-                  <ChatLeftText /> SMS
-                </NavDropdown.Item>
-                {/* <NavDropdown.Item href="/settings"><Gear /> Settings</NavDropdown.Item> */}
-              </NavDropdown>
-              {renderPatientMenu()}
-              {renderClinicalDataMenu()}
-              {renderVitalMenu()}
-            </Nav>
-            {renderpatientSearch()}
-
-            <Nav className="ml-auto">
-              <NavDropdown
-                className="rightDropdown"
-                title={
+<div className="user-container d-flex">
+<a href="#" className="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<img className="profile" alt="profile" src={Profile}/>
+<div className="name">{
                   localStorage.getItem("userName")
                     ? localStorage.getItem("userName")
                     : "Guest"
-                }
-                id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/settings">
-                  <Gear /> Settings
-                </NavDropdown.Item>
-                <NavDropdown.Item href="/profile">
-                  <PersonFill /> My Profile
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="/logout">
-                  <BoxArrowRight /> Sign Out
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="#" onClick={handleShow}>
-                <PersonPlusFill />
-              </Nav.Link>
-              {
-                (window.location.href.indexOf("patient-summary") <= 0) ?count:""
-              }
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+                }</div>
+</a>
+<div className="dropdown-menu dropdown-menu-end user-menu wide">
+
+<div className="row mb-1 ms-0 me-0">
+
+<div className="col-12 ps-1 pe-1">
+<ul className="list-unstyled">
+<li>
+<a href="/profile">
+<i className="icon bi-person-circle"></i>
+<span className="align-middle">My Profile</span>
+</a>
+</li>
+<li>
+<a href="#" onClick={handleShow}>
+<i className="icon bi-person-fill"></i>
+<span className="align-middle">Create Patient</span>
+</a>
+</li>
+</ul>
+</div>
+<div className="col-12 pe-1 ps-1">
+<ul className="list-unstyled">
+<li>
+<a href="/settings">
+<i className="icon bi-gear-fill"></i>
+<span className="align-middle">Settings</span>
+</a>
+</li>
+<li>
+<a href="/logout">
+<i className="icon bi-box-arrow-right"></i>
+<span className="align-middle">Logout</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<ul className="list-unstyled list-inline text-center menu-icons">
+	<li className="list-inline-item mr-10">
+	<div className="btn-group">
+<div className="dropdown pt-4">
+<a className="dropdown-toggle dropdown-toggle-1 mb-1 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<i className="icon text-white bi-envelope"></i> Mailbox
+</a>
+<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+<a className="dropdown-item" href="/inbox"><i className="icon bi-inbox"></i>  Inbox</a>
+<a className="dropdown-item" href="/outbox"><i className="icon bi-envelope-open"></i> Outbox</a>
+</div>
+</div>
+</div>
+	</li>
+	<li className="list-inline-item mr-10">
+	<div className="btn-group">
+<div className="dropdown pt-4">
+<a className="dropdown-toggle dropdown-toggle-1 mb-1 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<i className="icon text-white bi-envelope-open"></i> Messages
+</a>
+<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+	<a className="dropdown-item" href="/telephone"><i className="icon bi-chat-left-dots"></i> Call</a>
+<a className="dropdown-item" href="#" onClick={handleMessageModalShow}><i className="icon bi-envelope-open"></i> SMS</a>
+</div>
+</div>
+</div>
+	</li>
+	{renderPatientMenu()}
+  {renderClinicalDataMenu()}
+              {renderVitalMenu()}
+	
+<li className="list-inline-item">
+<a href="#" data-bs-toggle="modal"data-bs-target="#searchPagesModal">
+	<i className="icon text-white bi-search"></i>
+</a>
+</li>
+<li className="list-inline-item">{renderpatientSearch()}</li>
+
+
+<li className="list-inline-item">
+<a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" className="notification-button">
+<div className="position-relative d-inline-flex">
+<i className="icon text-white bi-bell"></i>
+<span className="position-absolute notification-dot rounded-xl"></span>
+</div>
+</a>
+<div className="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
+<div className="scroll-default">
+<ul className="list-unstyled border-last-none">
+<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
+<img src="img/profile/profile-1.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
+<div className="align-self-center">
+<a href="#">Joisse Kaycee just sent a new comment!</a>
+</div>
+</li>
+<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
+<img src="img/profile/profile-2.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
+<div className="align-self-center">
+<a href="#">New order received! It is total $147,20.</a>
+</div>
+</li>
+<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
+<img src="img/profile/profile-3.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
+<div className="align-self-center">
+<a href="#">3 items just added to wish list by a user!</a>
+</div>
+</li>
+<li className="pb-3 pb-3 border-bottom border-separator-light d-flex">
+<img src="img/profile/profile-6.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
+<div className="align-self-center">
+<a href="#">Kirby Peters just sent a new message!</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</li>
+	
+	
+</ul>
+<div className="menu-container flex-grow-1">
+<ul id="menu" className="menu">
+
+
+</ul>
+</div>
+<div className="mobile-buttons-container">
+<a href="#" id="scrollSpyButton" className="spy-button" data-bs-toggle="dropdown">
+<i className="icon bi-list text-white display-3"></i>
+	
+</a>
+<div className="dropdown-menu dropdown-menu-end" id="scrollSpyDropdown"></div>
+<a href="#" id="mobileMenuButton" className="menu-button">
+<i className="icon bi-list text-white display-3"></i>
+</a>
+</div>
+</div>
+<div className="nav-shadow"></div>
+</div>
 
         <Modal
           show={coreContext.showPatientConfirmationModal}

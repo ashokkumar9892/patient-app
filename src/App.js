@@ -265,7 +265,7 @@ function App() {
   };
 
   let content = (
-    <div>
+    <main>
       {" "}
       {/**/}{" "}
       {isAuth ? (
@@ -299,12 +299,12 @@ function App() {
                               </button> */}
         {isAuth ? (
           <React.Fragment>
-            <div className={style1}>
+            <div className="row"> 
               {" "}
               {sidebar === true ? <Menu /> : <Menu2 />}{" "}
               
-            </div>{" "}
-            <div className={style} style={{ marginLeft: "-20px" }}>
+           
+            <div className="col" >
             {(localStorage.getItem("userType")==="doctor")?<Modal getenduser={getenduser}/>:""}
             
               <Router>
@@ -379,6 +379,7 @@ function App() {
                 </Switch>{" "}
               </Router>{" "}
             </div>{" "}
+            </div>
           </React.Fragment>
         ) : (
           <div className="col-md-12">
@@ -394,7 +395,7 @@ function App() {
         )}{" "}
       </Row>{" "}
       {/* </Sidebar> */}{" "}
-    </div>
+    </main>
   );
 
   return (

@@ -81,14 +81,22 @@ const Dashboard = (props) => {
   };
   useEffect(fetchWeight, [coreContext.weightData.length]);
   const renderSelect=()=>{
-    return(
-      <select class="form-select form-select-sm" aria-label=".form-select-sm example" value={month} onChange={(e)=>{setMonth(e.target.value);}}>
-        <option selected >Select the Month</option>
+    return(<>
+     
+      <div className="col-xl-3 col-6">
+      <select className="form-select" value={month} onChange={(e)=>{setMonth(e.target.value);}} >
+      <option selected="selected">Select the Month</option>
       {months.map((curr,index)=>{
         return(<option value={index}>{curr}</option>)
         
  })}
-      </select>)
+      
+      </select>
+      
+      </div>
+      </>
+      
+      )
 
     
   }
@@ -341,251 +349,261 @@ const Dashboard = (props) => {
   console.log("vdevide", v_devices);
 
   return (
-    <div className="card">
-      <div className="card-header row">
-        <div className="col-md-5">
-          <h4>A Pattern Medical Clinic Dashboard</h4>
-        </div>
-        {/* <div className="col-md-4">
-                <DatePicker
-                    selected={date}
-                    onChange={(date) => setDate(date)}
-                    placeholderText='Enter a date'
-                    dateFormat='dd/MM/yyyy'
-                />
-            </div> */}
-        <div className="col-md-3">
-          <input type="checkbox" /> Show Only My Patients
-        </div>
-        <div className="col-md-4">
-        
+
+<div className="col">
+<div className="page-title-container mb-3">
+<div className="row">
+<div className="col mb-2">
+<h1 className="mb-2 pb-0 display-4" id="title">A Pattern Medical Clinic Dashboard
+</h1>
+
+</div>
+</div>
+</div>
+<div className="row">
+<div className="col-xl-12">
+<div className="card mb-3">
+<div className="card-body">
+<div className="row g-0 align-items-center">
+<div className="col-lg-3 col-6">
+<div className="form-check">
+<input className="form-check-input" type="checkbox"/>
+<label className="form-check-label" for="gridCheck">Check me out</label>
+</div>
+</div>
 {selectmonth}
-        </div>
-      </div>
-      <div className="card_body">
-        <h5>
-          <Bezier /> Chronic Care Management
-        </h5>
-        <table className="table table-bordered table-sm">
-          <tr>
-            {console.log(
-              "sahilwight",
-              coreContext.weightData
-                .map((curr) => curr.userId)
-                .filter((item, i, ar) => ar.indexOf(item) === i)
-            )}
-            {console.log(
-              "presusure",
-              coreContext.bloodpressureData
-                .map((curr) => curr.userId)
-                .filter((item, i, ar) => ar.indexOf(item) === i)
-            )}
-            {console.log(
-              "sahiglucoe",
-              coreContext.bloodglucoseData
-                .map((curr) => curr.userId)
-                .filter((item, i, ar) => ar.indexOf(item) === i)
-            )}
-            <th style={{ textAlign: "center" }}>Patients Enrolled</th>
-            <th style={{ textAlign: "center" }}>60+ Mins</th>
+	
 
-            <th style={{ textAlign: "center" }}>40-60 Mins</th>
-            <th style={{ textAlign: "center" }}>20-40 Mins</th>
-            <th style={{ textAlign: "center" }}>10-20 Mins</th>
-            <th style={{ textAlign: "center" }}>1-10 Mins</th>
-            <th style={{ textAlign: "center" }}>0 Mins</th>
-            <th style={{ textAlign: "center" }}>Inactive</th>
-            <th style={{ textAlign: "center" }}>Not Enrolled</th>
-          </tr>
-          {renderTimeLogs()}
-          <tr>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`Patients Information of CCM of ${months[month]} month`)}>{coreContext.patients.length}</a>{" "}
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(sixty,`Patients Information with time log between 60+ Mins of CCM of ${months[month]} month`)}>
-                {sixty.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(fiftynine,`Patients Information with time log between 40-60 Mins of CCM of ${months[month]} month`)}>
+</div>
+</div>
+</div>
+<div className="card mb-3">
+	<div className="card-header bg-primary pt-2 pb-2"> <h3 className="text-white mb-0">Chronic Care Management</h3>
+</div>
+<div className="card-body">
+<div className="row g-0 align-items-center">
+<div className="col-xl-12">
+<div className="table-responsive-sm mb-0">
+<table className="table table-bordered table-striped mb-0">
+<thead className="bg-defualts">
+<tr>
+<th  width="10%">Patients Enrolled	</th>
+<th width="10%">60+ Mins</th>
+<th width="10%">40-60 Mins	</th>
+<th width="10%">20-40 Mins	</th>
+<th width="10%">10-20 Mins	</th>
+<th  width="10%">1-10 Mins	</th>
+<th width="10%">0 Mins	</th>
+<th  width="10%">Inactive</th>
+<th width="10%">Not Enrolled
+</th>
+</tr>
+</thead>
+<tbody>
+  {renderTimeLogs()}
+<tr>
+<td> <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`Patients Information of CCM of ${months[month]} month`)}>{coreContext.patients.length}</a>{" "}</td>
+<td>            <a href="/dpatients" onClick={() => setPatient(sixty,`Patients Information with time log between 60+ Mins of CCM of ${months[month]} month`)}>
+                 {sixty.length}
+               </a>
+               </td>
+<td>
+<a href="/dpatients" onClick={() => setPatient(fiftynine,`Patients Information with time log between 40-60 Mins of CCM of ${months[month]} month`)}>
                 {fiftynine.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(thirtynine,`Patients Information with time log between 20-40 Mins of CCM of ${months[month]} month`)}>
-                {thirtynine.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(nineteen,`Patients Information with time log between 10-20 Mins of CCM of ${months[month]} month`)}>
+               </a>
+</td>
+<td><a href="/dpatients" onClick={() => setPatient(thirtynine,`Patients Information with time log between 20-40 Mins of CCM of ${months[month]} month`)}>
+                 {thirtynine.length}
+               </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(nineteen,`Patients Information with time log between 10-20 Mins of CCM of ${months[month]} month`)}>
                 {nineteen.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(nine,`Patients Information with time log between 1-10 Mins of CCM of ${months[month]} month`)}>
-                {nine.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(zero,`Patients Information with time log between 0-1 Mins of CCM of ${months[month]} month`)}>
-                {zero.length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(inactive,"`Patients Information with time log between 0 Mins of CCM of ${months[month]} month`")}>
-                {inactive.length}
-              </a>
-            </th>
-            {/* <th style={{ textAlign: 'center' }}><a href="/dpatients">{zeromin}</a></th> */}
-          </tr>
-        </table>
-      </div>
-      <div className="card_body">
-        <h5>
-          <Bezier /> Data Review & Management
-        </h5>
-        <table className="table table-bordered table-sm">
-          <tr>
-            
-            <th style={{ textAlign: "center" }}>Patients Enrolled</th>
-            <th style={{ textAlign: "center" }}>60+ Mins</th>
+               </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(nine,`Patients Information with time log between 1-10 Mins of CCM of ${months[month]} month`)}>
+                 {nine.length}
+               </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(zero,`Patients Information with time log between 0-1 Mins of CCM of ${months[month]} month`)}>
+                 {zero.length}
+               </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(inactive,"`Patients Information with time log between 0 Mins of CCM of ${months[month]} month`")}>
+                 {inactive.length}
+               </a></td>
+<td>0</td>
+</tr>
 
-            <th style={{ textAlign: "center" }}>40-60 Mins</th>
-            <th style={{ textAlign: "center" }}>20-40 Mins</th>
-            <th style={{ textAlign: "center" }}>10-20 Mins</th>
-            <th style={{ textAlign: "center" }}>1-10 Mins</th>
-            <th style={{ textAlign: "center" }}>0 Mins</th>
-            <th style={{ textAlign: "center" }}>Inactive</th>
-            <th style={{ textAlign: "center" }}>Not Enrolled</th>
-          </tr>
-          {renderTimeLogs()}
-          <tr>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients"onClick={() => setPatient([...sixty1,...fiftynine1,...thirtynine1,...nineteen1,...nine1,...zero1,...inactive])}>{coreContext.patients.length}</a>{" "}
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)],`Patients Information with time log between 60+ Mins of RPM of ${months[month]} month`)}>
+</tbody>
+</table>
+</div>
+	
+
+	
+</div>
+	
+
+</div>
+</div>
+</div>
+	<div className="card mb-3">
+	<div className="card-header bg-primary pt-2 pb-2"> <h3 className="text-white mb-0"> Data Review & Management
+</h3>
+</div>
+<div className="card-body">
+<div className="row g-0 align-items-center">
+<div className="col-xl-12">
+<div className="table-responsive-sm mb-0">
+<table className="table table-bordered table-striped mb-0">
+<thead className="bg-defualts">
+<tr>
+<th  width="10%">Patients Enrolled	</th>
+<th width="10%">60+ Mins</th>
+<th width="10%">40-60 Mins	</th>
+<th width="10%">20-40 Mins	</th>
+<th width="10%">10-20 Mins	</th>
+<th  width="10%">1-10 Mins	</th>
+<th width="10%">0 Mins	</th>
+<th  width="10%">Inactive</th>
+<th width="10%">Not Enrolled
+</th>
+</tr>
+</thead>
+<tbody>
+  {renderTimeLogs()}
+<tr>
+<td> <a href="/dpatients"onClick={() => setPatient([...sixty1,...fiftynine1,...thirtynine1,...nineteen1,...nine1,...zero1,...inactive])}>{coreContext.patients.length}</a>{" "}</td>
+<td>             <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)],`Patients Information with time log between 60+ Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(sixty1)].length}
+               </a></td>
+<td>
+<a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)],`Patients Information with time log between 40-60 Mins of RPM of ${months[month]} month`)}>
+                 {[...new Set(fiftynine1)].length}
               </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)],`Patients Information with time log between 40-60 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(fiftynine1)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)],`Patients Information with time log between 20-40 Mins of RPM of ${months[month]} month`)}>
+</td>
+<td><a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)],`Patients Information with time log between 20-40 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(thirtynine1)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)],`Patients Information with time log between 10-20 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(nineteen1)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)],`Patients Information with time log between 1-10 Mins of RPM of ${months[month]} month`)}>
+               </a></td>
+<td><a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)],`Patients Information with time log between 10-20 Mins of RPM of ${months[month]} month`)}>
+                 {[...new Set(nineteen1)].length}
+               </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)],`Patients Information with time log between 1-10 Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(nine1)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient([...new Set(zero1)],`Patients Information with time log between 0-1 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(zero1)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/dpatients" onClick={() => setPatient(inactive,`Patients Information with time log between 0 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(inactive)].length}
-              </a>
-            </th>
-            {/* <th style={{ textAlign: 'center' }}><a href="/dpatients">{zeromin}</a></th> */}
-          </tr>
-        </table>
-      </div>
-      <div className="card_body">
-        <h5>
-          <GraphUp /> Remote Patient Monitoring
-        </h5>
-        <table className="table table-bordered table-sm">
-          <tr>
-            {console.log("set", patientwdevice)}
-            <th style={{ textAlign: "center" }}>Active</th>
-            <th style={{ textAlign: "center" }}>Patients with Devices</th>
-            <th style={{ textAlign: "center" }}>Patients taking Readings</th>
-            <th style={{ textAlign: "center" }}>Qualified Supplied Device</th>
-            <th style={{ textAlign: "center" }}>40+ Mins</th>
-            <th style={{ textAlign: "center" }}>20-39 Mins</th>
-            <th style={{ textAlign: "center" }}>1-19 Mins</th>
-            <th style={{ textAlign: "center" }}>0 Mins</th>
-            <th style={{ textAlign: "center" }}>Inactive</th>
-          </tr>
-          {renderRemotePatientMonitor()}
-          <tr>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">{coreContext.patients.length}</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/device-info" onClick={() => setPatient(inactive)}>
-                {[...new Set(patientwdevice)].length}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/bloodpressure">{reading.length}</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/verifieddevices">
-                {v_devices !== undefined ? v_devices.length : 0}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-          </tr>
-        </table>
-      </div>
-      <div className="card_body">
-        <h5>
-          <Cash /> Billing & Claims
-        </h5>
-        <table className="table table-bordered table-sm">
-          <tr>
-            <th style={{ textAlign: "center" }}>Ready to Bill</th>
-            <th style={{ textAlign: "center" }}>Missing Info</th>
-            <th style={{ textAlign: "center" }}>Submitted</th>
-            <th style={{ textAlign: "center" }}>On hold</th>
-          </tr>
-          <tr>
-            <th style={{ textAlign: "center" }}>
-              <a href="/billing" onClick={()=>setBPatient(Billing)}>{checkBills(Billing)}
+               </a></td>
+<td><a href="/dpatients" onClick={() => setPatient([...new Set(zero1)],`Patients Information with time log between 0-1 Mins of RPM of ${months[month]} month`)}>
+               {[...new Set(zero1)].length}
+               </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(inactive,`Patients Information with time log between 0 Mins of RPM of ${months[month]} month`)}>
+                 {[...new Set(inactive)].length}
+               </a></td>
+<td>0</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+	
+
+	
+</div>
+	
+
+</div>
+</div>
+</div>
+	<div className="card mb-3">
+	<div className="card-header bg-primary pt-2 pb-2"> <h3 className="text-white mb-0">  Remote Patient Monitoring
+</h3>
+</div>
+<div className="card-body">
+<div className="row g-0 align-items-center">
+<div className="col-xl-12">
+<div className="table-responsive-sm mb-0">
+<table className="table table-bordered table-striped mb-0">
+<thead className="bg-defualts">
+<tr>
+<th  width="8%">Active</th>
+<th width="20%">Patients with Devices	</th>
+<th width="20%">Patients taking Readings</th>
+<th width="20%">Qualified Supplied Device</th>
+<th width="8%">40+ Mins</th>
+<th  width="8%">20-39 Mins</th>
+<th width="8%">1-19 Mins</th>
+<th  width="8%">0 Mins</th>
+<th width="8%">Inactive
+</th>
+</tr>
+</thead>
+<tbody>
+  {renderRemotePatientMonitor()}
+<tr>
+<td><a href="/Patients">{coreContext.patients.length}</a></td>
+<td><a href="/device-info" onClick={() => setPatient(inactive)}>
+                 {[...new Set(patientwdevice)].length}
+               </a></td>
+<td><a href="/bloodpressure">{reading.length}</a></td>
+<td><a href="/verifieddevices">
+                 {v_devices !== undefined ? v_devices.length : 0}
+               </a></td>
+<td> <a href="/Patients">2</a></td>
+<td> <a href="/Patients">2</a></td>
+<td> <a href="/Patients">2</a></td>
+<td> <a href="/Patients">2</a></td>
+<td> <a href="/Patients">2</a></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+	
+
+	
+</div>
+	
+
+</div>
+</div>
+</div>
+	<div className="card mb-3">
+	<div className="card-header bg-primary pt-2 pb-2"> <h3 className="text-white mb-0">Billing & Claims
+</h3>
+</div>
+<div className="card-body">
+<div className="row g-0 align-items-center">
+<div className="col-xl-12">
+<div className="table-responsive-sm mb-0">
+<table className="table table-bordered table-striped mb-0">
+<thead className="bg-defualts">
+<tr>
+<th  width="25%">Ready to Bill	</th>
+<th width="25%">Missing Info	</th>
+<th width="25%">Submitted</th>
+<th width="25%">On hold</th>
+
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/billing" onClick={()=>setBPatient(Billing)}>{checkBills(Billing)}
               {console.log(Billing,"Billing")}
-              </a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/billing">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-            <th style={{ textAlign: "center" }}>
-              <a href="/Patients">2</a>
-            </th>
-          </tr>
-        </table>
-      </div>
-    </div>
+               </a></td>
+<td><a href="/billing">2</a></td>
+<td> <a href="/Patients">2</a></td>
+<td><a href="/Patients">2</a></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+	
+
+	
+</div>
+	
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
   );
 };
 
