@@ -42,7 +42,7 @@ import {
   GiOrangeSlice,
   GiCagedBall,
 } from "react-icons/gi";
-import Profile from '../../assets/images/profile-1.webp';
+//import Profile from 'https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59094041-stock-illustration-medical-doctor-profile.jpg';
 import { CoreContext } from "../../context/core-context";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { ImMenu } from "react-icons/im";
@@ -747,7 +747,7 @@ const handlechangeprovider=(p)=>{
 
 <div className="user-container d-flex">
 <a href="#" className="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<img className="profile" alt="profile" src={Profile}/>
+<img className="profile" alt="profile" src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59094041-stock-illustration-medical-doctor-profile.jpg"/>
 <div className="name">{
                   localStorage.getItem("userName")
                     ? localStorage.getItem("userName")
