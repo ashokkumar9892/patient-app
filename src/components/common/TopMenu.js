@@ -937,7 +937,7 @@ const handlechangeprovider=(p)=>{
  (localStorage.getItem("userType")!== "patient")?
      
         <Form inline>
-          <div className="col-sm-4">
+          <div className="col-sm-12">
             {/* <input
                 name="name"
                 type="text"
@@ -948,7 +948,7 @@ const handlechangeprovider=(p)=>{
                 placeholder="Search patients..."
               /> */}
             {renderPatients()}
-            <div className="col-sm-4">
+            <div className="col-sm-12">
               <header>
                 <div style={{ width: "100%" }}>
                   <ReactSearchAutocomplete
