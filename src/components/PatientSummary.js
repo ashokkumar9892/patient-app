@@ -2108,7 +2108,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             {coreContext.patients[0].gender}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-            Diagnosis ID : {coreContext.patients[0].diagnosisId}
+            Diagnosis: {coreContext.patients[0].diagnosisId}
           </div>
         </div>
         
