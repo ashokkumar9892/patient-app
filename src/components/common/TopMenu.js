@@ -698,7 +698,10 @@ const handlechangeprovider=(p)=>{
   const rendernotifications=()=>{
     return(<>
     
-                  <div className="row">
+    <div className="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
+<div className="scroll-default">
+	<button type="button" className="btn btn-primary mb-3" onClick={()=>{markasread()}}>Mark all read</button>
+<ul className="list-unstyled border-last-none">
                   {
 
       notificationValue.sort(function(a,b){
@@ -707,22 +710,23 @@ const handlechangeprovider=(p)=>{
       }).map((curr)=>{
                  return(
                    <>
-                  <Typography gutterBottom>
-                    
-               {curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}
-                  </Typography>
-                  <Typography style={{textAlign:"right",color:"Blue",fontSize:"14px"}} onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1);handleClose1()}}>
-                    
-                    Mark as Read
-                    
-                        </Typography>
-                        <hr/>
+                 
+
+                        <li className="mb-2 pb-2 border-bottom border-separator-light d-flex">
+<div className="align-self-left">
+<p className="mb-0">{curr.value.split("~")[0]} has crossed the  threshold with {curr.value.split("~")[4]} reading {curr.value.split("~")[2]} on {curr.value.split("~")[3]}</p>
+	<a href="#" onClick={()=>{coreContext.AddNotification(curr.value,"admin",localStorage.getItem("userId"));notificationValue.splice(notificationValue.findIndex(a => a.value === curr.value) , 1);handleClose1()}}>Mark as read</a>
+</div>
+</li>
+                 
                  
                   
                     </>
                  )
                })}
-               </div>
+ </ul>
+</div>
+</div>
     </>)
   }
   //const count=React.useMemo({notificationValue.length,[notificationValue.length])
@@ -739,9 +743,9 @@ const handlechangeprovider=(p)=>{
       <React.Fragment>
       <div id="nav" className="nav-container d-flex">
 <div className="nav-content d-flex">
-<div className="logo position-relative">
-<a href="/">
-<div className="img">Patient App</div>
+<div class="logo position-relative">
+<a href="">
+<div class="img">A Pattern Plus</div>
 </a>
 </div>
 
@@ -836,39 +840,10 @@ const handlechangeprovider=(p)=>{
 <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" className="notification-button">
 <div className="position-relative d-inline-flex">
 <i className="icon text-white bi-bell"></i>
-<span className="position-absolute notification-dot rounded-xl"></span>
+<span className="notificaion-show badge bg-danger">{notificationValue.length}</span>
 </div>
 </a>
-<div className="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
-<div className="scroll-default">
-<ul className="list-unstyled border-last-none">
-<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
-<img src="img/profile/profile-1.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
-<div className="align-self-center">
-<a href="#">Joisse Kaycee just sent a new comment!</a>
-</div>
-</li>
-<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
-<img src="img/profile/profile-2.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
-<div className="align-self-center">
-<a href="#">New order received! It is total $147,20.</a>
-</div>
-</li>
-<li className="mb-3 pb-3 border-bottom border-separator-light d-flex">
-<img src="img/profile/profile-3.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
-<div className="align-self-center">
-<a href="#">3 items just added to wish list by a user!</a>
-</div>
-</li>
-<li className="pb-3 pb-3 border-bottom border-separator-light d-flex">
-<img src="img/profile/profile-6.webp" className="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..."/>
-<div className="align-self-center">
-<a href="#">Kirby Peters just sent a new message!</a>
-</div>
-</li>
-</ul>
-</div>
-</div>
+{count1}
 </li>
 	
 	

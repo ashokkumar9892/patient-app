@@ -989,7 +989,7 @@ img{object-fit:cover}
 .achievement.bg svg{fill:var(--separator-light)}
 .achievement.level svg{fill:var(--primary)}
 .absolute-profile{top:-6.5rem}
-:root{--transition-time:400ms;--transition-time-long:1000ms;--transition-time-short:200ms;--nav-size-slim:4.5rem;--nav-size:18rem;--footer-size:2.5rem;--input-height:2.25rem;--small-title-height:2rem;--font:"Nunito Sans",sans-serif;--font-heading:"Montserrat",sans-serif}
+:root{--transition-time:400ms;--transition-time-long:1000ms;--transition-time-short:200ms;--nav-size-slim:4.5rem;--nav-size:20rem;--footer-size:2.5rem;--input-height:2.25rem;--small-title-height:2rem;--font:"Nunito Sans",sans-serif;--font-heading:"Montserrat",sans-serif}
 html[data-radius=rounded]{--border-radius-lg:16px;--border-radius-md:10px;--border-radius-sm:6px;--border-radius-xl:50px}
 html[data-radius=standard]{--border-radius-lg:6px;--border-radius-md:4px;--border-radius-sm:3px;--border-radius-xl:4px}
 html[data-radius=flat]{--border-radius-lg:0;--border-radius-sm:0;--border-radius-md:0;--border-radius-xl:0}
@@ -2731,7 +2731,7 @@ html[data-placement=horizontal] .nav-container .language-switch-container,html[d
 html[data-placement=horizontal] .nav-container .language-switch-container .dropdown-menu,html[data-placement=vertical] .nav-container .language-switch-container .dropdown-menu{min-width:65px;margin-top:5px!important}
 html[data-placement=horizontal] .nav-container .language-switch-container .language-button,html[data-placement=vertical] .nav-container .language-switch-container .language-button{padding:0 8px;padding:5px 14px;border-radius:var(--border-radius-md)}
 html[data-placement=horizontal] .nav-container .language-switch-container .language-button:hover,html[data-placement=vertical] .nav-container .language-switch-container .language-button:hover{box-shadow:0 4px 10px rgba(0,0,0,.03)!important;background:rgba(255,255,255,.05)}
-html[data-placement=horizontal] .nav-container .logo .img,html[data-placement=horizontal] .nav-container .logo img,html[data-placement=vertical] .nav-container .logo .img,html[data-placement=vertical] .nav-container .logo img{width:160px;min-height:35px;object-position:left;object-fit:cover;transition:width var(--transition-time),height var(--transition-time)}
+html[data-placement=horizontal] .nav-container .logo .img,html[data-placement=horizontal] .nav-container .logo img,html[data-placement=vertical] .nav-container .logo .img,html[data-placement=vertical] .nav-container .logo img{width:200px;min-height:35px;object-position:left;object-fit:cover;transition:width var(--transition-time),height var(--transition-time)}
 html[data-placement=horizontal] .nav-container .logo .img,html[data-placement=vertical] .nav-container .logo .img{background-repeat:no-repeat}
 html[data-placement=horizontal] .nav-container .dropdown-menu,html[data-placement=vertical] .nav-container .dropdown-menu{border:initial;margin-top:initial;border-radius:var(--border-radius-md);box-shadow:0 6px 10px rgba(0,0,0,.1)!important}
 html[data-placement=horizontal] .nav-container .dropdown-menu a,html[data-placement=vertical] .nav-container .dropdown-menu a{color:var(--alternate)}
@@ -2785,7 +2785,7 @@ html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .m
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-icons .dropdown-menu,html[data-placement=vertical] .nav-container .nav-content .menu-icons .dropdown-menu,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-icons .dropdown-menu{margin-top:10px}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-icons li>a,html[data-placement=vertical] .nav-container .nav-content .menu-icons li>a,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-icons li>a{padding:.25rem .5rem;border-radius:var(--border-radius-md);height:100%;display:inline-flex;align-items:center}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .logo,html[data-placement=vertical] .nav-container .nav-content .logo,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .logo{margin-bottom:20px;text-align:center}
-html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .logo a,html[data-placement=vertical] .nav-container .nav-content .logo a,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .logo a{overflow:hidden;display:inline-block;width:180px}
+html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .logo a,html[data-placement=vertical] .nav-container .nav-content .logo a,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .logo a{overflow:hidden;display:inline-block;width:200px}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .language-switch-container,html[data-placement=vertical] .nav-container .nav-content .language-switch-container,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .language-switch-container{height:auto;margin-right:initial;display:flex!important}
 @media (max-width:1199.98px){html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .language-switch-container,html[data-placement=vertical] .nav-container .nav-content .language-switch-container,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .language-switch-container{margin-right:initial}
 }
@@ -2796,7 +2796,7 @@ html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .u
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .user-container .user .name,html[data-placement=vertical] .nav-container .nav-content .user-container .user .name,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .user-container .user .name{margin-right:0}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .user-container .user .profile,html[data-placement=vertical] .nav-container .nav-content .user-container .user .profile,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .user-container .user .profile{order:initial;width:50px;height:50px;margin-bottom:5px}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .user-container .dropdown-menu,html[data-placement=vertical] .nav-container .nav-content .user-container .dropdown-menu,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .user-container .dropdown-menu{margin-top:10px}
-html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-container,html[data-placement=vertical] .nav-container .nav-content .menu-container,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-container{display:flex!important;align-self:flex-start;order:3;margin-top:2rem;margin-bottom:1rem;width:16rem;margin-left:1rem;margin-right:1rem}
+html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-container,html[data-placement=vertical] .nav-container .nav-content .menu-container,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-container{display:flex!important;align-self:flex-start;order:3;margin-top:2rem;margin-bottom:1rem;width:19rem;margin-left:0rem;margin-right:1rem}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-container .menu,html[data-placement=vertical] .nav-container .nav-content .menu-container .menu,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-container .menu{width:100%;margin-left:0;margin-right:0;padding-left:1rem;padding-right:1rem;cursor:pointer}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-container .menu ul,html[data-placement=vertical] .nav-container .nav-content .menu-container .menu ul,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-container .menu ul{box-shadow:initial!important;background:initial;position:initial;border-radius:initial;padding:initial;padding-left:2rem}
 html[data-placement=horizontal] .nav-container.mobile-side-ready .nav-content .menu-container .menu li a,html[data-placement=vertical] .nav-container .nav-content .menu-container .menu li a,html[data-placement=vertical] .nav-container.mobile-side-ready .nav-content .menu-container .menu li a{border-radius:var(--border-radius-lg);width:100%;color:var(--light-text);transition:color var(--transition-time);margin-bottom:.1rem;margin-top:.1rem}
@@ -3072,3 +3072,21 @@ html[data-show=true] .settings-button{opacity:1}
     white-space: normal !important;
 }		
 }
+.notificaion-show{
+	width: 22px;
+    height: 23px;
+    border-radius: 50%;
+    padding: 4px 1px;
+	position: absolute;
+    top: -17px;
+    right: -18px;
+}
+@media(max-width:767px){
+	.notificaion-show{
+    right: -5px;
+
+}		
+}
+
+
+
