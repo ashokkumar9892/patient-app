@@ -1152,7 +1152,7 @@ const handlechangeprovider=(p)=>{
             <Row>
               <Col>
                 <Form.Group>
-                  <Form.Label>Diagnosis ID</Form.Label>
+                  <Form.Label>Diagnosis</Form.Label>
                   {
                   dcount.map((curr,index)=>{
                     return(
@@ -1162,7 +1162,7 @@ const handlechangeprovider=(p)=>{
                     value={dcount[index]}
                     size="sm"
                     type="text"
-                    placeholder="Enter Diagnosis ID"
+                    placeholder="Enter Diagnosis"
                   
                   />
                  

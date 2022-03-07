@@ -402,31 +402,31 @@ const Dashboard = (props) => {
 <tbody>
   {renderTimeLogs()}
 <tr>
-<td> <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`Patients Information of CCM of ${months[month]} month`)}>{coreContext.patients.length}</a>{" "}</td>
-<td>            <a href="/dpatients" onClick={() => setPatient(sixty,`Patients Information with time log between 60+ Mins of CCM of ${months[month]} month`)}>
-                 {sixty.length}
-               </a>
+<td> <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`${months[month]} 2022 Logs(CCM)`)}>{coreContext.patients.length}</a>{" "}</td>
+<td>   <a href="/dpatients" onClick={() => setPatient(sixty,`${months[month]} 2022 60+ Mins Logs(CCM)`)}>
+                {sixty.length}
+              </a>
                </td>
 <td>
-<a href="/dpatients" onClick={() => setPatient(fiftynine,`Patients Information with time log between 40-60 Mins of CCM of ${months[month]} month`)}>
+<a href="/dpatients" onClick={() => setPatient(fiftynine,`${months[month]} 2022 40-60 Mins Logs(CCM)`)}>
                 {fiftynine.length}
-               </a>
+              </a>
 </td>
-<td><a href="/dpatients" onClick={() => setPatient(thirtynine,`Patients Information with time log between 20-40 Mins of CCM of ${months[month]} month`)}>
-                 {thirtynine.length}
-               </a></td>
-<td><a href="/dpatients" onClick={() => setPatient(nineteen,`Patients Information with time log between 10-20 Mins of CCM of ${months[month]} month`)}>
+<td><a href="/dpatients" onClick={() => setPatient(thirtynine,`${months[month]} 2022 20-40 Mins Logs(CCM)`)}>
+                {thirtynine.length}
+              </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(nineteen,`${months[month]} 2022 10-20 Mins Logs(CCM)`)}>
                 {nineteen.length}
-               </a></td>
-<td> <a href="/dpatients" onClick={() => setPatient(nine,`Patients Information with time log between 1-10 Mins of CCM of ${months[month]} month`)}>
-                 {nine.length}
-               </a></td>
-<td> <a href="/dpatients" onClick={() => setPatient(zero,`Patients Information with time log between 0-1 Mins of CCM of ${months[month]} month`)}>
-                 {zero.length}
-               </a></td>
-<td><a href="/dpatients" onClick={() => setPatient(inactive,"`Patients Information with time log between 0 Mins of CCM of ${months[month]} month`")}>
-                 {inactive.length}
-               </a></td>
+              </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(nine,`${months[month]} 2022 1-10 Mins Logs(CCM)`)}>
+                {nine.length}
+              </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(zero,`${months[month]} 2022 0-1 Mins Logs(CCM)`)}>
+                {zero.length}
+              </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(inactive,`${months[month]} 2022 0 Mins Logs(CCM)`)}>
+                {inactive.length}
+              </a></td>
 <td>0</td>
 </tr>
 
@@ -468,30 +468,29 @@ const Dashboard = (props) => {
 <tbody>
   {renderTimeLogs()}
 <tr>
-<td> <a href="/dpatients"onClick={() => setPatient([...sixty1,...fiftynine1,...thirtynine1,...nineteen1,...nine1,...zero1,...inactive])}>{coreContext.patients.length}</a>{" "}</td>
+<td> <a href="/dpatients" onClick={() => setPatient([...sixty,...fiftynine,...thirtynine,...nineteen,...nine,...zero,...inactive],`${months[month]} 2022 Logs(RPM)`)}>{coreContext.patients.length}</a>{" "}</td>
 <td>             <a href="/dpatients" onClick={() => setPatient([...new Set(sixty1)],`Patients Information with time log between 60+ Mins of RPM of ${months[month]} month`)}>
                 {[...new Set(sixty1)].length}
                </a></td>
 <td>
-<a href="/dpatients" onClick={() => setPatient([...new Set(fiftynine1)],`Patients Information with time log between 40-60 Mins of RPM of ${months[month]} month`)}>
-                 {[...new Set(fiftynine1)].length}
-              </a>
-</td>
-<td><a href="/dpatients" onClick={() => setPatient([...new Set(thirtynine1)],`Patients Information with time log between 20-40 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(thirtynine1)].length}
-               </a></td>
-<td><a href="/dpatients" onClick={() => setPatient([...new Set(nineteen1)],`Patients Information with time log between 10-20 Mins of RPM of ${months[month]} month`)}>
-                 {[...new Set(nineteen1)].length}
-               </a></td>
-<td> <a href="/dpatients" onClick={() => setPatient([...new Set(nine1)],`Patients Information with time log between 1-10 Mins of RPM of ${months[month]} month`)}>
-                {[...new Set(nine1)].length}
-               </a></td>
-<td><a href="/dpatients" onClick={() => setPatient([...new Set(zero1)],`Patients Information with time log between 0-1 Mins of RPM of ${months[month]} month`)}>
-               {[...new Set(zero1)].length}
-               </a></td>
-<td><a href="/dpatients" onClick={() => setPatient(inactive,`Patients Information with time log between 0 Mins of RPM of ${months[month]} month`)}>
-                 {[...new Set(inactive)].length}
-               </a></td>
+<a href="/dpatients" onClick={() => setPatient(fiftynine,`${months[month]} 2022 40-60 Mins Logs(RPM)`)}>
+                {fiftynine.length}
+              </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(thirtynine,`${months[month]} 2022 20-40 Mins Logs(RPM)`)}>
+                {thirtynine.length}
+              </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(nineteen,`${months[month]} 2022 10-20 Mins Logs(RPM)`)}>
+                {nineteen.length}
+              </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(nine,`${months[month]} 2022 1-10 Mins Logs(RPM)`)}>
+                {nine.length}
+              </a></td>
+<td><a href="/dpatients" onClick={() => setPatient(zero,`${months[month]} 2022 0-1 Mins Logs(RPM)`)}>
+                {zero.length}
+              </a></td>
+<td> <a href="/dpatients" onClick={() => setPatient(inactive,`${months[month]} 2022 0 Mins Logs(RPM)`)}>
+                {inactive.length}
+              </a></td>
 <td>0</td>
 </tr>
 

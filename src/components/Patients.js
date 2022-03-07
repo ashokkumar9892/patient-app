@@ -846,7 +846,7 @@ const Patients = (props) => {
                   /> */}
                 
                   <Input
-                  label="Diagnosis Id"
+                  label="Diagnosis"
                   name="diagnosisId"
                   required={false}
                   register={register}
