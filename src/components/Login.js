@@ -161,7 +161,7 @@ Here at A Pattern Medical Clinic, our top priority is patient care. In order to 
 		<div className="mb-3 filled form-group tooltip-end-top">
 			<i className="icon-14 bi-person-fill text-primary"></i>
      
-<input className="form-control" placeholder="User Name" name="email" placeholder="Enter Email"  minLength={5}
+<input className="form-control" name="email" placeholder="Enter Email"  minLength={5}
           maxLength={55} onChange={onEmailChangedHandler} errors={errors}/>
 </div>
 	</div>
@@ -180,7 +180,7 @@ Here at A Pattern Medical Clinic, our top priority is patient care. In order to 
               required={true}
               minLength={5}
               maxLength={55}
-              register={register}
+            
               errors={errors}
               name="password"/>
 <a className="text-small position-absolute t-3 e-3" href="reset-password">Forgot?</a>
@@ -202,8 +202,8 @@ Here at A Pattern Medical Clinic, our top priority is patient care. In order to 
 	
 <div className="row mt-5">
 	<div className="col-xl-12  text-center">
-		Don't have an account ? Please Contact A Pattern <br/>
-		<strong>Medical Clinic (423) 455-2711</strong> </div>
+		Don't have an account ? Please Contact  <br/>
+		<strong>A Pattern Medical Clinic (423) 455-2711</strong> </div>
 </div>
 
 </div>
