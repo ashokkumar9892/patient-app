@@ -79,11 +79,12 @@ const BloodPressure = (props) => {
   const [userType, setUserType] = useState("");
   const [disablelink, setdisablelink] = useState(false);
   const [searchText, setSearchText] = React.useState("");
-  const [rows, setRows] = React.useState(coreContext.bloodpressureData);
+  const [rows, setRows] = React.useState([]);
+  const [frows,setfrows]=React.useState([]);
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
     const searchRegex = new RegExp(escapeRegExp(searchValue), "i");
-    const filteredRows = coreContext.bloodpressureData.filter((row) => {
+    const filteredRows = frows.filter((row) => {
       return Object.keys(row).some((field) => {
         return searchRegex.test(row[field].toString());
       });
@@ -92,7 +93,16 @@ const BloodPressure = (props) => {
   };
 
   React.useEffect(() => {
-    setRows(coreContext.bloodpressureData);
+    var patientUserId=[]
+    var rows1=[]
+    if(coreContext.patients[0]==="No data found"){
+      
+    }else{
+       patientUserId=coreContext.patients.map((curr)=>curr.userId)
+     rows1=coreContext.bloodpressureData.filter((curr)=>patientUserId.includes(curr.UserId))
+     setfrows(rows1)
+     setRows(rows1)
+    }
   }, [coreContext.bloodpressureData]);
 
   const fetchBloodPressure = () => {
@@ -321,7 +331,8 @@ const BloodPressure = (props) => {
       coreContext.bloodpressureData[0].UserName !== undefined
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
-      console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
+   
+      console.log("coreContext.bloodpressureData",coreContext.bloodpressureData,coreContext.patients)
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid
@@ -357,7 +368,7 @@ const BloodPressure = (props) => {
       );
     }
   };
-
+ const renderBG=React.useMemo(()=>renderBloodPressure(),[rows,coreContext.bloodpressureData.length])
   return (
     <div className="card">
       <h4 className="card-header">BLOOD PRESSURE INFORMATION</h4>
@@ -368,7 +379,7 @@ const BloodPressure = (props) => {
           Refresh
         </button>
       </div>
-      <div className="card-body">{renderBloodPressure()}</div>
+      <div className="card-body">{renderBG}</div>
     </div>
   );
 };

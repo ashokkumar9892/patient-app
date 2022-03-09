@@ -575,9 +575,7 @@ const Patients = (props) => {
       usertype === "admin" &&
       coreContext.patients[0].name !== undefined
       && coreContext.providerOptions.length>0 && coreContext.coachOptions.length>0 && coreContext.careCoordinatorOptions.length>0
-    ) 
-    console.log("uttkarsh patients",coreContext.patients)
-    {
+    ) {
       return (
         <>
           <div style={{ height: 680, width: "100%" }}>
@@ -605,7 +603,7 @@ const Patients = (props) => {
               // }}
               // selectionModel={selectionModel}
             />
-            {console.log(coreContext.patients[selectionModel])}
+            
           </div>
           {/* <center>{select}sa</center> */}
         </>
@@ -616,6 +614,7 @@ const Patients = (props) => {
       usertype !== "admin" &&
       coreContext.patients[0].name !== undefined
     ) {
+      {console.log("sahi", coreContext.patients[0].name)}
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid
@@ -624,7 +623,7 @@ const Patients = (props) => {
             columns={columns}
             pageSize={10}
             sortModel={[{ field: "name", sort: "asc" }]}
-            checkboxSelection={false}
+            //checkboxSelection={false}
             //hideFooterPagination
             // onSelectionModelChange={(selection) => {
             //   const newSelectionModel = selection.selectionModel;
@@ -640,12 +639,14 @@ const Patients = (props) => {
             //     setSelectionModel(newSelectionModel);
             //   }
             // }}
-            selectionModel={selectionModel}
+            //selectionModel={selectionModel}
           />
         </div>
       );
     } else {
+      {console.log("sahi", coreContext.patients[0].name)}
       return (
+        
         <div
           style={{
             height: 60,
