@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import axios from "axios";
-import "../App.css";
+//import "../App.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { CoreContext } from "../context/core-context";
 import Loader from "react-loader-spinner";
@@ -499,8 +500,11 @@ return String(ttt[0].bg_high)
   const renderDates = () => {
     return (
       <>
-        <div className="col-sm-12">
+          <div className="row">
+		<div className="col-xl-1">
           <label>From:</label>
+          </div>
+          <div className="col-xl-4">
           <DatePicker
             selected={from}
             onChange={(e) => {
@@ -510,7 +514,12 @@ return String(ttt[0].bg_high)
             value={from}
             // dateFormat="MM/dd/yyyy hh:mm:ss aa"
           />
-          <label className="ml-3">To:</label>
+          </div>
+          <div className="col-xl-1">
+          <label>To:</label>
+          </div>
+          <div className="col-xl-4 ">
+      
           <DatePicker
             selected={to}
             onChange={(e) => {
@@ -519,6 +528,7 @@ return String(ttt[0].bg_high)
             }}
             value={to}
           />
+        </div>
         </div>
       </>
     );
@@ -572,7 +582,9 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
   const renderslider = () => {
     return (
       <>
-        <Box className="col-12">
+        <div className="row">
+		<div className="col-xl-12">
+    
           <Slider
             aria-label="Restricted values"
             step={null}
@@ -588,7 +600,9 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
             }}
           />
           {/* {console.log("check slider value", slider)} */}
-        </Box>
+          
+        </div>
+        </div>
       </>
     );
   };
@@ -707,12 +721,15 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       if (index === 3) {
         return (
           <>
-            <table className="table table-bordered">
+          <div className="row">
+          <div className="col-xl-12">
+			<div className="table-responsive-sm mb-0">
+            <table className="table table-bordered mb-0" >
               <thead>
-                <tr style={{ backgroundColor: "#656565", color: "white" }}>
-                  <th scope="col">Date</th>
-                  <th scope="col">Blood Pressure(mmHG)</th>
-                  <th scope="col">Pulse(bpm)</th>
+                <tr className="bg-primary">
+                  <th width="30%" className="text-white">Date</th>
+                  <th width="30%" className="text-white">Blood Pressure(mmHG)</th>
+                  <th width="30%" className="text-white">Pulse(bpm)</th>
                 </tr>
               </thead>
               <tbody>
@@ -751,6 +768,9 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                 })}
               </tbody>
             </table>
+            </div>
+            </div>
+            </div>
           </>
         );
       }
@@ -893,36 +913,22 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       if (index === 1) {
         return (
           <>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard1 mb-1 text-light"
-                style={myst3}>
-                {" "}
-                Total Readings
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst2}>
-                {finaldata.length}
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Average Reading per day
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {/* {Math.round(
-                  Math.round((finaldata.length / daydfrnc) * 10) / 10
-                )} */}
-                {console.log(daydfrnc, "daydfrncutkarsh")}
-                {/* {
-                (finaldata.length > 0 && daydfrnc != 'undefined') ?
-                Math.round(Number(
-                  Math.round(Number(finaldata.length / daydfrnc) * 10) / 10)
-                ): "0"
-                } */}
-                {isNaN(
+            
+        
+          <div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape">Total Reading</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-orange"> {finaldata.length}</div>
+	</div>	
+		</div>
+	<div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape-1">Average Reading per day</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-blue">{isNaN(
                   Math.round(
                     Number(
                       Math.round(Number(finaldata.length / daydfrnc) * 10) / 10
@@ -935,58 +941,43 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                         Math.round(Number(finaldata.length / daydfrnc) * 10) /
                           10
                       )
-                    )}
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Average Systolic
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {/* {console.log(isNaN(avgsys),"avgsys")} */}
-                {isNaN(avgsys) ? "0" : Number(Math.round(avgsys))} mm HG
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Average Diastolic
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {console.log(avgdia, "avgdia")}
-                {isNaN(avgdia) ? "0 " : Number(Math.round(avgsys))}
-                mm HG
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Lowest Systolic
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {console.log(Systolic, "Systolic")}
-                {Systolic.length > 0 ? Math.min(...Systolic) : "0"} mm HG
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Highest Diastolic
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {diastolic.length > 0 ? Number(Math.max(...diastolic)) : "0"} mm
-                HG
-              </div>
-            </div>
+                    )}</div>
+	</div>	
+		</div>
+	<div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape">   Average Systolic</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-blue"> {isNaN(avgsys) ? "0" : Number(Math.round(avgsys))} mm HG</div>
+	</div>	
+		</div>
+	<div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape">  Average Diastolic</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-blue">{isNaN(avgdia) ? "0 " : Number(Math.round(avgsys))}
+                mm HG</div>
+	</div>	
+		</div>
+    <div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape">  Lowest Systolic</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-blue">{Systolic.length > 0 ? Math.min(...Systolic) : "0"} mm HG</div>
+	</div>	
+		</div>
+    <div class="row mb-2">
+	<div class="col-xl-6 col-8 mb-1">
+		<div class="dashboard-shape">  Highest Diastolic</div>
+	</div>
+		<div class="col-xl-2 col-4 mb-1">
+		<div class="dashboard-shape-right-blue"> {diastolic.length > 0 ? Number(Math.max(...diastolic)) : "0"} mm
+                HG</div>
+	</div>	
+		</div>
           </>
         );
       }
@@ -1286,21 +1277,24 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       if (index === 3) {
         return (
           <>
-            <table className="table table-bordered">
+          <div className="row">
+		<div className="col-xl-12">
+			<div className="table-responsive-sm mb-0">
+            <table className="table table-bordered  mb-0">
               <thead>
-                <tr style={{ backgroundColor: "#656565", color: "white" }}>
-                  <th scope="col"></th>
-                  <th scope="col" colspan="2">
-                    <h6>Morning</h6> 12AM to 10AM
+                <tr className="bg-primary">
+                  <th width="10%" className="text-white"></th>
+                  <th width="20%" className="text-white" colspan="2">
+                    Morning<br/>12AM to 10AM
                   </th>
-                  <th scope="col" colspan="2">
-                    <h6>Afternoon</h6> 10AM to 3PM
+                  <th width="20%" className="text-white" colspan="2">
+                    Afternoon<br/> 10AM to 3PM
                   </th>
-                  <th scope="col" colspan="2">
-                    <h6>Evening</h6> 3PM to 9PM
+                  <th width="20%" className="text-white" colspan="2">
+                    Evening<br/> 3PM to 9PM
                   </th>
-                  <th scope="col" colspan="2">
-                    <h6>Night</h6> 9PM to 12AM
+                  <th width="20%" className="text-white" colspan="2">
+                    Night<br/>9PM to 12AM
                   </th>
                 </tr>
                 <tr>
@@ -1523,6 +1517,10 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                     </tr> */}
               </tbody>
             </table>
+            </div>
+            </div>
+            </div>
+
           </>
         );
       }
@@ -2089,30 +2087,32 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
     if (coreContext.patients.length > 0)
       return (
         <>
-        <div className="row">
-          <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.patients[0].name}
-          </div>
-          <div className="col-md-3" style={{ fontWeight: "bold" }}>
-          Email : {coreContext.patients[0].email}
-          </div>
-          <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {"DOB : " + coreContext.patients[0].dob}
-            
-          </div>
-          <div className="col-md-2" style={{ fontWeight: "bold" }}>
-            {coreContext.patients[0].gender === "Male" ? (
+        
+         <div className="col-xl-2 mb-1">	
+	<p className="mb-0"><strong>Name</strong></p>
+  {coreContext.patients[0].name}
+</div>
+	<div className="col-xl-4 mb-1">
+		<p className="mb-0"><strong>Email</strong></p>
+    {coreContext.patients[0].email}
+</div>
+<div className="col-xl-2 mb-1">	
+	<p className="mb-0"><strong>DOB</strong></p>
+	{coreContext.patients[0].dob}
+</div>
+	<div className="col-xl-2 mb-1">	
+	<p className="mb-0"><strong>Gender</strong></p>
+	{coreContext.patients[0].gender === "Male" ? (
               <GenderMale />
             ) : (
               <GenderFemale />
             )}
             {coreContext.patients[0].gender}
-          </div>
-          <div className="col-md-3" style={{ fontWeight: "bold" }}>
-            Diagnosis : {coreContext.patients[0].diagnosisId}
-          </div>
-        </div>
-        
+</div>
+	<div className="col-xl-2 mb-1">	
+	<p className="mb-0"><strong>Diagnosis ID</strong></p>
+	{coreContext.patients[0].diagnosisId}
+</div>
         </>
       );
   };
@@ -2125,57 +2125,47 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
     if (coreContext.patient)
       return (
         <div className="row">
-          <div className="col-md-3">
-            Flags : <PencilSquare />
-          </div>
-        </div>
+<div className="col-xl-12 mb-2 mt-2">	
+	<p className="mb-0">Flags :  <i className="bi-pencil-square"></i></p>
+
+</div>
+	</div>
       );
   };
 
   const renderAddNotes = () => {
     if (coreContext.patient)
       return (
-        <div className="card">
-          <div className="card-body">
-            {" "}
-            <label for="exampleFormControlTextarea1">Internal Notes:</label>
-            <textarea
-              class="form-control"
-              rows="3"
-              placeholder="Enter notes"
-              value={notes != "undefined" ? notes : ""}
-              onChange={(e) => setNotes(e.target.value)}
-            />{" "}
-            <button
-              style={{
-                marginTop: "5px",
-                width: "10%",
-                backgroundColor: blue,
-              }}
-              className="btn btn-sm btn-primary-update float-right"
-              onClick={() => {
-                UpdatePatient();
-              }}>
-              Save Note
-            </button>
-          </div>
-        </div>
+        
+        <>
+        <hr className="mt-0"/>
+	<div className="row">
+<div className="col-xl-12 mb-1">	
+	<p className="mb-0">Internal Notes:</p>
+	<textarea className="form-control" rows="3" placeholder="Enter notes" value={notes != "undefined" ? notes : ""} onChange={(e) => setNotes(e.target.value)}></textarea>
+	</div>
+	<div className="col-xl-12 mb-1 text-center">	
+	<button type="button" className="btn btn-sm btn-danger mt-2" onClick={() => {
+       UpdatePatient();
+         }}>Save Note</button>
+
+</div>
+	</div>
+        </>
       );
   };
 
   const renderExpandCollapse = () => {
     if (coreContext.patient)
       return (
+        <>
         <div className="row">
-          <div className="col-md-3">
-            {" "}
-            <a href="#">Expand All</a>
-          </div>
-          <div className="col-md-3">
-            {" "}
-            <a href="#">Collapse All</a>
-          </div>
+        <div className="col-xl-12 mb-1">	
+          <a href="#" onClick={() => setShowNotesTextBox(false)} className="fs-5 me-5">Expand All</a>
+        <a href="#" onClick={() => setShowNotesTextBox(false) }className="fs-5">Collapse All</a>
         </div>
+          </div>
+          </>
       );
   };
 
@@ -2206,48 +2196,31 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
     if (coreContext.patient) {
       localStorage.setItem("ehrId", coreContext.patient.ehrId);
       return (
-        <div
-          className="row"
-          style={{ marginLeft: "10px", backgroundColor: "white" }}>
-          <MDBCard className="border row col-md-6">
-            <MDBCardBody>
-              <MDBCardTitle>Patient Information</MDBCardTitle>
-              <MDBCardText>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>Height (Inches) :</b>
-                  {coreContext.patient.height}
-                </div>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>Weight (Pounds):</b>
-                  {coreContext.patient.Weight}
-                </div>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>BMI :</b>{" "}
-                  {coreContext.patient.BMI}
-                </div>
-              </MDBCardText>
-            </MDBCardBody>
-          </MDBCard>
-          <MDBCard className="border row col-md-6">
-            <MDBCardBody>
-              <MDBCardTitle>Care Team</MDBCardTitle>
-              <MDBCardText>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>Provider:</b>
-                  {coreContext.patient.ProviderName}
-                </div>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>Care Coordinator:</b>
-                  {coreContext.patient.CareName}
-                </div>
-                <div>
-                  <b style={{ paddingRight: "10px" }}>Coach :</b>{" "}
-                  {coreContext.patient.CoachName}
-                </div>
-              </MDBCardText>
-            </MDBCardBody>
-          </MDBCard>
-        </div>
+        
+        <div className="row">
+<div className="col-xl-6">	
+<div className="card mb-0 border border-primary">
+<div className="card-body">
+	<h4>Patient Information</h4>
+	<p className="mb-1"><strong>Height (Inches):</strong> {coreContext.patient.height}</p>
+	<p className="mb-1"><strong>Weight (Pounds): </strong>  {coreContext.patient.Weight}</p>
+	<p className="mb-1"><strong>BMI:</strong> {coreContext.patient.BMI}</p>
+	</div>
+	</div>
+</div>
+		<div className="col-xl-6">	
+<div className="card mb-0 border border-primary">
+<div className="card-body">
+	<h4>Care Team</h4>
+	<p className="mb-1"><strong>Provider:</strong>  {coreContext.patient.ProviderName}</p>
+	<p className="mb-1"><strong>Care Coordinator:</strong>   {coreContext.patient.CareName}</p>
+	<p className="mb-1"><strong>Coach:</strong>  {coreContext.patient.CoachName}</p>
+
+
+	</div>
+</div>
+	</div>
+	</div>
       );
     }
   };
@@ -2258,51 +2231,22 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
   const handleSelect = (index) => {
     let _timerLog = {};
     if (index == 7) {
-      //       setstartDT(new Date());
+    
       fetchtotaltime();
       coreContext.fetchTimeLog("PATIENT_" + patientId);
     }
     if (index != 7) {
       fetchtotaltime();
-      //coreContext.fetchTimeLog();
+      
       {
       }
     }
 
     if (index === 8) {
-      //pause();
-
-      // after pause then should add in list.
-      //     // _timerLog.id = timelogIdCounter;
-      //     // _timerLog.taskType = taskType;
-      //     // _timerLog.performedBy = performedBy;
-      //     // _timerLog.performedOn = Moment(date).format('MMM-DD-YYYY hh:mm:ss A') ;
-      //     // _timerLog.timeAmount = minutes +":"+ seconds;
-      //     // _timerLog.startDT = Moment(startDT).format('MMM-DD-YYYY hh:mm:ss A') ;
-      //     // _timerLog.endDT = Moment(endDT).format('MMM-DD-YYYY hh:mm:ss A') ;
-      //     // _timerLog.username = userName;
-
-      //     // if(_timerLog.performedOn !=="Invalid date")
-      //     // {
-      //     //     coreContext.timeLogData.push(_timerLog);
-      //     // }
-      //     // //timerLogs.push(_timerLog);
-
-      //     //setTimerLog(timerLogs);
-      //     //console.log(index);
-      //     if(totalLogtime  > 0){
-      //         settotalLogtime(totalLogtime + seconds);
-      //     }else {
-      //         settotalLogtime(seconds);
-      //     }
-      //     settimelogIdCounter(timelogIdCounter+1);
+      
     }
   };
 
-  // const TimeInput = () => {
-  // const [tlvalue, setTlValue] = React.useState("00:00:00");
-
-  // const [tlvalueseconds, setTlvalueseconds] = React.useState("00:00:00");
   const onChange = (event) => {
     setTlValue(event.target.value);
   };
@@ -2311,13 +2255,10 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
     const value = event.target.value;
     const seconds = Math.max(0, getSecondsFromHHMMSS(value));
 
-    // alert('total second'+ seconds);
     setTlvalueseconds(seconds);
     const time = toHHMMSS(seconds);
     setTlValue(time);
-    //alert(time);
-
-    //alert(timevalue +'timevalue');
+  
   };
 
   const getSecondsFromHHMMSS = (value) => {
@@ -2361,47 +2302,32 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
   };
 
   function doSomething(value) {
-    // console.log("doSomething called by child with value:", value);
+    
   }
 
   const renderTabs = () => {
     if (coreContext.patient)
       return (
+        <div className="card mb-5">
+<div className="card-header border-0 pb-0">
         <Tabs
           onSelect={(index) => handleSelect(index)}
           onMouseLeave={(index) => handleLeaveTab(index)}>
           <TabList>
-            {/* <Tab onClick={pause}>Conditions</Tab> */}
+
             <Tab >Programs</Tab>
-            {/* <Tab onClick={pause}>Assesments</Tab> */}
+            
             <Tab >Clinical Data</Tab>
             <Tab >Billing</Tab>
-            {/* <Tab onClick={pause}>Alerts</Tab> */}
-            {/* <Tab onClick={pause}>Documents</Tab> */}
+        
             <Tab >Task Timer</Tab>
-            {/* <Tab onClick={pause}>Time Logs</Tab> */}
+            
             <Tab>Time Logs</Tab>
             <Tab >Devices</Tab>
             <Tab >Portal</Tab>
           </TabList>
 
-          {/* <TabPanel>
-                    <div className="card">
-                        <h4 className="card-header">
-                            Condition
-                        </h4>
-                        <div className="card-body">
-                            <input type="text" className='form-control mb-4' placeholder="Select one to add" />
-                            <table className='table table-bordered table-sm'>
-                                <th>Condition</th>
-                                <th>Diagonostic Code</th>
-                                <th>Diagonosic Code</th>
-                                <th>Programme</th>
-                                <th>Assessment</th>
-                            </table>
-                        </div>
-                    </div>
-                </TabPanel> */}
+         
           <TabPanel>
             <div className="card">
               <h4 className="card-header">Programs</h4>
@@ -2410,7 +2336,10 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   <Button variant="primary">CCM</Button>
                   <Button variant="secondary">RPM</Button>
                 </ButtonGroup>
-                <table className="table table-bordered table-sm">
+                <div className="row">
+		<div className="col-xl-12">
+			<div className="table-responsive-sm mb-0">
+                <table className="table table-bordered table-striped mb-0">
                   <th>Enroll Date</th>
                   <th>Enroll Status</th>
                   <th>Care Plan</th>
@@ -2420,51 +2349,35 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   <th>CCM Care Manager</th>
                   <th>CCM Physician</th>
                 </table>
+                </div>
+                </div>
+                </div>
               </div>
             </div>
           </TabPanel>
-          {/* <TabPanel>
-            <div className="card">
-              <h4 className="card-header">Assesments</h4>
-              <div className="card-body">
-                This patient does not yet have any assessments.
-              </div>
-            </div>
-          </TabPanel> */}
+         
           <TabPanel>
             <div className="card">
               <h4 className="card-header">Clinical Data</h4>
               <div className="card-body">
                 <Tabs>
                   <TabList>
-                    {/* <Tab onClick={pause}>Allergies</Tab>
-                                    <Tab onClick={pause}>Lab Results</Tab>
-                                    <Tab onClick={pause}>Medications</Tab> */}
-                    {/* <Tab onClick={pause}>Vitals</Tab> */}
+                  
                   </TabList>
-                  {/* <TabPanel>
-                                    Allergies
-                                </TabPanel>
-                                <TabPanel>
-                                    Lab Results
-                                </TabPanel>
-                                <TabPanel>
-                                    Medications
-                                </TabPanel> */}
+                
                   <TabPanel>
                     <Tabs>
                       <TabList>
                         <Tab >Blood Pressure</Tab>
-                        {/* <Tab onClick={pause}>Blood Pressure</Tab> */}
-                        {/* <Tab onClick={pause}>Blood Pressure Average</Tab> */}
+                        
                         <Tab onClick={()=>{fetchTd();fetchadmintd()}}>Blood Glucose</Tab>
-                        {/* <Tab onClick={pause}>Blood GLucose Average</Tab> */}
+                        
                         <Tab>Weight</Tab>
-                        {/* <Tab onClick={pause}>Weight Average</Tab> */}
+                        
                         <Tab>Threshold</Tab>
                       </TabList>
                       <TabPanel>
-                        {/* <div className="card"> */}
+                        
                         <Tabs>
                           <TabList>
                             <Tab >Dashboard</Tab>
@@ -2518,93 +2431,18 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                           <Weight></Weight>
                         </div>
                       </TabPanel>
-                      {/* <TabPanel>
-                        <div className="card">
-                          <WeightAverage />
-                        </div>
-                      </TabPanel> */}
+                      
                       <TabPanel>
                         <div className="card-body">
                         {thresoldbars}
                         </div>
-                        {/* <React.Fragment>
-                                                <div className='row'>
-                                                    <div className="col-md-6">
-                                                        <div className="card">
-                                                            
-                                                            <div>
-                                                                {userType === 'doctor' || userType === 'admin' || userType === 'provider' ? <button type='button' style={{ width: '250px' }} onClick={() => coreContext.UpdateThreshold("PATIENT_" + patient.userId, 'BG', bgMax, bgMin, userType)} className="btn btn-primary mb-2 float-right"> Update</button> : ''}
-                                                            </div>
-                                                            <h4 className="card-header">  Blood Glucose (mg / dl) </h4>
-                                                            <div className="card-body">
-                                                                <IonRangeSlider keyboard={true} onStart={e => onBGChange(e)} onFinish={e => onBGChange(e)} type='double' min={0} max={500} from={bgMin} to={bgMax} step={.01} grid={true} grid_margin={true} grid_number={5} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="card">
-                                                            <div>
-                                                                {userType === 'doctor' || userType === 'admin' || userType === 'provider' ? <button type='button' style={{ width: '250px' }} onClick={() => coreContext.UpdateThreshold("PATIENT_" + patient.userId, 'BMI', bmiMax, bmiMin, userType)} className="btn btn-primary mb-2 float-right"> Update</button> : ''}
-                                                            </div>
-                                                            <h4 className="card-header"> BMI  (kg / m2) </h4>
-                                                            <div className="card-body">
-                                                                <IonRangeSlider keyboard={true} onFinish={e => onBMIChange(e)} type='double' min={0} max={100} from={bmiMin} to={bmiMax} step={.01} grid={true} grid_margin={true} grid_number={5} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="card">
-                                                            <div>
-                                                                {userType === 'doctor' || userType === 'admin' || userType === 'provider' ? <button type='button' style={{ width: '250px' }} onClick={() => coreContext.UpdateThreshold("PATIENT_" + patient.userId, 'DIASTOLIC', diastolicMax, diastolicMin, userType)} className="btn btn-primary mb-2 float-right"> Update</button> : ''}
-                                                            </div>
-                                                            <h4 className="card-header"> Diastolic (mmHg) </h4>
-                                                            <div className="card-body">
-                                                                <IonRangeSlider keyboard={true} onFinish={e => onDiastolicChange(e)} type='double' min={0} max={500} from={diastolicMin} to={diastolicMax} step={.01} grid={true} grid_margin={true} grid_number={5} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="card">
-                                                            <div>
-                                                                {userType === 'doctor' || userType === 'admin' || userType === 'provider' ? <button type='button' style={{ width: '250px' }} onClick={() => coreContext.UpdateThreshold("PATIENT_" + patient.userId, 'SYSTOLIC', systolicMax, systolicMin, userType)} className="btn btn-primary mb-2 float-right"> Update</button> : ''}
-                                                            </div>
-                                                            <h4 className="card-header"> Systolic (mmHg) </h4>
-                                                            <div className="card-body">
-                                                                <IonRangeSlider keyboard={true} onFinish={e => onSystolicChange(e)} type='double' min={0} max={500} from={systolicMin} to={systolicMax} step={.01} grid={true} grid_margin={true} grid_number={5} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="card">
-                                                            <div>
-                                                                {userType === 'doctor' || userType === 'admin' || userType === 'provider' ? <button type='button' style={{ width: '250px' }} onClick={() => coreContext.UpdateThreshold("PATIENT_" + patient.userId, 'WS', weightMax, weightMin, userType)} className="btn btn-primary mb-2 float-right"> Update</button> : ''}   </div>
-                                                            <h4 className="card-header"> Weight (lb) </h4>
-                                                            <div className="card-body">
-                                                                <IonRangeSlider keyboard={true} onFinish={e => onWeightChange(e)} type='double' min={50} max={700} from={weightMin} to={weightMax} step={.01} grid={true} grid_margin={true} grid_number={5} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </React.Fragment> */}
+                        
                       </TabPanel>
                     </Tabs>
                   </TabPanel>
                 </Tabs>
                 <br /> <br />
-                {/* {/* {/* <Button className="mr-4" size="sm" variant="danger">New Allergy</Button>   <input type="checkbox" />  Patient has no allergies.
-                            <table className='table table-bordered table-sm mt-4'>
-                                <th>Allergy</th>
-                                <th>Category</th>
-                                <th>Reaction</th>
-                                <th>Active</th>
-                                <th>Critical</th>
-                                <th>Date Identified</th>
-                                <th>Actions</th>
-                            </table> */}
+              
               </div>
             </div>
           </TabPanel>
@@ -2632,43 +2470,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
               </div>
             </div>
           </TabPanel>
-          {/* <TabPanel>
-            <div className="card">
-              <h4 className="card-header">Alert</h4>
-              <div className="card-body">
-                Date Range <br />
-                <input type="text" className="form-control" placeholder="" />
-                <br />
-                <br />
-                <table className="table table-bordered table-sm mt-4">
-                  <th>Priority</th>
-                  <th>Title</th>
-                  <th>Date</th>
-                  <th>View</th>
-                </table>
-              </div>
-            </div>
-          </TabPanel> */}
-          {/* <TabPanel>
-            <div className="card">
-              <h4 className="card-header">Document</h4>
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-md-3">Document Type</div>
-                  <div className="col-md-3">Date Range</div>
-                  <div className="col-md-3">Search</div>
-                  <div className="col-md-3">Upload File</div>
-                </div>
-                <br /> <br />
-                <table className="table table-bordered table-sm mt-4">
-                  <th>Document Type</th>
-                  <th>Document Description</th>
-                  <th>Document Date</th>
-                  <th>Actions</th>
-                </table>
-              </div>
-            </div>
-          </TabPanel> */}
+       
 
           <TabPanel>
             <div className="card">
@@ -2679,6 +2481,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   style={{ backgroundColor: "transparent" }}>
                   <button
                     className="col-md-8"
+                    className="btn btn-sm btn-success"
                     type="button"
                     onClick={() => {
                       reset();
@@ -2704,8 +2507,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                       sett1("");
                       settimevalue("");
                       setTlValue("00:00:00");
-                    }}
-                    className="btn btn-sm btn-success">
+                    }}>
                     {" "}
                     Add Time Log
                   </button>
@@ -2714,7 +2516,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   <div className="col-md-6">
                     <div className="row">
                       Task Type
-                      {/* //  {setTaskType("CarePlanReconciliation")} */}
+                      
                       <select
                         value={t1 === "Other" ? t1 : taskType}
                         onChange={(e) => {
@@ -2733,7 +2535,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                         <option value="DataReview">Data Review  & Management</option>
                         <option value="Other">Others...</option>
                       </select>
-                      {/* {console.log("sahil",taskType)} */}
+                      
                       {t1 === "Other" ? (
                         <input
                           type="text"
@@ -2748,7 +2550,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                     <div className="row">
                       <div className="col-md-6">
                         Performed By
-                        {/* {renderTaskTimer()} */}
+                        
                         <select
                           value={performedBy}
                           onChange={(e) => {
@@ -2777,7 +2579,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                           showTimeSelect
                           timeFormat="HH:mm"
                           timeIntervals={15}
-                          // onChange={(date) => setDate(date)}
+                          
                           onChange={(date) => {
                             setDate(date);
                             setDirty();
@@ -2796,7 +2598,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                           onBlur={onBlur}
                           value={tlvalue}
                         />
-                        {/* <input className="form-control mb-2 mr-sm-2" type="time" min='00:00:00' max='23:59:59'  value={timevalue} onChange={(e)=>{settimevalue(e.target.value);}} step="1"/> */}
+                       
                       </div>
                     </div>
                   </div>
@@ -2932,12 +2734,22 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
             </div>
           </TabPanel>
         </Tabs>
+        </div></div>
       );
   };
 
   return (
-    <div className="card">
-      <div
+    <div className="col">
+      <div className="page-title-container mb-3">
+<div className="row">
+<div className="col mb-2">
+<h1 className="mb-2 pb-0 display-4" id="title">Patient Summary
+</h1>
+
+</div>
+</div>
+</div>
+      {/* <div
         className="btn btn-primary mb-2 float-right"
         style={{ backgroundColor: "transparent" }}
         id="stopwatch">
@@ -2967,68 +2779,51 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
           className="btn btn-sm btn-danger"
           onClick={reset}>
           Reset
-        </button>
+        </button> */}
         {/* <button type='button'eventKey={'TimeLog'}  onClick={() => {coreContext.UpdateTimeLog( coreContext.timeLogData, patientId, userName );handleSelect(8);setPristine();setPerformedBy("");setTaskType("");setDate("");sett1("");}} className="btn btn-sm btn-success"> Update Time Log</button>  */}
 
         {/* <button type='button' onClick={() => {pause();coreContext.AddTimeLog( taskType, performedBy, date,(tlvalue!=="00:00:00")?tlvalueseconds:minutes*60+seconds,startDT, patientId, userName );coreContext.fetchTimeLog("PATIENT_" + patientId);coreContext.fetchTimeLog("PATIENT_" + patientId);coreContext.fetchTimeLog("PATIENT_" + patientId);setPristine();setPerformedBy("");setTaskType("");setDate("");sett1("");settimevalue("");setTlValue("00:00:00");}} className="btn btn-sm btn-success"> Add Time Log</button> */}
-      </div>
-
-      {/* <div
-        className="btn btn-primary mb-2 float-right"
-        style={{ backgroundColor: "transparent" }}>
-        <button
-          style={{ marginRight: 12 }}
-          id="resetTimer"
-          className="btn btn-sm btn-danger"
-          onClick={reset}>
-          Reset
-        </button>
-      </div> */}
-
-      <div onClick={() => setShowNotesTextBox(false)} className="card-header">
-        {rendertop}
-      </div>
-      <div onClick={() => setShowNotesTextBox(false)} className="card-header">
-        {renderAddModifyFlags()}
-      </div>
-      <div className="card-header">{renderAddNotes()}</div>
-
+      {/* </div> */}
       <div className="row">
-        <div className="col-md-12">
-          <div
-            onClick={() => setShowNotesTextBox(false)}
-            className="card-header">
-            {renderExpandCollapse()}
-          </div>
-          <div
-            onClick={() => setShowNotesTextBox(false)}
-            className="card-header">
-            {renderPatientinformation()}{" "}
-          </div>
+      <div className="col-xl-12">
+      <div className="card mb-3 border border-primary">
+      <div className="card-body">
+      <div className="row">
+      
+        <div className="col-xl-10 col-xs-10 text-end pt-1">
+        <button  className="btn btn-md btn-success" onClick={start}>Start</button>&nbsp;&nbsp;
+          <button className="btn btn-md btn-warning" onClick={pause}>Pause</button>&nbsp;&nbsp;
+          <button className="btn btn-md btn-danger" onClick={reset}>Reset</button>
         </div>
-        {/* <div className="col-md-4">
-          <div
-            style={{ fontSize: 12 }}
-            className="card shadow p-3 mb-2 mt-3 bg-white rounded">
-            <div style={{ height: "140px", overflowY: "auto" }}>
-              {renderThreads()}
-            </div>
-
-            <div>
-              <Form.Label>Send a reply</Form.Label>
-              <Form.Control
-                autoFocus
-                size="sm"
-                as="textarea"
-                rows={2}
-                onChange={(e) => onSendMessage(e.target.value)}
-                value={message}
-                placeholder="Enter your message"
-              />
-            </div>
-          </div>
-        </div> */}
+        <div className="col-xl-2 col-xs-2">
+      <span className="fs-2 pt-2">{minutes}</span>
+      <span className="fs-2 pt-2">:</span>
+      <span className="fs-2 pt-2">{seconds}</span>
+  
+        
       </div>
+      
+      </div>
+      </div>
+      </div>
+
+      <div className="card mb-3">
+      <div className="card-body pt-0">
+      <div className="row bg-muted p-2">
+        {rendertop}
+        </div>
+        {renderAddModifyFlags()}
+        {renderAddNotes()}
+
+        </div>
+      </div>
+      
+      
+      <div className="card-body">
+      {renderExpandCollapse()}
+      {renderPatientinformation()}
+        </div>
+     
 
       {Prompt}
 
@@ -3158,8 +2953,10 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
           </Modal>
         </React.Fragment>
       </div>
-      <div onClick={() => setShowNotesTextBox(false)} className="card-header">
+      <div onClick={() => setShowNotesTextBox(false)} >
         {renderTabs()}
+      </div>
+      </div>
       </div>
     </div>
   );
