@@ -2704,7 +2704,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                       settimevalue("");
                       setTlValue("00:00:00");
                     }}
-                    className="btn btn-sm btn-success">
+                    >
                     {" "}
                     Add Time Log
                   </button>
