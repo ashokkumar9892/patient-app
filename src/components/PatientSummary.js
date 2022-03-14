@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import axios from "axios";
 //import "../App.css";
@@ -40,6 +38,7 @@ import {
   GridColDef,
   GridApi,
   GridCellValue,
+  GridToolbarExport  ,
 } from "@material-ui/data-grid";
 
 import { Weight } from "./Weight";
@@ -62,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 
 const PatientSummary = (props) => {
   const classes = useStyles();
@@ -101,19 +101,19 @@ const PatientSummary = (props) => {
     },
     {
       value: 30,
-      label: "Last 7 days",
+      label: "7 days",
     },
     {
       value: 45,
-      label: "Last 30 days",
+      label: "30 days",
     },
     {
       value: 60,
-      label: "Last 60 days",
+      label: "60 days",
     },
     {
       value: 75,
-      label: "Last 90 days",
+      label: "90 days",
     },
     {
       value: 100,
@@ -890,12 +890,15 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
 
         return (
           <>
-            <nav
-              className="navbar navbar-expand-lg text-light bg-dark mt-1"
-              style={{ height: "34px" }}>
-              <h6>Reading By Dates</h6>
-            </nav>
-            <Line
+            <div className="row mb-4">
+		<div className="col-xl-12">
+			<div className="card-body bg-dark text-white">Reading By Dates
+</div>
+	</div>
+		</div>
+    <div className="row mb-4">
+		<div className="col-xl-12">
+    <Line
               data={data}
               options={{
                 tooltips: {
@@ -907,6 +910,9 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                 },
               }}
             />
+	</div>
+		</div>
+          
           </>
         );
       }
@@ -915,20 +921,20 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
           <>
             
         
-          <div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape">Total Reading</div>
+          <div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape-1">Total Reading</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-orange"> {finaldata.length}</div>
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-orange"> {finaldata.length}</div>
 	</div>	
 		</div>
-	<div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape-1">Average Reading per day</div>
+	<div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape">Average Reading per day</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-blue">{isNaN(
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-blue">{isNaN(
                   Math.round(
                     Number(
                       Math.round(Number(finaldata.length / daydfrnc) * 10) / 10
@@ -944,37 +950,37 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                     )}</div>
 	</div>	
 		</div>
-	<div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape">   Average Systolic</div>
+	<div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape">   Average Systolic</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-blue"> {isNaN(avgsys) ? "0" : Number(Math.round(avgsys))} mm HG</div>
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-blue"> {isNaN(avgsys) ? "0" : Number(Math.round(avgsys))} mm HG</div>
 	</div>	
 		</div>
-	<div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape">  Average Diastolic</div>
+	<div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape">  Average Diastolic</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-blue">{isNaN(avgdia) ? "0 " : Number(Math.round(avgsys))}
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-blue">{isNaN(avgdia) ? "0 " : Number(Math.round(avgsys))}
                 mm HG</div>
 	</div>	
 		</div>
-    <div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape">  Lowest Systolic</div>
+    <div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape">  Lowest Systolic</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-blue">{Systolic.length > 0 ? Math.min(...Systolic) : "0"} mm HG</div>
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-blue">{Systolic.length > 0 ? Math.min(...Systolic) : "0"} mm HG</div>
 	</div>	
 		</div>
-    <div class="row mb-2">
-	<div class="col-xl-6 col-8 mb-1">
-		<div class="dashboard-shape">  Highest Diastolic</div>
+    <div className="row mb-2">
+	<div className="col-xl-6 col-8 mb-1">
+		<div className="dashboard-shape">  Highest Diastolic</div>
 	</div>
-		<div class="col-xl-2 col-4 mb-1">
-		<div class="dashboard-shape-right-blue"> {diastolic.length > 0 ? Number(Math.max(...diastolic)) : "0"} mm
+		<div className="col-xl-2 col-4 mb-1">
+		<div className="dashboard-shape-right-blue"> {diastolic.length > 0 ? Number(Math.max(...diastolic)) : "0"} mm
                 HG</div>
 	</div>	
 		</div>
@@ -1204,11 +1210,14 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
 
         return (
           <>
-            <nav
-              className="navbar navbar-expand-lg text-light bg-dark mt-1"
-              style={{ height: "34px" }}>
-              <h6>Reading By Dates</h6>
-            </nav>
+           <div className="row mb-4">
+		<div className="col-xl-12">
+			<div className="card-body bg-dark text-white">Reading By Dates
+</div>
+	</div>
+		</div>
+    <div className="row mb-4">
+		<div className="col-xl-12">
             <Line
               data={data}
               options={{
@@ -1271,6 +1280,7 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
                 },
               }}
             />
+            </div></div>
           </>
         );
       }
@@ -1526,75 +1536,54 @@ console.log("check admin thresold from patient",coreContext.thresoldData)
       }
       if (index === 1) {
         return (
-          <div style={{ height: 680, width: "100%" }}>
-            {/* {coreContext.bloodglucoseData} */}
-
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard1 mb-1 text-light"
-                style={myst3}>
-                {" "}
-                Total Readings
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst2}>
-                {finalbgdata.length}
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Average Reading per day
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {finalbgdata.length > 0 || daydfrnc == "undefined"
-                  ? Math.round(
-                      Math.round((finalbgdata.length / daydfrnc) * 10) / 10
-                    )
-                  : "0"}
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Average Glucose Level
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {console.log(avgbg, "avgbg")}
-                {isNaN(avgbg) ? "0" : Number(Math.round(avgbg))} mg/dl
-              </div>
-            </div>
-            {/* <div className="d-flex">
-    <div className="p-2 flex-fill finaldashboard mb-1 text-light" style={myst}> Average Diastolic</div>
-    <div className="p-2 flex  ml-2 text-light " style={myst1}>{Math.round(avgdia)} mm HG</div>
-  </div> */}
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Lowest Glucose Level
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {console.log(bg, "bg")}
-                {bg.length > 0 ? Number(Math.min(...bg)) : "0"} mg/dl
-              </div>
-            </div>
-            <div className="d-flex">
-              <div
-                className="p-2 flex-fill finaldashboard mb-1 text-light"
-                style={myst}>
-                {" "}
-                Highest Glucose Level
-              </div>
-              <div className="p-2 flex  ml-2 text-light " style={myst1}>
-                {bg.length > 0 ? Math.max(...bg) : "0"} mg/dl
-              </div>
-            </div>
+          <>
+          <div className="row mb-2">
+          <div className="col-xl-6 col-8 mb-1">
+            <div className="dashboard-shape">  Total Readings</div>
           </div>
+            <div className="col-xl-2 col-4 mb-1">
+            <div className="dashboard-shape-right-blue">{finalbgdata.length}</div>
+          </div>	
+            </div>
+          <div className="row mb-2">
+          <div className="col-xl-6 col-8 mb-1">
+            <div className="dashboard-shape-1">  Average Reading per day</div>
+          </div>
+            <div className="col-xl-2 col-4 mb-1">
+            <div className="dashboard-shape-right-orange">{finalbgdata.length > 0 || daydfrnc == "undefined"
+      ? Math.round(
+          Math.round((finalbgdata.length / daydfrnc) * 10) / 10
+        )
+      : "0"}</div>
+          </div>	
+            </div>
+          <div className="row mb-2">
+          <div className="col-xl-6 col-8 mb-1">
+            <div className="dashboard-shape">Average Glucose Level</div>
+          </div>
+            <div className="col-xl-2 col-4 mb-1">
+            <div className="dashboard-shape-right-blue"> {isNaN(avgbg) ? "0" : Number(Math.round(avgbg))} mg/dl</div>
+          </div>	
+            </div>
+          <div className="row mb-2">
+          <div className="col-xl-6 col-8 mb-1">
+            <div className="dashboard-shape">Lowest Glucose Level</div>
+          </div>
+            <div className="col-xl-2 col-4 mb-1">
+            <div className="dashboard-shape-right-blue">{bg.length > 0 ? Number(Math.min(...bg)) : "0"} mg/dl</div>
+          </div>	
+            </div>
+            <div className="row mb-2">
+            <div className="col-xl-6 col-8 mb-1">
+              <div className="dashboard-shape">Highest Glucose Level</div>
+            </div>
+              <div className="col-xl-2 col-4 mb-1">
+              <div className="dashboard-shape-right-blue"> {bg.length > 0 ? Math.max(...bg) : "0"} mg/dl</div>
+            </div>	
+              </div>
+           
+                </>
+        
         );
       }
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
@@ -1890,6 +1879,9 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             pageSize={10}
             sortModel={[{ field: "performedOn", sort: "desc" }]}
             sortingOrder={["desc", "asc"]}
+            components={{
+              Toolbar: GridToolbarExport ,
+            }}
           />
         </div>
       );
@@ -2449,14 +2441,19 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
           <TabPanel>
             <div className="card">
               <h4 className="card-header">Billing</h4>
-              <div className="card-body">
-                Status Filter <br />
-                <select name="" id="">
-                  <option value="">Ready to Bill</option>
-                </select>
-                <br />
-                <br />
-                <table className="table table-bordered table-sm mt-4">
+              <div className="card-body ps-0 pe-0">
+              <div className="row mb-4">
+		<div className="col-xl-3">
+			<label>Status Filter</label>
+			<select name="" className="form-select"><option value="">Ready to Bill</option></select>
+		</div>
+			</div>
+      <div className="row">
+		<div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+                <table className="table table-bordered table-striped mb-0">
+                <thead className="bg-defualts">
+                  <tr>
                   <th>EHR ID</th>
                   <th>Date of Service</th>
                   <th>Type</th>
@@ -2466,14 +2463,19 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   <th>POS</th>
                   <th>TC Claim</th>
                   <th>Actions</th>
+                  </tr>
+                  </thead>
                 </table>
+                </div>
+              </div>
+              </div>
               </div>
             </div>
           </TabPanel>
        
 
           <TabPanel>
-            <div className="card">
+            {/* <div className="card">
               <h4 className="card-header">Task Timer</h4>
               <div className="card-body">
                 <div
@@ -2604,7 +2606,127 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
+<div className="tab-pane" id="Task-Timer" role="tabpanel">
+<div className="card">
+	<h4 className="card-header">Task Timer</h4>
+	<div className="card-body ps-0 pe-0">
+		<div className="row mb-4">
+		<div className="col-xl-3">
+			<button className="btn btn-lg btn-success" type="button" onClick={() => {
+                      reset();
+                      coreContext.AddTimeLog(
+                        taskType,
+                        performedBy,
+                        date,
+                        tlvalue !== "00:00:00"
+                          ? tlvalueseconds
+                          : minutes * 60 + seconds,
+                        startDT,
+                        patientId,
+                        userName
+                      );
+                      coreContext.fetchTimeLog("PATIENT_" + patientId);
+                      coreContext.fetchTimeLog("PATIENT_" + patientId);
+                      coreContext.fetchTimeLog("PATIENT_" + patientId);
+                      setPristine();
+                      
+                      setPerformedBy("");
+                      setTaskType("");
+                      setDate(new Date());
+                      sett1("");
+                      settimevalue("");
+                      setTlValue("00:00:00");
+                    }}> Add Time Log</button>
+		</div>
+			</div>
+		
+		<div className="row">
+		<div className="col-xl-3">
+			<label>Task Type</label>
+			<select className="form-select" value={t1 === "Other" ? t1 : taskType}
+                        onChange={(e) => {
+                          setTaskType(e.target.value);
+                          setDirty();
+                          sett1(e.target.value);
+                        }}>
+				<option value="SelectTask">Select a Task Type</option>
+                        <option value="CareCoordination">
+                          Care Coordination
+                        </option>
+                        <option value="CarePlanReconciliation">
+                          Care Plan Reconciliation
+                        </option>
+                        <option value="DataReview">Data Review  & Management</option>
+                        <option value="Other">Others...</option>
+                      </select>
+                      
+                      {t1 === "Other" ? (
+                        <input
+                          type="text"
+                          className="form-control mb-2 mr-sm-2"
+                          placeholder="Enter other value.."
+                          value={taskType}
+                          onChange={(e) => setTaskType(e.target.value)}
+                        />
+                      ) : null}
+			
+			</div>
+			<div className="col-xl-3">
+			<label>Performed By</label>
+			<select
+                          value={performedBy}
+                          onChange={(e) => {
+                            setPerformedBy(e.target.value);
+                            setDirty();
+                          }}
+                          className="form-select">
+                          <option value="SelectUser">Select a User</option>
+                          {tt.map((curr) => {
+                            return (
+                              <option
+                                value={!curr.name ? curr.provider : curr.name}>
+                                {" "}
+                                {!curr.name ? curr.provider : curr.name}
+                              </option>
+                            );
+                          })}
+                        </select>
+			</div>
+			<div className="col-xl-3">
+        <div className="row">
+			<label>Performed On
+</label>
+</div>
+<div className="row">
+<DatePicker
+                          className="form-control"
+                          selected={date}
+                          showTimeSelect
+                          timeFormat="HH:mm"
+                          timeIntervals={15}
+                          
+                          onChange={(date) => {
+                            setDate(date);
+                            setDirty();
+                            setstartDT(date);
+                          }}
+                          placeholderText="Enter a date"
+                          dateFormat="MM/dd/yyyy hh:mm:ss aa"
+                        />
+                        </div>
+			</div>
+			<div className="col-xl-3">
+			<label>Enter Total Time:</label>
+			<input type="text" className="form-control"  onChange={onChange}
+                          onBlur={onBlur}
+                          value={tlvalue}/>
+			</div>
+		</div>
+		</div>
+		</div>
+    </div>
+
           </TabPanel>
 
           <TabPanel>
@@ -2953,9 +3075,9 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
           </Modal>
         </React.Fragment>
       </div>
-      <div onClick={() => setShowNotesTextBox(false)} >
+  
         {renderTabs()}
-      </div>
+       
       </div>
       </div>
     </div>
