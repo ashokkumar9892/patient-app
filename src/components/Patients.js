@@ -9,6 +9,7 @@ import { IconName } from "react-icons/bs";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import swal from 'sweetalert';
+import DataGridComponent from "./common/DataGridComponent";
 
 import Input from "./common/Input";
 import * as React from "react";
@@ -328,7 +329,8 @@ const Patients = (props) => {
     {
       field: "name",
       headerName: "Patient Name",
-      width: 220,
+      width: 150,
+      fleex:1,
       renderCell: (params) => (
         <a href={`/patient-summary/${btoa(params.row.userId)}`}>
           {" "}
@@ -340,40 +342,40 @@ const Patients = (props) => {
       field: "ProviderName",
       headerName: "Provider",
       editable: false,
-      width: 220,
+      width: 150,
     },
     {
       field: "CareName",
       headerName: "Care",
-      width: 220,
+      width: 150,
       editable: false,
     },
     {
       field: "CoachName",
       headerName: "Coach",
       editable: false,
-      width: 220,
+      width: 150,
     },
     {
       field: "height",
       headerName: "Height",
       editable: false,
       type: "number",
-      width: 125,
+      width: 150,
     },
     {
       field: "bg_reading",
       headerName: "Glucose",
       editable: false,
       type: "number",
-      width: 125,
+      width: 150,
     },
     {
       field: "ActiveStatus",
       headerName: "ActiveStatus",
       editable: false,
       type: "string",
-      width: 125,
+      width: 150,
     },
     // {
     //   field: 'Weight',
@@ -405,7 +407,7 @@ const Patients = (props) => {
     {
       field: "",
       headerName: "Action",
-      width: 120,
+      width: 150,
       renderCell: (params) => (
         <div style={{ width: "100px" }}>
           <a
@@ -580,7 +582,7 @@ const Patients = (props) => {
     {
       return (
         <>
-          <div style={{ height: 680, width: "100%" }}>
+          {/* <div style={{ height: 680, width: "100%" }}>
             <DataGrid
               className={classes.root}
               rows={coreContext.patients}
@@ -605,8 +607,9 @@ const Patients = (props) => {
               // }}
               // selectionModel={selectionModel}
             />
-            {console.log(coreContext.patients[selectionModel])}
-          </div>
+            {console.log(coreContext.patients[selectionModel])} */}
+          {/* </div> */}
+          <DataGridComponent rows={coreContext.patients} columns={admincolumns} sortModal={[{ field: "name", sort: "asc" }]}/>
           {/* <center>{select}sa</center> */}
         </>
       );
@@ -617,33 +620,9 @@ const Patients = (props) => {
       coreContext.patients[0].name !== undefined
     ) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            className={classes.root}
-            rows={coreContext.patients}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "name", sort: "asc" }]}
-            checkboxSelection={false}
-            //hideFooterPagination
-            // onSelectionModelChange={(selection) => {
-            //   const newSelectionModel = selection.selectionModel;
-
-            //   if (newSelectionModel.length > 1) {
-            //     const selectionSet = new Set(selectionModel);
-            //     const result = newSelectionModel.filter(
-            //       (s) => !selectionSet.has(s)
-            //     );
-
-            //     setSelectionModel(result);
-            //   } else {
-            //     setSelectionModel(newSelectionModel);
-            //   }
-            // }}
-            selectionModel={selectionModel}
-          />
-        </div>
-      );
+        
+<DataGridComponent rows={coreContext.patients} columns={columns} sortModal={[{ field: "name", sort: "asc" }]}/>
+        );
     } else {
       return (
         <div
@@ -661,49 +640,75 @@ const Patients = (props) => {
     }
   };
   useEffect(renderPatients, [JSON.stringify(coreContext.patients),coreContext.patients.length]);
-  // const renderbuttons=()=>{
-  //   <div style={{  width: '100px' }}  >
-  //   <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(rows)}>  <PencilSquare /></a>
-  //   <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(rows);fetchPatients();}}>  <Trash /></a>
-  //   <a  style={{  marginRight: '5px' }} href="#" onClick={() => showAssignDoctor(rows)}>  <Person /></a>
-  //   </div>
-  // }
+
 
   return (
     <React.Fragment>
-      <Table striped bordered hover responsive size="sm">
-        <caption>
-          Patients' List{" "}
-          <span className="float-right mr-5">
-            Active
-            <Switch
-              color="primary"
-              checked={checked}
-              //onChange={(event)=>setChecked(event.target.checked)}
-              onChange={onToggleChangeActiveUsers}
-              // inputProps={{ 'aria-label': 'controlled' }}
-            />
-            All
-          </span>{" "}
-        </caption>
+      
+      <div className="col">
+<div className="page-title-container mb-3">
+<div className="row">
+<div className="col mb-2">
+<h1 className="mb-2 pb-0 display-4" id="title">Patient's Information
+</h1>
+</div>
+<div className="col-sm-1 col-2" style={{width:"70px"}}>
+                                                <div className="form-group"><label for="inputName" className="text-14 mts text-black"><strong>Active</strong></label>
+                                                    
+                                           </div>
+                                            </div>
+						<div className="col-sm-3 col-5"><label className="switch">
+                                 <input type="checkbox" checked={checked} onChange={onToggleChangeActiveUsers}/>
+                             <span className="slider round"></span>
+                                 </label></div>
 
-        {/* {renderbuttons()} */}
-        {/* {(usertype==='admin')?((selectionModel.length!==0)? <div style={{  width: '100px',marginLeft:'20px' }}  >
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></a>
-                
-                <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></a>
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showAssignDoctor(coreContext.patients[selectionModel])}>  <Person /></a>
-                </div>: null):((selectionModel.length!==0)? <div style={{  width: '100px' }}  >
-                <a  style={{  marginRight: '5px' }} href="#" onClick={() => showEditForm(coreContext.patients[selectionModel])}>  <PencilSquare /></a>
-                
-                <a style={{  marginRight: '5px' }} href="#" onClick={() => {deletePatient(coreContext.patients[selectionModel]);fetchPatients();}}>  <Trash /></a>
-              
-                </div>: null)}
-                
-        */}
-        {renderPatients()}
-        {/* {console.log("val",select)} */}
-      </Table>
+
+</div>
+</div>
+
+<div className="row">
+<div className="col-xl-12">
+{/* <div className="card mb-3">
+<div className="card-body">
+<div className="row mtm">
+				    <div className="col-sm-2 col-2" style={{width:"70px"}}>
+                                                <div className="form-group"><label for="inputName" className="text-14 mts text-black"><strong>Active</strong></label>
+                                                    
+                                           </div>
+                                            </div>
+						<div className="col-sm-5 col-5"><label className="switch">
+                                 <input type="checkbox" checked={checked} onChange={onToggleChangeActiveUsers}/>
+                             <span className="slider round"></span>
+                                 </label></div>
+						 </div>
+</div>
+</div> */}
+<div className="card mb-3">	
+
+<div className="card-body">
+<div className="row">
+<div className="col-xl-12">
+<div className="table-responsive-sm mb-0">
+  {renderPatients()}
+
+</div>
+	
+
+	
+</div>
+	
+
+
+
+</div>
+
+</div>
+	</div>
+</div>
+</div>
+	</div>
+	
+      
 
       <Modal show={showModal} onHide={handleModalClose} size="lg">
         <Modal.Header closeButton>

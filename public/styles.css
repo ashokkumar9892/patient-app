@@ -1918,7 +1918,7 @@ body.spinner #root{opacity:.3;pointer-events:none;user-select:none}
 .text-lowercase{text-transform:lowercase}
 .table{--bs-table-bg:rgba(0, 0, 0, 0);--bs-table-striped-color:var(--body);--bs-table-striped-bg:rgba(var(--body-rgb), 0.05);--bs-table-active-color:var(--body);--bs-table-active-bg:rgba(var(--body-rgb), 0.1);--bs-table-hover-color:var(--body);--bs-table-hover-bg:rgba(var(--body-rgb), 0.075);color:var(--body);border-color:var(--separator-light)}
 .table>:not(:last-child)>:last-child>*{border-bottom-color:var(--separator)}
-.table>:not(caption)>*>*{--bs-table-bg:rgba(0, 0, 0, 0);color:var(--body)}
+.table>:not(caption)>*>*{--bs-table-bg:rgba(0, 0, 0, 0);/*color:var(--body)*/}
 .table-bordered>:not(caption)>*{border-color:var(--separator)}
 .toast{border-radius:var(--border-radius-md);border-color:var(--separator);font-size:1em;background:rgba(var(--foreground-rgb),.9)}
 .toast .toast-body,.toast .toast-header{padding:var(--card-spacing-sm);color:var(--body);border:initial;background:initial}
@@ -3163,4 +3163,62 @@ html[data-show=true] .settings-button{opacity:1}
 	margin-top: 5%;
 	border-radius: 10px;
 }
+/*toggle button start*/
+.switch {
+  position: relative;
+  display: inline-block;
+ width: 54px;
+    height: 27px;
+}
 
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch input:checked + .slider {
+  background-color: #2ac304;
+}
+
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

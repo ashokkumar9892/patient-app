@@ -11,6 +11,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles } from "@material-ui/styles";
 import { createTheme } from "@material-ui/core/styles";
+import DataGridComponent from "./common/DataGridComponent";
 const defaultTheme = createTheme();
 const useStyles = makeStyles(
   (theme) => ({
@@ -120,7 +121,7 @@ const BloodPressure = (props) => {
     {
       field: "UserName",
       headerName: "Patient Name",
-      width: 220,
+      width: 150,
       type: "string",
       renderCell: (params) => (
         <a
@@ -136,14 +137,14 @@ const BloodPressure = (props) => {
       headerName: "Systolic",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
     {
       field: "diastolic",
       headerName: "Diastolic",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     {
@@ -151,7 +152,7 @@ const BloodPressure = (props) => {
       headerName: "Pulse",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     {
@@ -159,7 +160,7 @@ const BloodPressure = (props) => {
       headerName: "Date Recorded",
       editable: false,
       type: "dateTime",
-      width: 200,
+      width: 150,
       valueFormatter: (params) => {
         const valueFormatted = Moment(params.value).format(
           "MM-DD-YYYY hh:mm A"
@@ -170,7 +171,7 @@ const BloodPressure = (props) => {
     {
       field: "CreatedDate",
       headerName: "Date Received",
-      width: 200,
+      width: 150,
       editable: false,
       type: "dateTime",
 
@@ -185,13 +186,13 @@ const BloodPressure = (props) => {
     {
       field: "DeviceId",
       headerName: "Device Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     {
       field: "readingId",
       headerName: "Reading Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     // {
@@ -224,14 +225,14 @@ const BloodPressure = (props) => {
       headerName: "Systolic",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
     {
       field: "diastolic",
       headerName: "Diastolic",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     {
@@ -239,7 +240,7 @@ const BloodPressure = (props) => {
       headerName: "Signal Strength",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     {
@@ -247,14 +248,14 @@ const BloodPressure = (props) => {
       headerName: "Pulse",
       type: "number",
       editable: false,
-      width: 200,
+      width: 150,
     },
     {
       field: "MeasurementDateTime",
       headerName: "Date Recorded",
       editable: false,
       type: "date",
-      width: 200,
+      width: 150,
       valueFormatter: (params) => {
         const valueFormatted = Moment(params.value).format(
           "MM-DD-YYYY hh:mm A"
@@ -265,7 +266,7 @@ const BloodPressure = (props) => {
     {
       field: "CreatedDate",
       headerName: "Date Received",
-      width: 200,
+      width: 150,
       editable: false,
       type: "dateTime",
 
@@ -280,13 +281,13 @@ const BloodPressure = (props) => {
     {
       field: "DeviceId",
       headerName: "Device Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     {
       field: "readingId",
       headerName: "Reading Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     {
@@ -323,23 +324,24 @@ const BloodPressure = (props) => {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
       console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            components={{ Toolbar: QuickSearchToolbar }}
-            rows={rows}
-            columns={dgcolumns}
-            pageSize={10}
-            sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
-            sortingOrder={["desc", "asc"]}
-            componentsProps={{
-              toolbar: {
-                value: searchText,
-                onChange: (event) => requestSearch(event.target.value),
-                clearSearch: () => requestSearch(""),
-              },
-            }}
-          />
-        </div>
+        // <div style={{ height: 680, width: "100%" }}>
+        //   <DataGrid
+        //     components={{ Toolbar: QuickSearchToolbar }}
+        //     rows={rows}
+        //     columns={dgcolumns}
+        //     pageSize={10}
+        //     sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
+        //     sortingOrder={["desc", "asc"]}
+        //     componentsProps={{
+        //       toolbar: {
+        //         value: searchText,
+        //         onChange: (event) => requestSearch(event.target.value),
+        //         clearSearch: () => requestSearch(""),
+        //       },
+        //     }}
+        //   />
+        // </div>
+        <DataGridComponent rows={rows} columns={dgcolumns} sortModal={[{ field: "MeasurementDateTime", sort: "desc" }]}/>
       );
     } else {
       return (
@@ -359,17 +361,43 @@ const BloodPressure = (props) => {
   };
 
   return (
-    <div className="card">
-      <h4 className="card-header">BLOOD PRESSURE INFORMATION</h4>
-      <div style={{ display: "flex", paddingTop: "10px" }}>
-        <button
-          style={{ marginLeft: "94%" }}
-          onClick={() => fetchBloodPressure()}>
-          Refresh
-        </button>
-      </div>
-      <div className="card-body">{renderBloodPressure()}</div>
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Blood Pressure's Information
+    </h1>
     </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderBloodPressure()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
+      </div>
+    </div>
+    </div>
+      </div>
   );
 };
 
