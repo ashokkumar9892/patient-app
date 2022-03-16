@@ -3,6 +3,7 @@ import React from 'react';
 import { GiCook, GiAbstract071, GiAcid, GiWeight, GiAerialSignal, GiOrangeSlice, GiCagedBall } from 'react-icons/gi';
 import { PersonFill } from 'react-bootstrap-icons';
 import { NavDropdown } from 'react-bootstrap';
+import Footer from './Footer'
 const Menu = (props) => {
 
 
@@ -159,6 +160,7 @@ const Menu = (props) => {
     }
 
     return (
+        
     // <nav className="navbar sidemenu" variant='light' style={{ backgroundColor: "rgb(1, 41, 113)" }} >
 
     //     <ul className="navbar-nav col-12 pr-2" style={{  height: "900px" }}>
@@ -192,7 +194,7 @@ const Menu = (props) => {
     //     </ul>
 
     // </nav>
-    
+    <>
     
     <div className="col-auto d-none d-lg-flex">
 <ul className="sw-25 side-menu mb-0 primary" id="menuSide">
@@ -231,8 +233,9 @@ const Menu = (props) => {
 {renderDeviceInformation()}
 </ul>
 </div>
+
     
-    
+    </>
     )
 }
 

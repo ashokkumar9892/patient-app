@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import { CoreContext } from "../context/core-context";
-import { DataGrid } from "@material-ui/data-grid";
+// import { DataGrid } from "@material-ui/data-grid";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import Loader from "react-loader-spinner";
+import DataGridComponent from "./common/DataGridComponent";
 const Moment = require("moment");
 
 const BloodGlucose = (props) => {
@@ -49,7 +50,7 @@ const BloodGlucose = (props) => {
       field: "MeasurementDateTime",
       headerName: "Date Recorded",
       editable: false,
-      width: 200,
+      width: 150,
       type: "dateTime",
 
       valueFormatter: (params) => {
@@ -64,27 +65,27 @@ const BloodGlucose = (props) => {
       headerName: "Blood Glucose (mmol)",
       type: "number",
       editable: false,
-      width: 200,
+      width: 170,
     },
     {
       field: "bloodglucosemgdl",
       headerName: "Blood Glucose (mgdl)",
       type: "number",
       editable: false,
-      width: 200,
+      width: 170,
     },
     {
       field: "meal",
       headerName: "Before/After Meal",
       width: 110,
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     {
       field: "CreatedDate",
       headerName: "Date Received",
-      width: 200,
+      width: 150,
       editable: false,
       type: "dateTime",
 
@@ -98,14 +99,14 @@ const BloodGlucose = (props) => {
     {
       field: "DeviceId",
       headerName: "Device Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     {
       field: "battery",
       headerName: "Battery",
       type: "number",
-      width: 200,
+      width: 150,
       editable: false,
     },
     // {
@@ -137,7 +138,7 @@ const BloodGlucose = (props) => {
       field: "MeasurementDateTime",
       headerName: "Date Recorded",
       editable: false,
-      width: 220,
+      width: 150,
       type: "dateTime",
 
       valueFormatter: (params) => {
@@ -159,20 +160,20 @@ const BloodGlucose = (props) => {
       headerName: "Blood Glucose (mgdl)",
       type: "number",
       editable: false,
-      width: 200,
+      width: 10,
     },
     {
       field: "meal",
       headerName: "Before/After Meal",
       width: 110,
       editable: false,
-      width: 200,
+      width: 150,
     },
 
     // {
     //   field: 'CreatedDate',
     //   headerName: 'Date Received',
-    //   width: 200,
+    //   width: 150,
     //   editable: false,type:'dateTime',
 
     //   valueFormatter: (params) => {
@@ -184,21 +185,21 @@ const BloodGlucose = (props) => {
     {
       field: "DeviceId",
       headerName: "Device Id",
-      width: 200,
+      width: 150,
       editable: false,
     },
     // {
     //   field: 'reading_id',
     //   headerName: 'Reading Id',
     //   type: 'number',
-    //   width: 200,
+    //   width: 150,
     //   editable: false,
     // },
     {
       field: "battery",
       headerName: "Battery",
       type: "number",
-      width: 200,
+      width: 150,
       editable: false,
     },
     {
@@ -233,17 +234,18 @@ const BloodGlucose = (props) => {
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          {/* {coreContext.bloodglucoseData} */}
-          <DataGrid
+        // <div style={{ height: 680, width: "100%" }}>
+        //   {/* {coreContext.bloodglucoseData} */}
+        //   <DataGrid
           
-            rows={coreContext.bloodglucoseData}
-            columns={dgcolumns}
-            pageSize={10}
-            sortingOrder={["desc", "asc"]}
-            sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
-          />
-        </div>
+        //     rows={coreContext.bloodglucoseData}
+        //     columns={dgcolumns}
+        //     pageSize={10}
+        //     sortingOrder={["desc", "asc"]}
+        //     sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
+        //   />
+        // </div>
+        <DataGridComponent rows={coreContext.bloodglucoseData} columns={dgcolumns} sortModal={[{ field: "MeasurementDateTime", sort: "desc" }]}/>
       );
     } else {
       return (
@@ -263,10 +265,43 @@ const BloodGlucose = (props) => {
   };
 
   return (
-    <div className="card">
-      <h4 className="card-header">BLOOD GLUCOSE INFORMATION</h4>
-      <div className="card-body">{renderBloodGlucose()}</div>
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Blood Pressure's Information
+    </h1>
     </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderBloodGlucose()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
+      </div>
+    </div>
+    </div>
+      </div>
   );
 };
 

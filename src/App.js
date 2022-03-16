@@ -265,7 +265,7 @@ function App() {
   };
 
   let content = (
-    <main>
+    <>
       {" "}
       {/**/}{" "}
       {isAuth ? (
@@ -286,7 +286,7 @@ function App() {
       ) : (
         ""
       )}
-      <Row>
+      
         {" "}
         {/* <Sidebar
                               sidebar={<b>Sidebar content</b>}
@@ -298,6 +298,8 @@ function App() {
                                 Open sidebar
                               </button> */}
         {isAuth ? (
+          <main>
+            <Row>
           <React.Fragment>
             <div className="row"> 
               {" "}
@@ -381,8 +383,10 @@ function App() {
             </div>{" "}
             </div>
           </React.Fragment>
+          </Row>
+          </main>
         ) : (
-          <div className="col-md-12">
+          <>
             <Router>
               <Switch>
                 <Route path="/login" component={Pages.Login} />{" "}
@@ -391,11 +395,11 @@ function App() {
                 <Redirect exact from="/" to="/login" />
               </Switch>{" "}
             </Router>{" "}
-          </div>
+          </>
         )}{" "}
-      </Row>{" "}
+      {" "}
       {/* </Sidebar> */}{" "}
-    </main>
+    </>
   );
 
   return (

@@ -744,7 +744,7 @@ const handlechangeprovider=(p)=>{
       <div id="nav" className="nav-container d-flex">
 <div className="nav-content d-flex">
 <div class="logo position-relative">
-<a href="">
+<a href="/dashboard">
 <div class="img">A Pattern Plus</div>
 </a>
 </div>
@@ -835,7 +835,7 @@ const handlechangeprovider=(p)=>{
 </li>
 {/* <li className="list-inline-item">{renderpatientSearch()}</li> */}
 
-
+{(window.location.href.indexOf("patient-summary") <=0)?
 <li className="list-inline-item">
 <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" className="notification-button">
 <div className="position-relative d-inline-flex">
@@ -844,7 +844,7 @@ const handlechangeprovider=(p)=>{
 </div>
 </a>
 {count1}
-</li>
+</li>:null}
 	
 	
 </ul>
@@ -968,7 +968,8 @@ const handlechangeprovider=(p)=>{
           <Modal.Body>
             <Form.Group>
               <Form.Label>Mobile Number*</Form.Label>
-              {/* <Form.Control size="sm" type="text" onChange={e => setMobilePhone(e.target.value)} value={mobilePhone} placeholder="Enter mobile number" /> */}
+              {/* <Form.Control
+maxLength="50" size="sm" type="text" onChange={e => setMobilePhone(e.target.value)} value={mobilePhone} placeholder="Enter mobile number" /> */}
 
               {renderPatients()}
               <div className="rowC">
@@ -1004,6 +1005,7 @@ const handlechangeprovider=(p)=>{
             <Form.Group>
               <Form.Label>Description*</Form.Label>
               <Form.Control
+maxLength="50"
                 type="reset"
                 size="sm"
                 as="textarea"
@@ -1034,6 +1036,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Email*</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="email"
                     placeholder="Email"
@@ -1046,6 +1049,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Password*</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="password"
                     onChange={(e) => setpwd(e.target.value)}
@@ -1058,6 +1062,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>User Name</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     readOnly={true}
                     type="text"
@@ -1072,6 +1077,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>First Name*</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     onChange={(e) => setfirstName(e.target.value)}
@@ -1084,6 +1090,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Middle Name</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     onChange={(e) => setmiddleName(e.target.value)}
@@ -1096,6 +1103,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Last Name*</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     onChange={(e) => setlastName(e.target.value)}
@@ -1110,6 +1118,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Date of Birth*</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="date"
                     placeholder="Enter date"
@@ -1122,6 +1131,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Gender*</Form.Label>
                   <Form.Control
+maxLength="50"
                     onChange={(e) => setGender(e.target.value)}
                     value={gender}
                     size="sm"
@@ -1136,6 +1146,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Language</Form.Label>
                   <Form.Control
+maxLength="50"
                     onChange={(e) => setLanguage(e.target.value)}
                     value={language}
                     size="sm"
@@ -1158,6 +1169,7 @@ const handlechangeprovider=(p)=>{
                     return(
                       <>
                       <Form.Control
+maxLength="50"
                     onChange={(e) => handledcount(index,e.target.value)}
                     value={dcount[index]}
                     size="sm"
@@ -1222,7 +1234,8 @@ const handlechangeprovider=(p)=>{
                 </form>
                 {/* <Form.Group>
                             <Form.Label>Care Coordinator</Form.Label>
-                            <Form.Control size="sm" as="select" onChange={e => setPcm(e.target.value)} value={pcm}>
+                            <Form.Control
+maxLength="50" size="sm" as="select" onChange={e => setPcm(e.target.value)} value={pcm}>
                                 <option value=""></option>
                                 <option value="Dykes, Kami">Dykes, Kami</option>
                                 <option value="Ortiz, Lisa">Ortiz, Lisa</option>
@@ -1247,7 +1260,8 @@ const handlechangeprovider=(p)=>{
                 </form>
                 {/* <Form.Group>
                             <Form.Label>Providers</Form.Label>
-                            <Form.Control size="sm" as="select" onChange={e => setPp(e.target.value)} value={pp} options={coreContext.providerOptions} >
+                            <Form.Control
+maxLength="50" size="sm" as="select" onChange={e => setPp(e.target.value)} value={pp} options={coreContext.providerOptions} >
                             
                             </Form.Control>
                         </Form.Group> */}
@@ -1263,6 +1277,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Home Phone</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter home phone"
@@ -1275,6 +1290,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Mobile Phone</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter mobile phone"
@@ -1287,6 +1303,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Work Phone</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="212-333-1234-123"
@@ -1301,6 +1318,7 @@ const handlechangeprovider=(p)=>{
                 <Col>Preferred Phone</Col>
                 <Col>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     as="select"
                     onChange={(e) => setPreferred(e.target.value)}
@@ -1318,6 +1336,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Phone Notes</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Phone Notes"
@@ -1351,11 +1370,13 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Mailing address</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter Street Location"
                     onChange={(e) => setStreet(e.target.value)}
                     value={street}
+                    
                   />
                 </Form.Group>
               </Col>
@@ -1363,6 +1384,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>Zip Code</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter ZIP"
@@ -1377,6 +1399,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>City</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter City"
@@ -1389,6 +1412,7 @@ const handlechangeprovider=(p)=>{
                 <Form.Group>
                   <Form.Label>State</Form.Label>
                   <Form.Control
+maxLength="50"
                     size="sm"
                     type="text"
                     placeholder="Enter State"
@@ -1407,7 +1431,8 @@ const handlechangeprovider=(p)=>{
                     <Col>
                         <Form.Group>
                             <Form.Label>POS</Form.Label>
-                            <Form.Control size="sm" as="select" onChange={e => setPos(e.target.value)} value={pos}>
+                            <Form.Control
+maxLength="50" size="sm" as="select" onChange={e => setPos(e.target.value)} value={pos}>
                                 <option value=""></option>
                                 <option value="Home">Home</option>
                                 <option value="Office">Office</option>
@@ -1422,7 +1447,8 @@ const handlechangeprovider=(p)=>{
                     <Col>
                         <Form.Group>
                             <Form.Label>Risk Scope</Form.Label>
-                            <Form.Control size="sm" type="text" placeholder="Enter RAF" onChange={e => setRaf(e.target.value)} value={raf} />
+                            <Form.Control
+maxLength="50" size="sm" type="text" placeholder="Enter RAF" onChange={e => setRaf(e.target.value)} value={raf} />
                         </Form.Group>
                     </Col>
                 </Row> */}

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
           whiteSpace:"normal"
       },
       "& .MuiDataGrid-row.Mui-odd": {
-        backgroundColor: "LightGray"
+        backgroundColor: "#f0f0f0"
       },
       "& .MuiDataGrid-columnHeaderTitle": {
         overflow: "visible",

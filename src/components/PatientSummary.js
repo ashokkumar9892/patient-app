@@ -2137,7 +2137,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
 	<textarea className="form-control" rows="3" placeholder="Enter notes" value={notes != "undefined" ? notes : ""} onChange={(e) => setNotes(e.target.value)}></textarea>
 	</div>
 	<div className="col-xl-12 mb-1 text-center">	
-	<button type="button" className="btn btn-sm btn-danger mt-2" onClick={() => {
+	<button type="button" className="btn btn-danger mt-2" onClick={() => {
        UpdatePatient();
          }}>Save Note</button>
 

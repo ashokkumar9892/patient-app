@@ -117,7 +117,7 @@ const Login = (props) => {
     //     </div>
     //   </div>
     // </div>
-    <div id="root" className="h-100">
+    <div className="h-100">
 <div className="fixed-background"></div>
 <div className="container-fluid p-0 h-100 position-relative">
 <div className="row g-0 h-100">
@@ -142,9 +142,9 @@ Here at A Pattern Medical Clinic, our top priority is patient care. In order to 
 </div>
 <div className="col-12 col-lg-auto h-100 pb-4 px-4 pt-0 p-lg-0">
 <div className="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center shadow-deep py-5 full-page-content-right-border">
-<div className="sw-lg-70 px-5">
-	<div className="row mb-5">
-	<div className="col-xl-12 text-center">
+<div className="sw-lg-70 px-5" >
+	<div className="row mb-5" >
+	<div className="col-xl-12 text-center mt-7" >
 		<div className="sh-11">
 	
 <a href="">

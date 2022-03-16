@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import CoreContextProvider from './context/core-context';
 import TempContextProvider from './context/temp-context';
+import Footer from '../src/components/common/Footer'
 
 //axios.defaults.baseURL = 'http://patient.local'; // dev
 axios.defaults.baseURL = 'https://patient-api.siddhantait.com'; // production
@@ -16,6 +17,7 @@ ReactDOM.render(
     <CoreContextProvider>
       <TempContextProvider>
         <App />
+        
       </TempContextProvider>
     </CoreContextProvider>
   </React.StrictMode>,
