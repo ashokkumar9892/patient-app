@@ -924,7 +924,7 @@ const handlechangeprovider=(p)=>{
               </Col>
               <Col>
                 <Form.Group>
-                  <Form.Label>Password*</Form.Label>
+                  <Form.Label >Password*</Form.Label>
                   <Form.Control
                     size="sm"
                     type="password"
