@@ -265,6 +265,9 @@ const Thresold = (props) => {
   return (
     
     <React.Fragment>
+      <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
     <div className="row">
       <div className="col-md-6">
         <div className="card">
@@ -515,6 +518,9 @@ const Thresold = (props) => {
       </div>
     </div>
     {renderslider()}
+    </div>
+    </div>
+    </div>
   </React.Fragment>
 
   );

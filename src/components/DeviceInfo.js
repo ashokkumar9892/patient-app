@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { CoreContext } from "../context/core-context";
 import { DataGrid } from "@material-ui/data-grid";
 import Loader from "react-loader-spinner";
+import DataGridComponent from "./common/DataGridComponent";
 
 const Deviceinfo = (props) => {
   const coreContext = useContext(CoreContext);
@@ -55,19 +56,19 @@ const Deviceinfo = (props) => {
     {
       field: "username",
       headerName: "Patient Name",
-      width: 300,
+      flex:1,
       type: "string",
     },
     {
       field: "deviceID",
       headerName: "Device ID",
       editable: false,
-      width: 300,
+      flex:1,
     },
     {
       field: "DeviceType",
       headerName: "Device Type",
-      width: 310,
+      flex:1,
       editable: false,
     },
   ];
@@ -95,14 +96,15 @@ const Deviceinfo = (props) => {
       coreContext.deviceData[0].username !== undefined
     ) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            rows={coreContext.deviceData}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "deviceID", sort: "asc" }]}
-          />
-        </div>
+        // <div style={{ height: 680, width: "100%" }}>
+        //   <DataGrid
+        //     rows={coreContext.deviceData}
+        //     columns={columns}
+        //     pageSize={10}
+        //     sortModel={[{ field: "deviceID", sort: "asc" }]}
+        //   />
+        // </div>
+        <DataGridComponent rows={coreContext.deviceData} columns={columns} sortModal={[{ field: "deviceID", sort: "asc" }]}/>
       );
     } else {
       return (
@@ -122,11 +124,48 @@ const Deviceinfo = (props) => {
   };
 
   return (
-    <div className="card">
-      <h4 className="card-header">Device information</h4>
+    // <div className="card">
+    //   <h4 className="card-header">Device information</h4>
 
-      <div className="card-body">{renderdeviceinfo()}</div>
+    //   <div className="card-body">{renderdeviceinfo()}</div>
+    // </div>
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Device Information
+    </h1>
     </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderdeviceinfo()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
+      </div>
+    </div>
+    </div>
+      </div>
   );
 };
 

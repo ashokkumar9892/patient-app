@@ -3,6 +3,7 @@ import { CoreContext } from '../context/core-context';
 import { DataGrid } from '@material-ui/data-grid';
 import { PencilSquare, Trash } from 'react-bootstrap-icons';
 import Loader from "react-loader-spinner";
+import DataGridComponent from './common/DataGridComponent';
 
 
 
@@ -199,15 +200,16 @@ const Weight = (props) => {
         if (coreContext.weightData.length > 0 &&coreContext.weightData[0].UserName!==undefined){
         //  coreContext.weightData  = coreContext.weightData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
         return (
-            <div style={{ height: 680, width: '100%' }}>
-              <DataGrid
-                rows={coreContext.weightData}
-                columns={dgcolumns}
-                sortingOrder={['desc', 'asc']}
-                pageSize={10}
-                sortModel={[{ field: 'MeasurementDateTime', sort: 'desc' }]}
-              />
-            </div>
+            // <div style={{ height: 680, width: '100%' }}>
+            //   <DataGrid
+            //     rows={coreContext.weightData}
+            //     columns={dgcolumns}
+            //     sortingOrder={['desc', 'asc']}
+            //     pageSize={10}
+            //     sortModel={[{ field: 'MeasurementDateTime', sort: 'desc' }]}
+            //   />
+            // </div>
+            <DataGridComponent rows={coreContext.weightData} columns={dgcolumns} sortModal={[{ field: "MeasurementDateTime", sort: "desc" }]}/>
           );
         }
         else{
@@ -220,17 +222,46 @@ const Weight = (props) => {
        
     }
 
-    return <div className='card'>
-        <h4 className="card-header">WEIGHT INFORMATION</h4>
-        <div style={{ display: "flex", paddingTop:'10px' }}>
-        <button  style={{ marginLeft: "94%"  }} onClick={() => fetchWeight()}>
-          Refresh
-        </button>
+    return(
+    
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Weight Information
+    </h1>
+    </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderWeight()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
       </div>
-        <div className="card-body">
-        {renderWeight()}
-        </div>
-    </div >
+    </div>
+    </div>
+      </div>
+    )
 }
 
 
