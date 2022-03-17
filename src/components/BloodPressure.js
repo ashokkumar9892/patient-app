@@ -123,6 +123,7 @@ const BloodPressure = (props) => {
       headerName: "Patient Name",
       width: 150,
       type: "string",
+      headerAlign: 'left',
       renderCell: (params) => (
         <a
           disable={disablelink}
@@ -136,6 +137,7 @@ const BloodPressure = (props) => {
       field: "systolic",
       headerName: "Systolic",
       type: "number",
+      headerAlign: 'left',
       editable: false,
       width: 150,
     },
@@ -144,12 +146,14 @@ const BloodPressure = (props) => {
       headerName: "Diastolic",
       type: "number",
       editable: false,
+      headerAlign: 'left',
       width: 150,
     },
 
     {
       field: "Pulse",
       headerName: "Pulse",
+      headerAlign: 'left',
       type: "number",
       editable: false,
       width: 150,
@@ -160,6 +164,7 @@ const BloodPressure = (props) => {
       headerName: "Date Recorded",
       editable: false,
       type: "dateTime",
+      headerAlign: 'left',
       width: 150,
       valueFormatter: (params) => {
         const valueFormatted = Moment(params.value).format(
@@ -173,6 +178,7 @@ const BloodPressure = (props) => {
       headerName: "Date Received",
       width: 150,
       editable: false,
+      headerAlign: 'left',
       type: "dateTime",
 
       valueFormatter: (params) => {
@@ -225,6 +231,7 @@ const BloodPressure = (props) => {
       headerName: "Systolic",
       type: "number",
       editable: false,
+      headerAlign: 'left',
       width: 150,
     },
     {
@@ -233,6 +240,7 @@ const BloodPressure = (props) => {
       type: "number",
       editable: false,
       width: 150,
+      headerAlign: 'left',
     },
 
     {
@@ -240,7 +248,9 @@ const BloodPressure = (props) => {
       headerName: "Signal Strength",
       type: "number",
       editable: false,
-      width: 150,
+      headerAlign: 'left',
+      width: 150,  
+          headerAlign: 'left',
     },
 
     {
@@ -249,6 +259,7 @@ const BloodPressure = (props) => {
       type: "number",
       editable: false,
       width: 150,
+      headerAlign: 'left',
     },
     {
       field: "MeasurementDateTime",
@@ -256,6 +267,7 @@ const BloodPressure = (props) => {
       editable: false,
       type: "date",
       width: 150,
+      headerAlign: 'left',
       valueFormatter: (params) => {
         const valueFormatted = Moment(params.value).format(
           "MM-DD-YYYY hh:mm A"
@@ -269,6 +281,7 @@ const BloodPressure = (props) => {
       width: 150,
       editable: false,
       type: "dateTime",
+      headerAlign: 'left',
 
       valueFormatter: (params) => {
         const valueFormatted = Moment(params.value).format(
@@ -283,16 +296,19 @@ const BloodPressure = (props) => {
       headerName: "Device Id",
       width: 150,
       editable: false,
+      headerAlign: 'left',
     },
     {
       field: "readingId",
       headerName: "Reading Id",
       width: 150,
       editable: false,
+      headerAlign: 'left',
     },
     {
       field: "sortDateColumn",
       headerName: "Action",
+      headerAlign: 'left',
     },
   ];
 

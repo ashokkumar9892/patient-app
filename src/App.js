@@ -301,12 +301,12 @@ function App() {
           <main>
             <Row>
           <React.Fragment>
-            <div className="row"> 
+            
               {" "}
               {sidebar === true ? <Menu /> : <Menu2 />}{" "}
               
            
-            <div className="col" >
+           
             {(localStorage.getItem("userType")==="doctor")?<Modal getenduser={getenduser}/>:""}
             
               <Router>
@@ -380,8 +380,8 @@ function App() {
                   <Redirect exact from="/" to="/patients" />
                 </Switch>{" "}
               </Router>{" "}
-            </div>{" "}
-            </div>
+           
+            
           </React.Fragment>
           </Row>
           </main>

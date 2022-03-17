@@ -23,13 +23,15 @@ const useStyles = makeStyles((theme) => ({
       
       },
       "& .MuiDataGrid-cell":{
-          border: "0.3px solid grey",
+          border: "1px solid #dfdddd",
           lineHeight:"unset !important",
           maxHeight:"none !important",
-          whiteSpace:"normal"
+          whiteSpace:"normal",
+          textAlign:"left"
       },
       "& .MuiDataGrid-row.Mui-odd": {
-        backgroundColor: "#f0f0f0"
+        backgroundColor: "#e9e9e9",
+        
       },
       "& .MuiDataGrid-columnHeaderTitle": {
         overflow: "visible",
@@ -51,6 +53,7 @@ const DataGridComponent = (props) => {
 <div style={{ height: 680, width: "100%" }}>
         <DataGrid
               className={classes.root}
+              
               rows={rows}
               columns={columns}
               pageSize={10}
