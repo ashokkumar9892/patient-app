@@ -5,6 +5,7 @@ import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useForm } from "react-hook-form";
 import Input from "./common/Input";
 import swal from "sweetalert";
+import DataGridComponent from "./common/DataGridComponent";
 
 import {
   DataGrid,
@@ -129,23 +130,40 @@ const CareCoordinator = (props) => {
   const renderCoordinators = () => {
     if (coreContext.ccData.length > 0) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            rows={coreContext.ccData}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "name", sort: "asc" }]}
-          />
-        </div>
+        // <div style={{ height: 680, width: "100%" }}>
+        //   <DataGrid
+        //     rows={coreContext.ccData}
+        //     columns={columns}
+        //     pageSize={10}
+        //     sortModel={[{ field: "name", sort: "asc" }]}
+        //   />
+        // </div>
+        <DataGridComponent rows={coreContext.ccData} columns={columns} sortModal={[{ field: "name", sort: "asc" }]}/>
       );
     }
   };
 
   return (
-    <div className="card">
-      <h4 className="card-header">CARE COORDINATOR INFORMATION</h4>
-      <div className="card-body">
-        <form autoComplete={false} class="form-inline">
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Care Coordinator Information
+    </h1>
+    </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+    <form autoComplete={false} class="form-inline">
           <input
             type="text"
             value={name}
@@ -191,12 +209,24 @@ const CareCoordinator = (props) => {
             Add Care Coordinator
           </button>
         </form>
+      {renderCoordinators()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
       </div>
-      <div className="card-body">
-        <table className="table table-bordered table-hover table-sm">
-          {renderCoordinators()}
-        </table>
-      </div>
+    </div>
+    </div>
+      
       <Modal
         show={coreContext.showProviderModal}
         onHide={coreContext.handleProviderModalClose}>

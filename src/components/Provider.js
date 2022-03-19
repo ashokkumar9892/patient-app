@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import Input from "./common/Input";
 import Switch from "@material-ui/core/Switch";
 import swal from "sweetalert";
+import DataGridComponent from "./common/DataGridComponent";
 
 
 import {
@@ -233,32 +234,49 @@ useEffect(fetchProviders, [checked]);
   const renderProviders = () => {
     if (coreContext.providerData.length > 0) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            components={{ Toolbar: QuickSearchToolbar }}
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "provider", sort: "asc" }]}
-            componentsProps={{
-              toolbar: {
-                value: searchText,
-                onChange: (event) => requestSearch(event.target.value),
-                clearSearch: () => requestSearch(""),
-              },
-            }}
-          />
-        </div>
+        // <div style={{ height: 680, width: "100%" }}>
+        //   <DataGrid
+        //     components={{ Toolbar: QuickSearchToolbar }}
+        //     rows={rows}
+        //     columns={columns}
+        //     pageSize={10}
+        //     sortModel={[{ field: "provider", sort: "asc" }]}
+        //     componentsProps={{
+        //       toolbar: {
+        //         value: searchText,
+        //         onChange: (event) => requestSearch(event.target.value),
+        //         clearSearch: () => requestSearch(""),
+        //       },
+        //     }}
+        //   />
+        // </div>
+        <DataGridComponent rows={coreContext.providerData} columns={columns} sortModal={[{ field: "provider", sort: "asc" }]}/>
       );
     }
   };
   useEffect(renderProviders, [JSON.stringify(coreContext.providerData)]);
 
   return (
-    <div className="card">
-      <h4 className="card-header">PROVIDER INFORMATION</h4>
-      <div className="card-body">
-        <form class="form-inline">
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">PROVIDER Information
+    </h1>
+    </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+    <form class="form-inline">
           <input
             type="email"
             value={email}
@@ -304,7 +322,7 @@ useEffect(fetchProviders, [checked]);
             Add Provider
           </button>
         </form>
-        <span className="float-right mr-5">
+        {/* <span className="float-right mr-5">
             Active
             <Switch
               color="primary"
@@ -314,13 +332,25 @@ useEffect(fetchProviders, [checked]);
               // inputProps={{ 'aria-label': 'controlled' }}
             />
             All
-          </span>
+          </span> */}
+      {renderProviders()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
       </div>
-      <div className="card-body">
-        <table className="table table-bordered table-hover table-sm">
-          {renderProviders()}
-        </table>
-      </div>
+    </div>
+    </div>
+     
 
       <Modal
         show={coreContext.showProviderModal}
