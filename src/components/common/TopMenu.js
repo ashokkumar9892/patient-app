@@ -393,6 +393,23 @@ const handlechangeprovider=(p)=>{
       alert("Enter password...");
       return;
     }
+   
+    if (pwd.length < 8) {
+      alert("Your password needs a minimum of 8 characters")
+      return;
+    } else if (pwd.search(/[a-z]/) < 0) {
+      alert("Your password needs a lower case letter")
+      return;
+    } else if(pwd.search(/[A-Z]/) < 0) {
+      alert("Your password needs an uppser case letter")
+      return;
+    } else  if (pwd.search(/[0-9]/) < 0) {
+      alert("Your password needs a number")
+      return;
+    } else  if (pwd.search(/[!@#$%^&()~":<>?]/) < 0) {
+      alert("Your password needs a Speacial Character")
+      return;
+    } 
     if (!birthDate) {
       alert("Enter date of birth...");
       return;
