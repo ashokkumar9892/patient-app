@@ -727,6 +727,8 @@ const Patients = (props) => {
                   required={true}
                   register={register}
                   errors={errors}
+                  maxLength={55}
+
                 />
 
                 <Input
@@ -736,7 +738,7 @@ const Patients = (props) => {
                   onChange={(e) => setPhone(e.target.value)}
                   required={true}
                   minLength={5}
-                  maxLength={10}
+                  maxLength={55}
                   register={register}
                   errors={errors}
                   name="phone"
