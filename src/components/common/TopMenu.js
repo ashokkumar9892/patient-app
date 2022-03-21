@@ -198,6 +198,7 @@ coreContext.FetchNotification(localStorage.getItem("userId"))
   }
 
   const FetchNotificationForBP=()=>{
+    console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
     var date = new Date();
 date.setDate(date.getDate() - 7);
 date.setHours(0,0,0,0)
@@ -256,6 +257,7 @@ date.setHours(0,0,0,0)
     
   }
   const FetchNotificationForBG=()=>{
+    console.log("coreContext.bloodglucoseData",coreContext.bloodglucoseData)
     var date = new Date();
     date.setDate(date.getDate() - 7);
     date.setHours(0,0,0,0)
