@@ -11,6 +11,7 @@ import axios from "axios";
 import Sidebar from "react-sidebar";
 import * as Pages from "./components";
 import { DPatients } from "./components/DPatients";
+import Testing from "./components/common/Testing";
 import {BillingPatient} from "./components/BillingPatient";
 import { BloodPressureAverage } from "./components/BloodPressureAverage";
 import { BloodGlucoseAverage } from "./components/BloodGlucoseAverage";
@@ -355,6 +356,7 @@ function App() {
                   <Route exact path="/logout" component={Pages.Logout} />{" "}
                   <Route exact path="/profile" component={Pages.MyProfile} />{" "}
                   <Route exact path="/thresold" component={Pages.Thresold} />{" "}
+                  <Route exact path="/testing" component={Testing} />
                   <Route
                     exact
                     path="/patient-summary/:patient"
