@@ -7,6 +7,7 @@ import { PencilSquare, Trash, Person } from "react-bootstrap-icons";
 import { IconName } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import Input from "./common/Input";
+import DataGridComponent from "./common/DataGridComponent";
 import {
   DataGrid,
   GridColDef,
@@ -280,25 +281,59 @@ const DPatients = (props) => {
     }
     if (coreContext.AlltimeLogData.length > 0) {
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            sortModel={[{ field: "name", sort: "asc" }]}
-          />
-        </div>
+        // <div style={{ height: 680, width: "100%" }}>
+        //   <DataGrid
+        //     rows={rows}
+        //     columns={columns}
+        //     pageSize={10}
+        //     sortModel={[{ field: "name", sort: "asc" }]}
+        //   />
+        // </div>
+        <DataGridComponent rows={rows} columns={columns} sortModal={[{ field: "name", sort: "asc" }]}/>
       );
     }
   };
 
   return (
-    <React.Fragment>
-      {" "}
-      <Table striped bordered hover responsive size="sm">
-        <caption>{localStorage.getItem("DInformaion")}</caption>
-        {renderPatients()}
-      </Table>
+    <>
+      
+      <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">{localStorage.getItem("DInformaion")}
+    </h1>
+    </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderPatients()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
+      </div>
+    </div>
+    </div>
+      </div>
       <Modal show={showModal} onHide={handleModalClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Edit Patient </Modal.Title>
@@ -432,7 +467,7 @@ const DPatients = (props) => {
           </Form>
         </Modal.Body>
       </Modal>
-      <div style={{ width: "300px" }}>
+     
         <Modal show={showAssignDrModal} onHide={handleAssignDrModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Assign Care Team </Modal.Title>
@@ -505,9 +540,9 @@ const DPatients = (props) => {
             </Form>
           </Modal.Body>
         </Modal>
-      </div>
-    </React.Fragment>
+        </>
   );
 };
 
 export { DPatients };
+
