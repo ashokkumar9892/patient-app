@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import { CoreContext } from "../context/core-context";
+import { CoreContext } from "../../context/core-context";
 import { DataGrid } from "@material-ui/data-grid";
 import Loader from "react-loader-spinner";
-import DataGridComponent from "./common/DataGridComponent";
+import DataGridComponent from "../../components/common/DataGridComponent";
 
 const Testing = (props) => {
   const coreContext = useContext(CoreContext);
@@ -71,6 +71,12 @@ const Testing = (props) => {
       flex:1,
       editable: false,
     },
+    {
+      field: "status",
+      headerName: "Status",
+      flex:1,
+      type: "string",
+    },
   ];
 
   //https://material-ui.com/components/data-grid/
@@ -95,6 +101,40 @@ const Testing = (props) => {
       coreContext.deviceData.length > 0 &&
       coreContext.deviceData[0].username !== undefined
     ) {
+      var date = new Date();
+date.setDate(date.getDate() - 7);
+date.setHours(0,0,0,0)
+      let rows=[];
+      let bpdevice=[];
+      let bgdevice=[];
+      let wsdevice=[];
+      coreContext.bloodpressureData.filter((data)=>data.MeasurementDateTime>date).map((curr)=>{
+        if(!bpdevice.includes(curr.DeviceId)){
+          bpdevice.push(curr.DeviceId)
+        }
+      })
+      coreContext.bloodglucoseData.filter((data)=>data.MeasurementDateTime>date).map((curr)=>{
+        if(!bgdevice.includes(curr.DeviceId)){
+          bgdevice.push(curr.DeviceId)
+        }
+      })
+      coreContext.weightData.filter((data)=>data.MeasurementDateTime>date).map((curr)=>{
+        if(!wsdevice.includes(curr.DeviceId)){
+          wsdevice.push(curr.DeviceId)
+        }
+      })
+      coreContext.deviceData.map((curr)=>{
+        if(bpdevice.includes(curr.deviceID)==true || bgdevice.includes(curr.deviceID)==true || wsdevice.includes(curr.deviceID)==true){
+          curr.status="ok"
+        }else{
+          curr.status="Fail"
+        }
+        
+        rows.push(curr)
+        
+      })
+      
+     
       return (
         // <div style={{ height: 680, width: "100%" }}>
         //   <DataGrid
@@ -104,7 +144,7 @@ const Testing = (props) => {
         //     sortModel={[{ field: "deviceID", sort: "asc" }]}
         //   />
         // </div>
-        <DataGridComponent rows={coreContext.deviceData} columns={columns} sortModal={[{ field: "deviceID", sort: "asc" }]}/>
+        <DataGridComponent rows={rows} columns={columns} sortModal={[{ field: "deviceID", sort: "asc" }]}/>
       );
     } else {
       return (

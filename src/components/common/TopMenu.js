@@ -180,6 +180,7 @@ const TopMenu = ({ changestyle, showSidebar }) => {
     );
     coreContext.fetchBloodPressure(patientId, userType);
     coreContext.fetchBloodGlucose(patientId, userType);
+    coreContext.fetchWSData(patientId,userType);
     coreContext.fetchPatientListfromApi(userType, patientId);
   }
   const fetchadmintd=()=>{
