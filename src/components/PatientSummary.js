@@ -2102,7 +2102,7 @@ const rendertimelog=React.useMemo(()=>renderTimelogs(),[JSON.stringify(coreConte
             {coreContext.patients[0].gender}
 </div>
 	<div className="col-xl-2 mb-1">	
-	<p className="mb-0"><strong>Diagnosis ID</strong></p>
+	<p className="mb-0"><strong>Diagnosis</strong></p>
 	{coreContext.patients[0].diagnosisId}
 </div>
         </>

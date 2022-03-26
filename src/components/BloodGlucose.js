@@ -269,7 +269,7 @@ const BloodGlucose = (props) => {
     <div className="page-title-container mb-3">
     <div className="row">
     <div className="col mb-2">
-    <h1 className="mb-2 pb-0 display-4" id="title">Blood Pressure's Information
+    <h1 className="mb-2 pb-0 display-4" id="title">Blood Glucose's Information
     </h1>
     </div>
     </div>

@@ -731,6 +731,7 @@ const Patients = (props) => {
                   required={true}
                   register={register}
                   errors={errors}
+                  maxLength={50}
                 />
 
                 <Input
@@ -740,7 +741,7 @@ const Patients = (props) => {
                   onChange={(e) => setPhone(e.target.value)}
                   required={true}
                   minLength={5}
-                  maxLength={10}
+                  maxLength={50}
                   register={register}
                   errors={errors}
                   name="phone"
@@ -753,6 +754,7 @@ const Patients = (props) => {
                   placeholder="Enter dob"
                   onChange={(e) => setBirthDate(e.target.value)}
                   required={true}
+                  maxLength={50}
                   register={register}
                   errors={errors}
                   name="dob"
@@ -810,6 +812,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={mobilePhone}
+                  maxLength={50}
                   onChange={(e) => setMobilePhone(e.target.value)}
                 />
 
@@ -820,6 +823,7 @@ const Patients = (props) => {
                   register={register}
                   errors={errors}
                   elementType="text"
+                  maxLength={50}
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
                 />
@@ -832,6 +836,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={city}
+                  maxLength={50}
                   onChange={(e) => setCity(e.target.value)}
                 />  
                 <div className="row">
@@ -858,6 +863,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={dcount[index]}
+                  maxLength={50}
                   onChange={(e) => handledcount(index,e.target.value)}
                 />
                
@@ -886,6 +892,7 @@ const Patients = (props) => {
                   value={lname}
                   required={true}
                   register={register}
+                  maxLength={50}
                   errors={errors}
                 />
 
@@ -897,6 +904,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="select"
                   value={provider}
+                  maxLength={50}
                   options={coreContext.providerOptions}
                   onChange={(e) => setProvider(e.target.value)}
                 />
@@ -908,6 +916,7 @@ const Patients = (props) => {
                   register={register}
                   errors={errors}
                   elementType="select"
+                  maxLength={50}
                   value={coordinator}
                   options={coreContext.careCoordinatorOptions}
                   onChange={(e) => setCoordinator(e.target.value)}
@@ -918,6 +927,7 @@ const Patients = (props) => {
                   name="coach"
                   required={false}
                   register={register}
+                  maxLength={50}
                   errors={errors}
                   elementType="select"
                   value={coach}
@@ -933,6 +943,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="select"
                   value={language}
+                  maxLength={50}
                   options={coreContext.languageOptions}
                   onChange={(e) => setLanguage(e.target.value)}
                 />
@@ -945,6 +956,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={workPhone}
+                  maxLength={50}
                   onChange={(e) => setWorkPhone(e.target.value)}
                 />
 
@@ -954,6 +966,7 @@ const Patients = (props) => {
                   required={false}
                   register={register}
                   errors={errors}
+                  maxLength={50}
                   elementType="text"
                   value={zip}
                   onChange={(e) => setZip(e.target.value)}
@@ -965,6 +978,7 @@ const Patients = (props) => {
                   required={false}
                   register={register}
                   errors={errors}
+                  maxLength={50}
                   elementType="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
