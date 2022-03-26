@@ -308,7 +308,7 @@ function App() {
               
            
            
-            {(localStorage.getItem("userType")==="doctor")?<Modal getenduser={getenduser}/>:""}
+            {/* {(localStorage.getItem("userType")==="doctor")?<Modal getenduser={getenduser}/>:""} */}
             
               <Router>
                 <Switch>
