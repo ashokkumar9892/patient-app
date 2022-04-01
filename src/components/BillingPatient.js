@@ -14,6 +14,7 @@ import Input from "./common/Input";
 import * as React from "react";
 import Switch from "@material-ui/core/Switch";
 import moment from 'moment';
+import DataGridComponent from "./common/DataGridComponent";
 
 import {
   DataGrid,
@@ -84,17 +85,18 @@ const BillingPatient = (props) => {
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
       return (
-        <div style={{ height: 680, width: "100%" }}>
-          {/* {coreContext.bloodglucoseData} */}
-          <DataGrid
+        // <div style={{ height: 680, width: "100%" }}>
+        //   {/* {coreContext.bloodglucoseData} */}
+        //   <DataGrid
           
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            // sortingOrder={["desc", "asc"]}
-            // sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
-          />
-        </div>
+        //     rows={rows}
+        //     columns={columns}
+        //     pageSize={10}
+        //     // sortingOrder={["desc", "asc"]}
+        //     // sortModel={[{ field: "MeasurementDateTime", sort: "desc" }]}
+        //   />
+        // </div>
+        <DataGridComponent rows={rows} columns={columns} />
       );
     } else {
       return (
@@ -116,10 +118,43 @@ const BillingPatient = (props) => {
   }
 
   return (
-    <div className="card">
-      <h4 className="card-header">BILL INFORMATION</h4>
-      <div className="card-body">{renderBills()}</div>
+    <div className="col">
+    <div className="page-title-container mb-3">
+    <div className="row">
+    <div className="col mb-2">
+    <h1 className="mb-2 pb-0 display-4" id="title">Billing Information
+    </h1>
     </div>
+    </div>
+    </div>
+    
+    <div className="row">
+    <div className="col-xl-12">
+   
+    <div className="card mb-3">	
+    
+    <div className="card-body">
+    <div className="row">
+    <div className="col-xl-12">
+    <div className="table-responsive-sm mb-0">
+      {renderBills()}
+    
+    </div>
+      
+    
+      
+    </div>
+      
+    
+    
+    
+    </div>
+    
+    </div>
+      </div>
+    </div>
+    </div>
+      </div>
   );
 };
 
