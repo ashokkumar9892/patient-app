@@ -198,6 +198,7 @@ coreContext.FetchNotification(localStorage.getItem("userId"))
   }
 
   const FetchNotificationForBP=()=>{
+    console.log("coreContext.bloodpressureData",coreContext.bloodpressureData)
     var date = new Date();
 date.setDate(date.getDate() - 7);
 date.setHours(0,0,0,0)
@@ -256,6 +257,7 @@ date.setHours(0,0,0,0)
     
   }
   const FetchNotificationForBG=()=>{
+    console.log("coreContext.bloodglucoseData",coreContext.bloodglucoseData)
     var date = new Date();
     date.setDate(date.getDate() - 7);
     date.setHours(0,0,0,0)
@@ -393,6 +395,23 @@ const handlechangeprovider=(p)=>{
       alert("Enter password...");
       return;
     }
+   
+    if (pwd.length < 8) {
+      alert("Your password needs a minimum of 8 characters")
+      return;
+    } else if (pwd.search(/[a-z]/) < 0) {
+      alert("Your password needs a lower case letter")
+      return;
+    } else if(pwd.search(/[A-Z]/) < 0) {
+      alert("Your password needs an uppser case letter")
+      return;
+    } else  if (pwd.search(/[0-9]/) < 0) {
+      alert("Your password needs a number")
+      return;
+    } else  if (pwd.search(/[!@#$%^&()~":<>?]/) < 0) {
+      alert("Your password needs a Speacial Character")
+      return;
+    } 
     if (!birthDate) {
       alert("Enter date of birth...");
       return;
@@ -924,7 +943,7 @@ const handlechangeprovider=(p)=>{
               </Col>
               <Col>
                 <Form.Group>
-                  <Form.Label>Password*</Form.Label>
+                  <Form.Label >Password*</Form.Label>
                   <Form.Control
                     size="sm"
                     type="password"
@@ -1032,7 +1051,7 @@ const handlechangeprovider=(p)=>{
             <Row>
               <Col>
                 <Form.Group>
-                  <Form.Label>Diagnosis ID</Form.Label>
+                  <Form.Label>Diagnosis</Form.Label>
                   {
                   dcount.map((curr,index)=>{
                     return(
@@ -1042,7 +1061,7 @@ const handlechangeprovider=(p)=>{
                     value={dcount[index]}
                     size="sm"
                     type="text"
-                    placeholder="Enter Diagnosis ID"
+                    placeholder="Enter Diagnosis"
                   
                   />
                  

@@ -701,12 +701,11 @@ export const CoreContextProvider = (props) => {
         TableName: userTable,
         KeyConditionExpression: "PK = :v_PK",
         FilterExpression:
-          "ActiveStatus <> :v_ActiveStatus AND GSI1PK IN (:v_GSI1PK1, :v_GSI1PK2)",
+          "ActiveStatus <> :v_ActiveStatus",
         ExpressionAttributeValues: {
           ":v_PK": { S: "DEVICE_WS_READING" },
           ":v_ActiveStatus": { S: "Deactive" },
-          ":v_GSI1PK1": { S: "DEVICE_WS_PATIENT_121524123727622" },
-          ":v_GSI1PK2": { S: "DEVICE_WS_PATIENT_1627230254837" },
+       
         },
       };
     }
@@ -2425,15 +2424,14 @@ export const CoreContextProvider = (props) => {
       data = {
         TableName: userTable,
         ProjectionExpression:
-          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken, ActiveStatus,Notes",
+          "PK,SK,UserId,UserName,irregular,systolic,diastolic,pulse,TimeSlots,MeasurementDateTime,CreatedDate,DeviceId,IMEI,ActionTaken,GSI1PK,ActiveStatus,Notes",
         KeyConditionExpression: "PK = :v_PK",
         FilterExpression:
-          "ActiveStatus <> :v_ActiveStatus AND GSI1PK IN (:v_GSI1PK1, :v_GSI1PK2)",
+          "ActiveStatus <> :v_ActiveStatus ",
         ExpressionAttributeValues: {
           ":v_PK": { S: "DEVICE_BP_READING" },
           ":v_ActiveStatus": { S: "Deactive" },
-          ":v_GSI1PK1": { S: "DEVICE_BP_PATIENT_121524123727622" },
-          ":v_GSI1PK2": { S: "DEVICE_BP_PATIENT_1627230254837" },
+    
         },
       };
     }
@@ -2467,6 +2465,7 @@ export const CoreContextProvider = (props) => {
         if (bloodpressureData.length === 0) {
           dataSetbp.push("No Data Found");
         }
+        else{
 
         bloodpressureData.forEach((bp, index) => {
           //   console.log('p' + index, bg);
@@ -2530,7 +2529,7 @@ export const CoreContextProvider = (props) => {
 
           dataSetbp.push(bpdata);
         });
-
+      }
         setbloodpressureData(dataSetbp);
       });
   };

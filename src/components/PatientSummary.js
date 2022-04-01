@@ -2108,7 +2108,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
             {coreContext.patients[0].gender}
           </div>
           <div className="col-md-3" style={{ fontWeight: "bold" }}>
-            Diagnosis ID : {coreContext.patients[0].diagnosisId}
+            Diagnosis: {coreContext.patients[0].diagnosisId}
           </div>
         </div>
         
@@ -2704,7 +2704,7 @@ const thresoldbars=React.useMemo(()=>renderthresold(),[JSON.stringify(coreContex
                       settimevalue("");
                       setTlValue("00:00:00");
                     }}
-                    className="btn btn-sm btn-success">
+                    >
                     {" "}
                     Add Time Log
                   </button>

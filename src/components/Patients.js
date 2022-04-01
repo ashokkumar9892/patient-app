@@ -575,9 +575,7 @@ const Patients = (props) => {
       usertype === "admin" &&
       coreContext.patients[0].name !== undefined
       && coreContext.providerOptions.length>0 && coreContext.coachOptions.length>0 && coreContext.careCoordinatorOptions.length>0
-    ) 
-    console.log("uttkarsh patients",coreContext.patients)
-    {
+    ) {
       return (
         <>
           <div style={{ height: 680, width: "100%" }}>
@@ -605,7 +603,7 @@ const Patients = (props) => {
               // }}
               // selectionModel={selectionModel}
             />
-            {console.log(coreContext.patients[selectionModel])}
+            
           </div>
           {/* <center>{select}sa</center> */}
         </>
@@ -616,6 +614,7 @@ const Patients = (props) => {
       usertype !== "admin" &&
       coreContext.patients[0].name !== undefined
     ) {
+      {console.log("sahi", coreContext.patients[0].name)}
       return (
         <div style={{ height: 680, width: "100%" }}>
           <DataGrid
@@ -624,7 +623,7 @@ const Patients = (props) => {
             columns={columns}
             pageSize={10}
             sortModel={[{ field: "name", sort: "asc" }]}
-            checkboxSelection={false}
+            //checkboxSelection={false}
             //hideFooterPagination
             // onSelectionModelChange={(selection) => {
             //   const newSelectionModel = selection.selectionModel;
@@ -640,12 +639,14 @@ const Patients = (props) => {
             //     setSelectionModel(newSelectionModel);
             //   }
             // }}
-            selectionModel={selectionModel}
+            //selectionModel={selectionModel}
           />
         </div>
       );
     } else {
+      {console.log("sahi", coreContext.patients[0].name)}
       return (
+        
         <div
           style={{
             height: 60,
@@ -726,6 +727,8 @@ const Patients = (props) => {
                   required={true}
                   register={register}
                   errors={errors}
+                  maxLength={55}
+
                 />
 
                 <Input
@@ -735,7 +738,7 @@ const Patients = (props) => {
                   onChange={(e) => setPhone(e.target.value)}
                   required={true}
                   minLength={5}
-                  maxLength={10}
+                  maxLength={55}
                   register={register}
                   errors={errors}
                   name="phone"
@@ -806,6 +809,7 @@ const Patients = (props) => {
                   elementType="text"
                   value={mobilePhone}
                   onChange={(e) => setMobilePhone(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -816,7 +820,9 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={street}
+                  
                   onChange={(e) => setStreet(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -828,6 +834,7 @@ const Patients = (props) => {
                   elementType="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                  maxLength={55}
                 />  
                 <div className="row">
                 <div className="col-md-10">
@@ -846,7 +853,7 @@ const Patients = (props) => {
                   /> */}
                 
                   <Input
-                  label="Diagnosis Id"
+                  label="Diagnosis"
                   name="diagnosisId"
                   required={false}
                   register={register}
@@ -854,6 +861,7 @@ const Patients = (props) => {
                   elementType="text"
                   value={dcount[index]}
                   onChange={(e) => handledcount(index,e.target.value)}
+                  maxLength={55}
                 />
                
                   
@@ -881,6 +889,7 @@ const Patients = (props) => {
                   value={lname}
                   required={true}
                   register={register}
+                  maxLength={55}
                   errors={errors}
                 />
 
@@ -894,6 +903,7 @@ const Patients = (props) => {
                   value={provider}
                   options={coreContext.providerOptions}
                   onChange={(e) => setProvider(e.target.value)}
+                  maxLength={55}
                 />
                 {/* {console.log(coreContext.careCoordinatorOptions,coreContext.coachOptions)} */}
                 <Input
@@ -906,6 +916,7 @@ const Patients = (props) => {
                   value={coordinator}
                   options={coreContext.careCoordinatorOptions}
                   onChange={(e) => setCoordinator(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -918,6 +929,7 @@ const Patients = (props) => {
                   value={coach}
                   options={coreContext.coachOptions}
                   onChange={(e) => setCoach(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -930,6 +942,7 @@ const Patients = (props) => {
                   value={language}
                   options={coreContext.languageOptions}
                   onChange={(e) => setLanguage(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -941,6 +954,7 @@ const Patients = (props) => {
                   elementType="text"
                   value={workPhone}
                   onChange={(e) => setWorkPhone(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -952,6 +966,7 @@ const Patients = (props) => {
                   elementType="text"
                   value={zip}
                   onChange={(e) => setZip(e.target.value)}
+                  maxLength={55}
                 />
 
                 <Input
@@ -962,6 +977,7 @@ const Patients = (props) => {
                   errors={errors}
                   elementType="text"
                   value={state}
+                  maxLength={55}
                   onChange={(e) => setState(e.target.value)}
                 />
               </div>

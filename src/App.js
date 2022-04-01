@@ -23,6 +23,7 @@ import "./dgmaterial.css";
 import Menu from "./components/common/Menu";
 import Menu2 from "./components/common/Menu2";
 import TopMenu from "./components/common/TopMenu";
+import Testing from "./components/common/Testing"
 import { CoreContext } from "./context/core-context";
 import { Row, Col } from "react-bootstrap";
 import { TablePagination } from "@material-ui/core";
@@ -350,6 +351,7 @@ function App() {
                     component={WeightAverage}
                   />{" "}
                   <Route exact path="/weight" component={Pages.Weight} />{" "}
+                  <Route exact path="/testing" component={Testing} />{" "}
                   <Route exact path="/logout" component={Pages.Logout} />{" "}
                   <Route exact path="/profile" component={Pages.MyProfile} />{" "}
                   <Route exact path="/thresold" component={Pages.Thresold} />{" "}

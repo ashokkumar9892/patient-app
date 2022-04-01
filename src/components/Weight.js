@@ -197,11 +197,20 @@ const Weight = (props) => {
       }
       
         if (coreContext.weightData.length > 0 &&coreContext.weightData[0].UserName!==undefined){
+          var patientUserId=[]
+          var rows1=[]
+          if(coreContext.patients[0]==="No data found"){
+            
+          }else{
+             patientUserId=coreContext.patients.map((curr)=>curr.userId)
+           rows1=coreContext.weightData.filter((curr)=>patientUserId.includes(curr.userId))
+          
+          }
         //  coreContext.weightData  = coreContext.weightData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
         return (
             <div style={{ height: 680, width: '100%' }}>
               <DataGrid
-                rows={coreContext.weightData}
+                rows={rows1}
                 columns={dgcolumns}
                 sortingOrder={['desc', 'asc']}
                 pageSize={10}

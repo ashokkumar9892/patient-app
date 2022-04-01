@@ -232,12 +232,22 @@ const BloodGlucose = (props) => {
       coreContext.bloodglucoseData[0].UserName !== undefined
     ) {
       //coreContext.bloodpressureData  = coreContext.bloodpressureData.sort((a,b) => new Moment(b.sortDateColumn) - new Moment(a.sortDateColumn));
+console.log(coreContext.bloodglucoseData)
+      var patientUserId=[]
+    var rows1=[]
+    if(coreContext.patients[0]==="No data found"){
+      
+    }else{
+       patientUserId=coreContext.patients.map((curr)=>curr.userId)
+     rows1=coreContext.bloodglucoseData.filter((curr)=>patientUserId.includes(curr.userId))
+    
+    }
       return (
         <div style={{ height: 680, width: "100%" }}>
           {/* {coreContext.bloodglucoseData} */}
           <DataGrid
           
-            rows={coreContext.bloodglucoseData}
+            rows={rows1}
             columns={dgcolumns}
             pageSize={10}
             sortingOrder={["desc", "asc"]}
