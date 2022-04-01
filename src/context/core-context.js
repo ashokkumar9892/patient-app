@@ -73,7 +73,7 @@ export const CoreContextProvider = (props) => {
   const [result, setResult] = useState([]);
 
   const [apiUrl, setApiUrl] = useState(
-    "https://rpmcrudapis20210808220332demo.azurewebsites.net/api"
+    "http://54.183.129.168/api"
   );
   const [userTable, setuserTable] = useState("UserDetailsDemo");
 
