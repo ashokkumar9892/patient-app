@@ -73,7 +73,7 @@ export const CoreContextProvider = (props) => {
   const [result, setResult] = useState([]);
 
   const [apiUrl, setApiUrl] = useState(
-    "http://54.183.129.168/api"
+    "https://appapi.apatternplus.com/api"
   );
   const [userTable, setuserTable] = useState("UserDetailsDemo");
 
